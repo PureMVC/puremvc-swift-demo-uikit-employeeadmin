@@ -1,4 +1,4 @@
-## [PureMVC](http://puremvc.github.com/) [Swift](https://github.com/PureMVC/puremvc-swift-multicore-framework/wiki) Demo: Employee Admin
+## [PureMVC](http://puremvc.github.com/) [Swift](https://github.com/PureMVC/puremvc-swift-standard-framework/wiki) Demo: Employee Admin
 
 This demo illustrates techniques for performing routine maintenance operations in a PureMVC-based application using [Cocoa Touch/UIKit](http://en.wikipedia.org/wiki/Cocoa_Touch) view components.
 
