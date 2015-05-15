@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="zib-fA-VP7">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Users-->
+        <scene sceneID="69T-tL-pE9">
+            <objects>
+                <tableViewController storyboardIdentifier="UserList" id="q3F-19-ikL" customClass="UserList" customModule="EmployeeAdmin" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="xq3-Pz-4dJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="UserListCell" textLabel="4R4-qa-BWR" style="IBUITableViewCellStyleDefault" id="36d-Dc-4kD">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="36d-Dc-4kD" id="IS6-jP-4eW">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4R4-qa-BWR">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="q3F-19-ikL" id="8GW-0C-Ynr"/>
+                            <outlet property="delegate" destination="q3F-19-ikL" id="NUb-2F-BLW"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Users" id="r0U-3i-2pf"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="20q-s6-zz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1228" y="1092"/>
+        </scene>
+        <!--User Role-->
+        <scene sceneID="Ezw-hW-5A0">
+            <objects>
+                <tableViewController storyboardIdentifier="UserRole" title="User Role" id="s7Y-v5-9he" customClass="UserRole" customModule="EmployeeAdmin" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="7Iy-xP-1e5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserRoleCell" id="ULt-es-ljg">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ULt-es-ljg" id="yV7-QX-gnB">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="s7Y-v5-9he" id="zlf-gB-QKS"/>
+                            <outlet property="delegate" destination="s7Y-v5-9he" id="Uub-Ed-RQD"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ui6-57-80U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2545" y="1086"/>
+        </scene>
+        <!--User Form-->
+        <scene sceneID="Qv5-wB-U5s">
+            <objects>
+                <tableViewController storyboardIdentifier="UserForm" id="ftx-mQ-zyy" customClass="UserForm" customModule="EmployeeAdmin" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Wbk-cc-TAe">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection id="xZ1-De-DkQ">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserFormCell" id="sEP-ch-1Dy">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sEP-ch-1Dy" id="lV4-Vu-OdS">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dpL-Z6-U9V">
+                                                    <rect key="frame" x="8" y="7" width="92" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="360" id="XAY-5Q-Y5v"/>
+                                                        <constraint firstAttribute="width" constant="130" id="vjy-1h-mAX"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="XAY-5Q-Y5v"/>
+                                                            <exclude reference="vjy-1h-mAX"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="7" width="180" height="30"/>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="vjy-1h-mAX"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <mask key="constraints">
+                                                            <include reference="XAY-5Q-Y5v"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="ftx-mQ-zyy" id="2iB-U1-awF"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dhh-WT-6e3">
+                                                    <rect key="frame" x="501" y="7" width="91" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="130" id="OAX-uY-VeZ"/>
+                                                        <constraint firstAttribute="width" constant="360" id="r0U-4o-NlK"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="OAX-uY-VeZ"/>
+                                                            <exclude reference="r0U-4o-NlK"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="212" y="7" width="180" height="30"/>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="OAX-uY-VeZ"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <mask key="constraints">
+                                                            <include reference="r0U-4o-NlK"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="ftx-mQ-zyy" id="5IV-uM-fdv"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="dpL-Z6-U9V" firstAttribute="leading" secondItem="lV4-Vu-OdS" secondAttribute="leadingMargin" id="7qv-JP-z9I"/>
+                                                <constraint firstItem="dhh-WT-6e3" firstAttribute="trailing" secondItem="lV4-Vu-OdS" secondAttribute="trailingMargin" id="Dwn-1F-yUN"/>
+                                                <constraint firstAttribute="centerY" secondItem="dpL-Z6-U9V" secondAttribute="centerY" constant="-0.5" id="XjL-OC-PA1"/>
+                                                <constraint firstAttribute="centerY" secondItem="dhh-WT-6e3" secondAttribute="centerY" constant="-0.5" id="iaL-U9-9AG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserFormCell" id="N7A-N0-ZOM">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N7A-N0-ZOM" id="TfJ-Gd-U0R">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xsf-l0-jf6">
+                                                    <rect key="frame" x="8" y="7" width="57" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="130" id="Jtb-3X-7Ye"/>
+                                                        <constraint firstAttribute="width" constant="360" id="caI-4a-ELh"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="Jtb-3X-7Ye"/>
+                                                            <exclude reference="caI-4a-ELh"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="Jtb-3X-7Ye"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <mask key="constraints">
+                                                            <include reference="caI-4a-ELh"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="ftx-mQ-zyy" id="46q-rk-Hgi"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username*" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TEK-qO-KeQ">
+                                                    <rect key="frame" x="500" y="7" width="92" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="360" id="BlC-Fy-X1b"/>
+                                                        <constraint firstAttribute="width" constant="130" id="NAl-4s-JSQ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="BlC-Fy-X1b"/>
+                                                            <exclude reference="NAl-4s-JSQ"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="NAl-4s-JSQ"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <mask key="constraints">
+                                                            <include reference="BlC-Fy-X1b"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="ftx-mQ-zyy" id="8Uv-q5-7BR"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="TEK-qO-KeQ" secondAttribute="centerY" constant="-0.5" id="477-cW-UTd"/>
+                                                <constraint firstItem="TEK-qO-KeQ" firstAttribute="trailing" secondItem="TfJ-Gd-U0R" secondAttribute="trailingMargin" id="Vra-Qf-AAY"/>
+                                                <constraint firstAttribute="centerY" secondItem="Xsf-l0-jf6" secondAttribute="centerY" constant="-0.5" id="Znp-Sv-TMH"/>
+                                                <constraint firstItem="Xsf-l0-jf6" firstAttribute="leading" secondItem="TfJ-Gd-U0R" secondAttribute="leadingMargin" id="w5l-JX-Waz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserFormCell" id="lbZ-RE-d7d">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lbZ-RE-d7d" id="FbT-5a-vqW">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password*" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aII-QU-O0a">
+                                                    <rect key="frame" x="8" y="7" width="90" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="130" id="FlT-c3-Cnv"/>
+                                                        <constraint firstAttribute="width" constant="360" id="iuo-Be-iwt"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="FlT-c3-Cnv"/>
+                                                            <exclude reference="iuo-Be-iwt"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="FlT-c3-Cnv"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <mask key="constraints">
+                                                            <include reference="iuo-Be-iwt"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="ftx-mQ-zyy" id="fZK-Lc-hRa"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm*" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qXr-Uk-iqB">
+                                                    <rect key="frame" x="514" y="7" width="78" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="360" id="WmD-o6-OYY"/>
+                                                        <constraint firstAttribute="width" constant="130" id="i99-o6-QVk"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="WmD-o6-OYY"/>
+                                                            <exclude reference="i99-o6-QVk"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="i99-o6-QVk"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <mask key="constraints">
+                                                            <include reference="WmD-o6-OYY"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="ftx-mQ-zyy" id="tij-yv-gDF"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="qXr-Uk-iqB" secondAttribute="centerY" constant="-0.5" id="Una-zd-Y08"/>
+                                                <constraint firstItem="aII-QU-O0a" firstAttribute="leading" secondItem="FbT-5a-vqW" secondAttribute="leadingMargin" id="bUO-Ly-td0"/>
+                                                <constraint firstItem="qXr-Uk-iqB" firstAttribute="trailing" secondItem="FbT-5a-vqW" secondAttribute="trailingMargin" id="sPz-iL-bSG"/>
+                                                <constraint firstAttribute="centerY" secondItem="aII-QU-O0a" secondAttribute="centerY" constant="-0.5" id="ypm-mH-lpJ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserRoleCell" rowHeight="200" id="mtD-Ui-NTF">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="181"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mtD-Ui-NTF" id="oi3-Ux-lDk">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xRq-M7-ZAE">
+                                                    <rect key="frame" x="140" y="19" width="320" height="162"/>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="ftx-mQ-zyy" id="KeL-a1-X1T"/>
+                                                        <outlet property="delegate" destination="ftx-mQ-zyy" id="Q9s-Y9-rHz"/>
+                                                    </connections>
+                                                </pickerView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerX" secondItem="xRq-M7-ZAE" secondAttribute="centerX" constant="0.5" id="Jk5-Uv-8I3"/>
+                                                <constraint firstAttribute="centerY" secondItem="xRq-M7-ZAE" secondAttribute="centerY" id="RHT-a2-Q1t"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="Cyl-tr-NTm">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="UserRoleCell" textLabel="QW0-2M-Lg7" style="IBUITableViewCellStyleDefault" id="ilo-w4-qSN">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ilo-w4-qSN" id="8NW-Ny-iFa">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="User Roles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QW0-2M-Lg7">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserRoleCell" id="W9v-xr-Dxa">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W9v-xr-Dxa" id="2lv-OC-vrC">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="ftx-mQ-zyy" id="42W-eS-ZEj"/>
+                            <outlet property="delegate" destination="ftx-mQ-zyy" id="6AP-2b-yPJ"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="confirmPassword" destination="qXr-Uk-iqB" id="g6e-EK-93o"/>
+                        <outlet property="department" destination="xRq-M7-ZAE" id="pBI-r0-qLE"/>
+                        <outlet property="email" destination="Xsf-l0-jf6" id="I78-up-ivC"/>
+                        <outlet property="fname" destination="dpL-Z6-U9V" id="rC5-Kz-JKd"/>
+                        <outlet property="lname" destination="dhh-WT-6e3" id="aN9-ts-wmR"/>
+                        <outlet property="password" destination="aII-QU-O0a" id="UW0-IQ-uMZ"/>
+                        <outlet property="userRoleCell" destination="ilo-w4-qSN" id="vkO-Ds-dGz"/>
+                        <outlet property="username" destination="TEK-qO-KeQ" id="Hsc-FW-xdD"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3tL-rE-rWq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1881" y="1086"/>
+        </scene>
+        <!--Employee Admin-->
+        <scene sceneID="gW4-UE-L4e">
+            <objects>
+                <navigationController id="zib-fA-VP7" customClass="EmployeeAdmin" customModule="EmployeeAdmin" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3fz-cw-T2i">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="q3F-19-ikL" kind="relationship" relationship="rootViewController" id="Mgg-fh-J83"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YFT-xo-MUX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="530" y="1092"/>
+        </scene>
+    </scenes>
+</document>
