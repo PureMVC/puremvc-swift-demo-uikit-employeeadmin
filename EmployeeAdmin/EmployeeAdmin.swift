@@ -26,7 +26,7 @@ class EmployeeAdmin: UINavigationController {
         userList = viewControllers[0] as! UserList
         userForm = storyboard!.instantiateViewControllerWithIdentifier("UserForm") as! UserForm
         userRole = storyboard!.instantiateViewControllerWithIdentifier("UserRole") as! UserRole
-        _delegate!.viewDidLoad()
+        _delegate?.viewDidLoad()
     }
     
     func showUserForm() {

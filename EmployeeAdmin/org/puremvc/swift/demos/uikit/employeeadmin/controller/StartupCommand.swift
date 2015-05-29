@@ -14,7 +14,7 @@ class StartupCommand: MacroCommand {
     Add the Subcommands to startup the PureMVC apparatus.
     
     Generally, it is best to prep the Model (mostly registering
-    proxies)followed by preparation of the View (mostly registering
+    proxies) followed by preparation of the View (mostly registering
     Mediators).
     */
     override func initializeMacroCommand() {

@@ -19,7 +19,7 @@ class UserList: UITableViewController, UITableViewDataSource, UITableViewDelegat
     
     weak var _delegate: UserListDelegate?
     
-    var users: [UserVO]!
+    var users: [UserVO]?
     
     required init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder)
@@ -28,20 +28,22 @@ class UserList: UITableViewController, UITableViewDataSource, UITableViewDelegat
     
     // show details of the user
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.onSelect(users[indexPath.row])
+        delegate?.onSelect(users![indexPath.row])
     }
     
     // add user to the tableView
     func add(userVO: UserVO) {
-        users.append(userVO)
-        tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: users.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        if users != nil {
+            users!.append(userVO)
+            tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: users!.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
     }
     
     // update user in the tableView
     func update(userVO: UserVO) {
-        for (index, element) in enumerate(users) {
+        for (index, element) in enumerate(users!) {
             if userVO.username == element.username {
-                users[index] = userVO
+                users![index] = userVO
                 var cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0))
                 cell?.textLabel?.text = userVO.givenName
                 break
@@ -52,8 +54,8 @@ class UserList: UITableViewController, UITableViewDataSource, UITableViewDelegat
     // delete user from the tableView
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            delegate?.onDelete(users[indexPath.row])
-            users.removeAtIndex(indexPath.row)
+            delegate?.onDelete(users![indexPath.row])
+            users!.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
     }
@@ -65,13 +67,13 @@ class UserList: UITableViewController, UITableViewDataSource, UITableViewDelegat
     
     // number of rows
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+        return users != nil ? users!.count : 0
     }
     
     // cell contents
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("UserListCell", forIndexPath: indexPath) as! UITableViewCell
-        cell.textLabel?.text = users[indexPath.row].givenName
+        cell.textLabel?.text = users![indexPath.row].givenName
         return cell
     }
     

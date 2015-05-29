@@ -19,7 +19,6 @@ class ApplicationFacade: Facade {
     static var USER_SELECTED = "userSelected"
     static var USER_ADDED = "userAdded"
     static var USER_UPDATED = "userUpdated"
-    static var USER_DELETED = "userDeleted"
     
     static var ADD_ROLE_RESULT = "addRoleResult"
         

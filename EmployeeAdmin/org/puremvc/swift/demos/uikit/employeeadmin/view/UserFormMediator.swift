@@ -12,7 +12,7 @@ class UserFormMediator: Mediator, UserFormDelegate {
     
     override class var NAME: String { return "UserFormMediator" }
     
-    var userProxy: UserProxy!
+    var userProxy: UserProxy?
     
     init(viewComponent: UserForm) {
         super.init(mediatorName: UserFormMediator.NAME, viewComponent: viewComponent)
@@ -20,16 +20,16 @@ class UserFormMediator: Mediator, UserFormDelegate {
     
     override func onRegister() {
         userForm.delegate = self
-        userProxy = (facade.retrieveProxy(UserProxy.NAME) as! UserProxy)
+        userProxy = facade.retrieveProxy(UserProxy.NAME) as? UserProxy
     }
     
     func onAdd(userVO: UserVO) {
-        userProxy.addItem(userVO)
+        userProxy?.addItem(userVO)
         sendNotification(ApplicationFacade.USER_ADDED, body: userVO)
     }
     
     func onUpdate(userVO: UserVO) {
-        userProxy.updateItem(userVO)
+        userProxy?.updateItem(userVO)
         sendNotification(ApplicationFacade.USER_UPDATED, body: userVO)
     }
     

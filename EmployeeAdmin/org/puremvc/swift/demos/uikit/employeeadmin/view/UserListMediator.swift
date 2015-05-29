@@ -10,7 +10,7 @@ import PureMVC
 
 class UserListMediator: Mediator, UserListDelegate {
     
-    var userProxy: UserProxy!
+    var userProxy: UserProxy?
     
     override class var NAME: String { return "UserListMediator" }
     
@@ -20,8 +20,8 @@ class UserListMediator: Mediator, UserListDelegate {
     
     override func onRegister() {
         userList.delegate = self
-        userProxy = (facade.retrieveProxy(UserProxy.NAME) as! UserProxy)
-        userList.users = userProxy.users
+        userProxy = facade.retrieveProxy(UserProxy.NAME) as? UserProxy
+        userList.users = userProxy?.users;
     }
     
     func onNew() {
