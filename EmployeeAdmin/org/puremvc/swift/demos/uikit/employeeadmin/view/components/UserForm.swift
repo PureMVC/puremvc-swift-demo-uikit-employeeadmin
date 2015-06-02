@@ -46,14 +46,16 @@ class UserForm: UITableViewController, UITableViewDataSource, UIPickerViewDataSo
     // populate user details
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        fname.text = userVO!.fname ?? ""
-        lname.text = userVO!.lname ?? ""
-        email.text = userVO!.email ?? ""
-        username.text = userVO!.username ?? ""
-        password.text = userVO!.password ?? ""
-        confirmPassword.text = userVO?.password ?? ""
         
-        department.selectRow(userVO!.department.ordinal + 1, inComponent: 0, animated: false)
+        if let userVO = userVO {
+            fname.text = userVO.fname
+            lname.text = userVO.lname
+            email.text = userVO.email
+            username.text = userVO.username
+            password.text = userVO.password
+            confirmPassword.text = userVO.password
+            department.selectRow(userVO.department.ordinal + 1, inComponent: 0, animated: false)
+        }
         
         username.enabled = (mode == .MODE_ADD)
         userRoleCell.userInteractionEnabled = (mode == .MODE_EDIT)
@@ -70,27 +72,29 @@ class UserForm: UITableViewController, UITableViewDataSource, UIPickerViewDataSo
     
     // save or update
     func save() {
-        userVO!.fname = fname.text
-        userVO!.lname = lname.text
-        userVO!.email = email.text
-        userVO!.username = username.text
-        userVO!.password = password.text
-        userVO!.department = DeptEnum.comboList[department.selectedRowInComponent(0)]
-        
-        if (userVO!.password == confirmPassword.text && userVO!.isValid == true) {
-            mode == .MODE_ADD ? delegate?.onAdd(userVO!) : delegate?.onUpdate(userVO!)
-            self.navigationController?.popToRootViewControllerAnimated(true)
-        } else {
-            let alertController = UIAlertController(title: "Error", message:"Invalid Form Data.", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alertController, animated: true, completion: nil)
+        if let userVO = userVO {
+            userVO.fname = fname.text
+            userVO.lname = lname.text
+            userVO.email = email.text
+            userVO.username = username.text
+            userVO.password = password.text
+            userVO.department = DeptEnum.comboList[department.selectedRowInComponent(0)]
+            
+            if (userVO.password == confirmPassword.text && userVO.isValid == true) {
+                mode == .MODE_ADD ? delegate?.onAdd(userVO) : delegate?.onUpdate(userVO)
+                self.navigationController?.popToRootViewControllerAnimated(true)
+            } else {
+                let alertController = UIAlertController(title: "Error", message:"Invalid Form Data.", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
         }
     }
     
     // select user roles
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(indexPath.section == 1 && indexPath.row == 0) {
-            delegate?.onUserRolesSelected(userVO!)
+        if let userVO = userVO where indexPath.section == 1 && indexPath.row == 0 {
+            delegate?.onUserRolesSelected(userVO)
         }
     }
     

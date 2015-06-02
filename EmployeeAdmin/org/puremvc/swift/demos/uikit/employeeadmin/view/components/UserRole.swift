@@ -20,7 +20,6 @@ class UserRole: UITableViewController, UITableViewDataSource, UITableViewDelegat
     weak var _delegate: UserRoleDelegate?
     
     var userVO: UserVO?
-    var selectedRole: RoleEnum?
     var userRoles: [RoleEnum]?
     
     required init(coder aDecoder: NSCoder!) {
@@ -57,11 +56,12 @@ class UserRole: UITableViewController, UITableViewDataSource, UITableViewDelegat
         var role = RoleEnum.list[indexPath.row].value
         cell.textLabel?.text = role
         
-        if delegate!.doesUserHaveRole(userVO!, role: RoleEnum.list[indexPath.row]) {
+        if let userVO = userVO, hasRole = delegate?.doesUserHaveRole(userVO, role: RoleEnum.list[indexPath.row]) where hasRole == true {
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
         } else {
             cell.accessoryType = UITableViewCellAccessoryType.None
         }
+        
         return cell
     }
 

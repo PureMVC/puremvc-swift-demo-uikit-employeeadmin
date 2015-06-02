@@ -10,14 +10,14 @@
 	<string>EmployeeAdmin</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>79CC14F255AD7FF8F836B31824198C66BAF95E10</key>
+		<key>93C06ED47ABACBC7E2452B0C7DBDD1017F1E0DEC</key>
 		<string>https://github.com/sshams/puremvc-swift-demo-uikit-employeeadmin.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>EmployeeAdmin.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>79CC14F255AD7FF8F836B31824198C66BAF95E10</key>
+		<key>93C06ED47ABACBC7E2452B0C7DBDD1017F1E0DEC</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>79CC14F255AD7FF8F836B31824198C66BAF95E10</string>
+	<string>93C06ED47ABACBC7E2452B0C7DBDD1017F1E0DEC</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>79CC14F255AD7FF8F836B31824198C66BAF95E10</string>
+			<string>93C06ED47ABACBC7E2452B0C7DBDD1017F1E0DEC</string>
 			<key>IDESourceControlWCCName</key>
 			<string>puremvc-swift-demo-uikit-employeeadmin</string>
 		</dict>
