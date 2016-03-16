@@ -6,8 +6,6 @@
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
-import PureMVC
-
 class UserVO {
     
     var username: String

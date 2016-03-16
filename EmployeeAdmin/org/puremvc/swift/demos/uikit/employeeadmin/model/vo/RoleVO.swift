@@ -6,9 +6,6 @@
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
-import PureMVC
-import Foundation
-
 class RoleVO {
     
     var username: String

@@ -50,7 +50,7 @@ class UserRoleMediator: Mediator, UserRoleDelegate {
         case ApplicationFacade.NEW_USER:
             userRole.userVO = (notification.body as! UserVO)
         case ApplicationFacade.USER_ADDED:
-            var userVO = notification.body as! UserVO
+            let userVO = notification.body as! UserVO
             roleProxy?.addItem(RoleVO(username: userVO.username))
         case ApplicationFacade.USER_SELECTED:
             userRole.userVO = (notification.body as! UserVO)

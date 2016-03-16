@@ -25,9 +25,9 @@ class UserProxy: Proxy {
     
     // update an item in the data
     func updateItem(item: Any) {
-        var user = item as! UserVO
+        let user = item as! UserVO
         var users = data as! [UserVO]
-        for (index, element) in enumerate(users) {
+        for (index, element) in users.enumerate() {
             if (element.username == user.username) {
                 users[index] = user
                 data = users
@@ -38,9 +38,9 @@ class UserProxy: Proxy {
     
     // delete an item in the data
     func deleteItem(item: Any) {
-        var user = item as! UserVO
+        let user = item as! UserVO
         var users = data as! [UserVO]
-        for (index, element) in enumerate(users) {
+        for (index, element) in users.enumerate() {
             if (element.username == user.username) {
                 users.removeAtIndex(index)
                 data = users

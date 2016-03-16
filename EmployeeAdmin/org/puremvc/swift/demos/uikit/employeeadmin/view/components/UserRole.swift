@@ -15,15 +15,15 @@ protocol UserRoleDelegate: class {
     func doesUserHaveRole(userVO: UserVO, role: RoleEnum) -> Bool
 }
 
-class UserRole: UITableViewController, UITableViewDataSource, UITableViewDelegate {
+class UserRole: UITableViewController {
     
     weak var _delegate: UserRoleDelegate?
     
     var userVO: UserVO?
     var userRoles: [RoleEnum]?
     
-    required init(coder aDecoder: NSCoder!) {
-        super.init(coder: aDecoder)
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -33,7 +33,7 @@ class UserRole: UITableViewController, UITableViewDataSource, UITableViewDelegat
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
         
         if cell!.accessoryType == UITableViewCellAccessoryType.None {
             cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
@@ -51,9 +51,9 @@ class UserRole: UITableViewController, UITableViewDataSource, UITableViewDelegat
     
     // cell content - checkmark/none
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("UserRoleCell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("UserRoleCell", forIndexPath: indexPath) 
         
-        var role = RoleEnum.list[indexPath.row].value
+        let role = RoleEnum.list[indexPath.row].rawValue
         cell.textLabel?.text = role
         
         if let userVO = userVO, hasRole = delegate?.doesUserHaveRole(userVO, role: RoleEnum.list[indexPath.row]) where hasRole == true {
