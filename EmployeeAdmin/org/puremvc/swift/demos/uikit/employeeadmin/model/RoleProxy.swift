@@ -26,7 +26,7 @@ class RoleProxy: Proxy {
     // delete an item from the data
     func deleteItem(item: Any) {
         var roles = data as! [RoleVO]
-        for (index, element) in enumerate(roles) {
+        for (index, element) in roles.enumerate() {
             if(element.username == (item as! UserVO).username) {
                 roles.removeAtIndex(index)
                 data = roles
@@ -39,10 +39,10 @@ class RoleProxy: Proxy {
     func doesUserHaveRole(user: UserVO, role: RoleEnum) -> Bool {
         var hasRole = false
         var roles = data as! [RoleVO]
-        for (i, element) in enumerate(roles) {
+        for (i, element) in roles.enumerate() {
             if(element.username == user.username) {
-                var userRoles = roles[i].roles
-                for(j, element) in enumerate(userRoles) {
+                let userRoles = roles[i].roles
+                for(_, element) in userRoles.enumerate() {
                     if (element.equals(role)) {
                         hasRole = true
                         break
@@ -59,7 +59,7 @@ class RoleProxy: Proxy {
         var result = false
         if(!doesUserHaveRole(user, role: role)) {
             var roles = data as! [RoleVO]
-            for (i, element) in enumerate(roles) {
+            for (i, element) in roles.enumerate() {
                 if (element.username == user.username) {
                     var userRoles = roles[i].roles
                     userRoles.append(role)
@@ -76,10 +76,10 @@ class RoleProxy: Proxy {
     func removeRoleFromUser(user: UserVO, role: RoleEnum) {
         if(doesUserHaveRole(user, role: role)) {
             var roles = data as! [RoleVO]
-            for (i, element) in enumerate(roles) {
+            for (i, element) in roles.enumerate() {
                 if (element.username == user.username) {
                     var userRoles = roles[i].roles
-                    for (j, element) in enumerate(userRoles) {
+                    for (j, element) in userRoles.enumerate() {
                         if (element.equals(role)) {
                             userRoles.removeAtIndex(j)
                             roles[i].roles = userRoles
@@ -96,7 +96,7 @@ class RoleProxy: Proxy {
     func getUserRoles(username: String) -> [RoleEnum] {
         var userRoles = [RoleEnum]()
         var roles = data as! [RoleVO]
-        for (index, element) in enumerate(roles) {
+        for (index, element) in roles.enumerate() {
             if (element.username == username) {
                 userRoles = roles[index].roles
             }

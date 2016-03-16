@@ -15,7 +15,7 @@ class PrepModelCommand: SimpleCommand {
     */
     override func execute(notification: INotification) {
         // Create User Proxy,
-        var userProxy = UserProxy()
+        let userProxy = UserProxy()
         
         //Populate it with dummy data
         userProxy.addItem(UserVO(username: "lstooge", fname: "Larry", lname: "Stooge", email: "larry@stooges.com", password: "ijk456", department: DeptEnum.ACCT))
@@ -26,7 +26,7 @@ class PrepModelCommand: SimpleCommand {
         facade.registerProxy(userProxy)
         
         // Create Role Proxy
-        var roleProxy = RoleProxy()
+        let roleProxy = RoleProxy()
         
         //Populate it with dummy data 
         roleProxy.addItem(RoleVO(username: "lstooge", roles: [RoleEnum.PAYROLL, RoleEnum.EMP_BENEFITS]))

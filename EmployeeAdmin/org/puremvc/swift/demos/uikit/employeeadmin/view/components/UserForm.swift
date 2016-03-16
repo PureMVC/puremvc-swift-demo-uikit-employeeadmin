@@ -12,10 +12,10 @@ import PureMVC
 protocol UserFormDelegate: class {
     func onAdd(userVO: UserVO)
     func onUpdate(userVO: UserVO)
-    func onUserRolesSelected(UserVO)
+    func onUserRolesSelected(userVO: UserVO)
 }
 
-class UserForm: UITableViewController, UITableViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
+class UserForm: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
     weak var _delegate: UserFormDelegate?
     
@@ -39,7 +39,7 @@ class UserForm: UITableViewController, UITableViewDataSource, UIPickerViewDataSo
     @IBOutlet weak var userRoleCell: UITableViewCell!
     
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "save")
     }
     
@@ -54,7 +54,7 @@ class UserForm: UITableViewController, UITableViewDataSource, UIPickerViewDataSo
             username.text = userVO.username
             password.text = userVO.password
             confirmPassword.text = userVO.password
-            department.selectRow(userVO.department.ordinal + 1, inComponent: 0, animated: false)
+            department.selectRow(userVO.department.hashValue, inComponent: 0, animated: false)
         }
         
         username.enabled = (mode == .MODE_ADD)
@@ -72,22 +72,15 @@ class UserForm: UITableViewController, UITableViewDataSource, UIPickerViewDataSo
     
     // save or update
     func save() {
-        if let userVO = userVO {
-            userVO.fname = fname.text
-            userVO.lname = lname.text
-            userVO.email = email.text
-            userVO.username = username.text
-            userVO.password = password.text
-            userVO.department = DeptEnum.comboList[department.selectedRowInComponent(0)]
+        let userVO = UserVO(username: username.text, fname: fname.text, lname: lname.text, email: email.text, password: password.text, department: DeptEnum.comboList[department.selectedRowInComponent(0)])
             
-            if (userVO.password == confirmPassword.text && userVO.isValid == true) {
-                mode == .MODE_ADD ? delegate?.onAdd(userVO) : delegate?.onUpdate(userVO)
-                self.navigationController?.popToRootViewControllerAnimated(true)
-            } else {
-                let alertController = UIAlertController(title: "Error", message:"Invalid Form Data.", preferredStyle: UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
+        if (userVO.password == confirmPassword.text && userVO.isValid == true) {
+            mode == .MODE_ADD ? delegate?.onAdd(userVO) : delegate?.onUpdate(userVO)
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        } else {
+            let alertController = UIAlertController(title: "Error", message:"Invalid Form Data.", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     
@@ -99,8 +92,8 @@ class UserForm: UITableViewController, UITableViewDataSource, UIPickerViewDataSo
     }
     
     // UIPickerViewDelegate
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        return DeptEnum.comboList[row].value
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return DeptEnum.comboList[row].rawValue
     }
     
     // UIPickerViewDataSource

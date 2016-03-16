@@ -13,9 +13,9 @@ class DeleteUserCommand: SimpleCommand {
     // retrieve the user and role proxies and delete the user
     // and his roles. then send the USER_DELETED notification
     override func execute(notification: INotification) {
-        var userVO = notification.body as! UserVO
-        var userProxy = facade.retrieveProxy(UserProxy.NAME) as? UserProxy
-        var roleProxy = facade.retrieveProxy(RoleProxy.NAME) as? RoleProxy
+        let userVO = notification.body as! UserVO
+        let userProxy = facade.retrieveProxy(UserProxy.NAME) as? UserProxy
+        let roleProxy = facade.retrieveProxy(RoleProxy.NAME) as? RoleProxy
         userProxy?.deleteItem(userVO)
         roleProxy?.deleteItem(userVO)
     }
