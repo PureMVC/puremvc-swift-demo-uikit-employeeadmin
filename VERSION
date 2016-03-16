@@ -1,10 +1,14 @@
 PureMVC Swift UIKit Demo - Employee Admin (Ported)
 --------------------------------------------------------------------------
-Release Date: 05/15/2015
+Release Date: 03/16/16
     Platform: Swift, Cocoa Touch, UIKit
-     Version: 1
+     Version: 1.1
        Major: 0
        Minor: 0
       Author: Saad Shams <saad.shams@puremvc.org>
 --------------------------------------------------------------------------
 1.0.0 - First public release.
+
+1.1 - Swift 2.0 support was added. Updated swift header documentation to newer 
+      standard for parameters and returns. Update of var into let declarations 
+      for never mutated variables.
