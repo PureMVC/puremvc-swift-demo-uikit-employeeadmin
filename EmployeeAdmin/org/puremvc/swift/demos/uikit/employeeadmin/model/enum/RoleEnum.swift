@@ -45,11 +45,11 @@ enum RoleEnum: String {
     
     static var comboList: [RoleEnum] {
         var cList = RoleEnum.list
-        cList.insert(NONE_SELECTED, atIndex: 0)
+        cList.insert(NONE_SELECTED, at: 0)
         return cList
     }
     
-    func equals(roleEnum: RoleEnum) -> Bool {
+    func equals(_ roleEnum: RoleEnum) -> Bool {
         return self == roleEnum
     }
 }

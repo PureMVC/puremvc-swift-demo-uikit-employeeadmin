@@ -31,11 +31,11 @@ enum DeptEnum: String {
     
     static var comboList: [DeptEnum] {
         var cList = DeptEnum.list
-        cList.insert(NONE_SELECTED, atIndex: 0)
+        cList.insert(NONE_SELECTED, at: 0)
         return cList
     }
     
-    func equals(deptEnum: DeptEnum) -> Bool {
+    func equals(_ deptEnum: DeptEnum) -> Bool {
         return self == deptEnum
     }
 }

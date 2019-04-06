@@ -2,7 +2,7 @@
 //  RoleProxy.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2015-2025 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
@@ -17,86 +17,45 @@ class RoleProxy: Proxy {
     }
     
     // add an item to the data
-    func addItem(item: Any) {
+    func addItem(_ item: Any) {
         var roles = data as! [RoleVO]
         roles.append(item as! RoleVO)
         data = roles;
     }
     
-    // delete an item from the data
-    func deleteItem(item: Any) {
+    func addRoleVO(_ roleVO: RoleVO) {
         var roles = data as! [RoleVO]
-        for (index, element) in roles.enumerate() {
+        var found = false;
+        for (_, element) in roles.enumerated() {
+            if(roleVO.username == element.username) {
+                element.roles = roleVO.roles
+                found = true
+                break
+            }
+        }
+        if(!found) {
+            roles.append(roleVO)
+            data = roles
+        }
+    }
+    
+    // delete an item from the data
+    func deleteItem(_ item: Any) {
+        var roles = data as! [RoleVO]
+        for (index, element) in roles.enumerated() {
             if(element.username == (item as! UserVO).username) {
-                roles.removeAtIndex(index)
+                roles.remove(at: index)
                 data = roles
                 break
             }
         }
     }
     
-    // determine if the user has a given role
-    func doesUserHaveRole(user: UserVO, role: RoleEnum) -> Bool {
-        var hasRole = false
-        var roles = data as! [RoleVO]
-        for (i, element) in roles.enumerate() {
-            if(element.username == user.username) {
-                let userRoles = roles[i].roles
-                for(_, element) in userRoles.enumerate() {
-                    if (element.equals(role)) {
-                        hasRole = true
-                        break
-                    }
-                }
-                
-            }
-        }
-        return hasRole
-    }
-    
-    // add a role to this user
-    func addRoleToUser(user: UserVO, role: RoleEnum) {
-        var result = false
-        if(!doesUserHaveRole(user, role: role)) {
-            var roles = data as! [RoleVO]
-            for (i, element) in roles.enumerate() {
-                if (element.username == user.username) {
-                    var userRoles = roles[i].roles
-                    userRoles.append(role)
-                    roles[i].roles = userRoles
-                    result = true
-                    break
-                }
-            }
-        }
-        sendNotification(ApplicationFacade.ADD_ROLE_RESULT, body: result)
-    }
-    
-    // remove a role from the user
-    func removeRoleFromUser(user: UserVO, role: RoleEnum) {
-        if(doesUserHaveRole(user, role: role)) {
-            var roles = data as! [RoleVO]
-            for (i, element) in roles.enumerate() {
-                if (element.username == user.username) {
-                    var userRoles = roles[i].roles
-                    for (j, element) in userRoles.enumerate() {
-                        if (element.equals(role)) {
-                            userRoles.removeAtIndex(j)
-                            roles[i].roles = userRoles
-                            break
-                        }
-                    }
-                    break
-                }
-            }
-        }
-    }
-    
     // get a users roles
-    func getUserRoles(username: String) -> [RoleEnum] {
+    func getUserRoles(_ username: String) -> [RoleEnum] {
         var userRoles = [RoleEnum]()
         var roles = data as! [RoleVO]
-        for (index, element) in roles.enumerate() {
+        for (index, element) in roles.enumerated() {
             if (element.username == username) {
                 userRoles = roles[index].roles
             }

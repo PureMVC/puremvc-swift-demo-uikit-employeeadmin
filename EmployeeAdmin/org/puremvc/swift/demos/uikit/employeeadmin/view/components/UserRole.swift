@@ -2,71 +2,55 @@
 //  UserRole.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2015-2025 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
 import UIKit
-import PureMVC
 
 protocol UserRoleDelegate: class {
-    func onAdd(userVO: UserVO, role: RoleEnum)
-    func onDelete(userVO: UserVO, role: RoleEnum)
-    func doesUserHaveRole(userVO: UserVO, role: RoleEnum) -> Bool
+    func addRole(_ role: RoleEnum)
+    func removeRole(_ role: RoleEnum)
 }
 
 class UserRole: UITableViewController {
     
-    weak var _delegate: UserRoleDelegate?
+    weak var delegate: UserRoleDelegate?
     
-    var userVO: UserVO?
-    var userRoles: [RoleEnum]?
+    var roles: [RoleEnum]?
     
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
-        tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
-        
-        if cell!.accessoryType == UITableViewCellAccessoryType.None {
-            cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
-            delegate?.onAdd(userVO!, role: RoleEnum.list[indexPath.row])
-        } else {
-            cell!.accessoryType = UITableViewCellAccessoryType.None
-            delegate?.onDelete(userVO!, role: RoleEnum.list[indexPath.row])
-        }
-    }
-    
-    // number of rows
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return RoleEnum.list.count
-    }
-    
-    // cell content - checkmark/none
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("UserRoleCell", forIndexPath: indexPath) 
+    // cell content initialize - checkmark/none
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserRoleCell", for: indexPath)
         
         let role = RoleEnum.list[indexPath.row].rawValue
         cell.textLabel?.text = role
         
-        if let userVO = userVO, hasRole = delegate?.doesUserHaveRole(userVO, role: RoleEnum.list[indexPath.row]) where hasRole == true {
-            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+        if roles?.contains(RoleEnum.list[indexPath.row]) ?? false {
+            cell.accessoryType = UITableViewCell.AccessoryType.checkmark
         } else {
-            cell.accessoryType = UITableViewCellAccessoryType.None
+            cell.accessoryType = UITableViewCell.AccessoryType.none
         }
         
         return cell
     }
-
-    var delegate: UserRoleDelegate? {
-        get { return _delegate }
-        set { _delegate = newValue }
+    
+    // cell selected
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath as IndexPath)
+        
+        if cell!.accessoryType == UITableViewCell.AccessoryType.none {
+            cell!.accessoryType = UITableViewCell.AccessoryType.checkmark
+            delegate?.addRole(RoleEnum.list[indexPath.row])
+        } else {
+            cell!.accessoryType = UITableViewCell.AccessoryType.none
+            delegate?.removeRole(RoleEnum.list[indexPath.row])
+        }
     }
+    
+    // number of rows
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return RoleEnum.list.count
+    }
+
 }

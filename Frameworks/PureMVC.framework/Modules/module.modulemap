@@ -1,3 +1,11 @@
 framework module PureMVC {
+  umbrella header "PureMVC.h"
+
+  export *
+  module * { export * }
+}
+
+module PureMVC.Swift {
     header "PureMVC-Swift.h"
+    requires objc
 }

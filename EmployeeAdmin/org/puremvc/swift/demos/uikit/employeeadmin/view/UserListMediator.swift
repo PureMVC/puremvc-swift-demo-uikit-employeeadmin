@@ -2,15 +2,16 @@
 //  UserListMediator.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2015-2025 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
 import PureMVC
 
 class UserListMediator: Mediator, UserListDelegate {
-    
+
     var userProxy: UserProxy?
+    var roleProxy: RoleProxy?
     
     override class var NAME: String { return "UserListMediator" }
     
@@ -19,39 +20,28 @@ class UserListMediator: Mediator, UserListDelegate {
     }
     
     override func onRegister() {
-        userList.delegate = self
         userProxy = facade.retrieveProxy(UserProxy.NAME) as? UserProxy
-        userList.users = userProxy?.users;
+        roleProxy = facade.retrieveProxy(RoleProxy.NAME) as? RoleProxy
+        userList.delegate = self
+        userList.userVOs = userProxy?.users;
     }
     
-    func onNew() {
-        sendNotification(ApplicationFacade.NEW_USER, body: UserVO())
+    func add(_ userVO: UserVO, roleVO: RoleVO) {
+        userProxy?.addItem(userVO)
+        roleProxy?.addRoleVO(roleVO)
     }
     
-    func onDelete(userVO: UserVO) {
+    func update(_ userVO: UserVO, roleVO: RoleVO) {
+        userProxy?.updateItem(userVO)
+        roleProxy?.addRoleVO(roleVO)
+    }
+    
+    func delete(_ userVO: UserVO) {
         sendNotification(ApplicationFacade.DELETE_USER, body: userVO)
     }
     
-    func onSelect(userVO: UserVO) {
-        sendNotification(ApplicationFacade.USER_SELECTED, body: userVO)
-    }
-    
-    override func listNotificationInterests() -> [String] {
-        return [
-            ApplicationFacade.USER_ADDED,
-            ApplicationFacade.USER_UPDATED
-        ]
-    }
-    
-    override func handleNotification(notification: INotification) {
-        switch notification.name {
-        case ApplicationFacade.USER_ADDED:
-            userList.add(notification.body as! UserVO)
-        case ApplicationFacade.USER_UPDATED:
-            userList.update(notification.body as! UserVO)
-        default:
-            break
-        }
+    func getUserRoles(_ username: String) -> [RoleEnum] {
+        return roleProxy?.getUserRoles(username) ?? [RoleEnum]()
     }
     
     var userList: UserList {

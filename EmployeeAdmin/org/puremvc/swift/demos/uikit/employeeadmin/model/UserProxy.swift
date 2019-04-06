@@ -2,7 +2,7 @@
 //  UserProxy.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2015-2025 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
@@ -17,17 +17,17 @@ class UserProxy: Proxy {
     }
     
     // add an item to the data
-    func addItem(item: Any) {
+    func addItem(_ item: Any) {
         var users = data as! [UserVO]
         users.append(item as! UserVO)
         data = users
     }
     
     // update an item in the data
-    func updateItem(item: Any) {
+    func updateItem(_ item: Any) {
         let user = item as! UserVO
         var users = data as! [UserVO]
-        for (index, element) in users.enumerate() {
+        for (index, element) in users.enumerated() {
             if (element.username == user.username) {
                 users[index] = user
                 data = users
@@ -37,12 +37,12 @@ class UserProxy: Proxy {
     }
     
     // delete an item in the data
-    func deleteItem(item: Any) {
+    func deleteItem(_ item: Any) {
         let user = item as! UserVO
         var users = data as! [UserVO]
-        for (index, element) in users.enumerate() {
+        for (index, element) in users.enumerated() {
             if (element.username == user.username) {
-                users.removeAtIndex(index)
+                users.remove(at: index)
                 data = users
                 break
             }

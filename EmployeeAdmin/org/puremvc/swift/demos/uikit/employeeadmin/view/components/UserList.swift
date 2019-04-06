@@ -2,83 +2,84 @@
 //  UserList.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2015-2025 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
 import UIKit
-import PureMVC
 
 protocol UserListDelegate: class {
-    func onNew()
-    func onDelete(userVO: UserVO)
-    func onSelect(userVO: UserVO)
+    func add(_ userVO: UserVO, roleVO: RoleVO)
+    func update(_ userVO: UserVO, roleVO: RoleVO)
+    func delete(_ userVO: UserVO)
+    func getUserRoles(_ username: String) -> [RoleEnum]
 }
 
-class UserList: UITableViewController {
+class UserList: UITableViewController, UserFormDelegate {
+
+    weak var delegate: UserListDelegate?
     
-    weak var _delegate: UserListDelegate?
-    
-    var users: [UserVO]?
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "onNew")
-    }
+    var userVOs: [UserVO]?
     
     // show details of the user
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.onSelect(users![indexPath.row])
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "segueToUserForm", sender: userVOs![indexPath.row])
     }
     
-    // add user to the tableView
-    func add(userVO: UserVO) {
-        if users != nil {
-            users!.append(userVO)
-            tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: users!.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+    // segue to UserForm to show user details
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier, identifier == "segueToUserForm" {
+            if let userForm = segue.destination as? UserForm {
+                userForm.delegate = self
+                if let userVO = sender as? UserVO { // existing user
+                    userForm.userVO = userVO
+                    userForm.roleVO = RoleVO(username: userVO.username, roles: (delegate?.getUserRoles(userVO.username)))
+                } 
+            }
         }
     }
     
-    // update user in the tableView
-    func update(userVO: UserVO) {
-        for (index, element) in (users!).enumerate() {
+    // add user and roles
+    func add(_ userVO: UserVO, roleVO: RoleVO) {
+        delegate?.add(userVO, roleVO: roleVO)
+        userVOs?.append(userVO)
+        if let users = userVOs {
+            tableView.insertRows(at: [IndexPath(row: users.count-1, section: 0)], with: UITableView.RowAnimation.automatic)
+        }
+    }
+    
+    // update user and roles
+    func update(_ userVO: UserVO, roleVO: RoleVO) {
+        delegate?.update(userVO, roleVO: roleVO)
+        for (index, element) in (userVOs!).enumerated() {
             if userVO.username == element.username {
-                users![index] = userVO
-                let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0))
+                userVOs![index] = userVO
+                let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0))
                 cell?.textLabel?.text = userVO.givenName
                 break
             }
         }
     }
     
-    // delete user from the tableView
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete {
-            delegate?.onDelete(users![indexPath.row])
-            users!.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-        }
-    }
-    
-    // add new user
-    func onNew() {
-        delegate?.onNew()
-    }
-    
     // number of rows
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users != nil ? users!.count : 0
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return userVOs?.count ?? 0
     }
     
-    // cell contents
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("UserListCell", forIndexPath: indexPath) 
-        cell.textLabel?.text = users![indexPath.row].givenName
+    // cell contents for UserList
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserListCell", for: indexPath as IndexPath)
+        cell.textLabel?.text = userVOs?[indexPath.row].givenName
         return cell
     }
     
-    var delegate: UserListDelegate? {
-        get { return _delegate }
-        set { _delegate = newValue }
+    // delete user from the tableView and model
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            delegate?.delete(userVOs![indexPath.row])
+            userVOs?.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+        }
     }
+
 }
