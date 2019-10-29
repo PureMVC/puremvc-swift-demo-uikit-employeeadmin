@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "PureMVC",
+        "repositoryURL": "https://github.com/PureMVC/puremvc-swift-multicore-framework",
+        "state": {
+          "branch": null,
+          "revision": "e08dcd23008342dd92f069eb2de8c28a37cbaec2",
+          "version": "1.3.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

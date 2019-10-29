@@ -27,14 +27,14 @@ class ApplicationFacade: Facade {
     /**
     Singleton Factory Method
     */
-    class func getInstance() -> ApplicationFacade {
-        return super.getInstance { ApplicationFacade() } as! ApplicationFacade
+    class func getInstance(key: String) -> ApplicationFacade {
+        return super.getInstance(key) { ApplicationFacade(key: key) } as! ApplicationFacade
     }
     
     /**
     Start the application
     */
-    func startup(_ appDelegate: UIApplicationDelegate) {
+    func startup(_ appDelegate: AppDelegate) {
         sendNotification(ApplicationFacade.STARTUP, body: appDelegate)
     }
     

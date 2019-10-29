@@ -54,7 +54,7 @@ class RoleProxy: Proxy {
     // get a users roles
     func getUserRoles(_ username: String) -> [RoleEnum] {
         var userRoles = [RoleEnum]()
-        var roles = data as! [RoleVO]
+        let roles = data as! [RoleVO]
         for (index, element) in roles.enumerated() {
             if (element.username == username) {
                 userRoles = roles[index].roles

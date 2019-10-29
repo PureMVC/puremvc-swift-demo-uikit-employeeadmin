@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A871EC4B2367BA210096FB51 /* PureMVC in Frameworks */ = {isa = PBXBuildFile; productRef = A871EC4A2367BA210096FB51 /* PureMVC */; };
 		A876423522549E62002FB773 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876423422549E62002FB773 /* AppDelegate.swift */; };
 		A876423A22549E62002FB773 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A876423822549E62002FB773 /* Main.storyboard */; };
 		A876423C22549E63002FB773 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A876423B22549E63002FB773 /* Assets.xcassets */; };
@@ -29,7 +30,6 @@
 		A876428D22549EE2002FB773 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427B22549EE2002FB773 /* UserRole.swift */; };
 		A876428E22549EE2002FB773 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427C22549EE2002FB773 /* UserList.swift */; };
 		A876428F22549EE2002FB773 /* UserForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427D22549EE2002FB773 /* UserForm.swift */; };
-		A876429422549FBA002FB773 /* PureMVC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A876429322549FBA002FB773 /* PureMVC.framework */; };
 		A876429622549FDE002FB773 /* EmployeeAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876429522549FDE002FB773 /* EmployeeAdmin.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,7 +79,6 @@
 		A876427B22549EE2002FB773 /* UserRole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
 		A876427C22549EE2002FB773 /* UserList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		A876427D22549EE2002FB773 /* UserForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserForm.swift; sourceTree = "<group>"; };
-		A876429322549FBA002FB773 /* PureMVC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PureMVC.framework; sourceTree = "<group>"; };
 		A876429522549FDE002FB773 /* EmployeeAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeAdmin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A876429422549FBA002FB773 /* PureMVC.framework in Frameworks */,
+				A871EC4B2367BA210096FB51 /* PureMVC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,7 +115,6 @@
 				A876424822549E63002FB773 /* EmployeeAdminTests */,
 				A876425322549E63002FB773 /* EmployeeAdminUITests */,
 				A876423222549E62002FB773 /* Products */,
-				A876429222549FBA002FB773 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -273,14 +271,6 @@
 			path = components;
 			sourceTree = "<group>";
 		};
-		A876429222549FBA002FB773 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				A876429322549FBA002FB773 /* PureMVC.framework */,
-			);
-			path = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -297,6 +287,9 @@
 			dependencies = (
 			);
 			name = EmployeeAdmin;
+			packageProductDependencies = (
+				A871EC4A2367BA210096FB51 /* PureMVC */,
+			);
 			productName = EmployeeAdmin;
 			productReference = A876423122549E62002FB773 /* EmployeeAdmin.app */;
 			productType = "com.apple.product-type.application";
@@ -369,6 +362,9 @@
 				Base,
 			);
 			mainGroup = A876422822549E62002FB773;
+			packageReferences = (
+				A871EC492367BA210096FB51 /* XCRemoteSwiftPackageReference "puremvc-swift-multicore-framework" */,
+			);
 			productRefGroup = A876423222549E62002FB773 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -605,15 +601,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = EmployeeAdmin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-					"$(PROJECT_DIR)/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.puremvc.EmployeeAdmin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -627,15 +619,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = EmployeeAdmin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-					"$(PROJECT_DIR)/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.puremvc.EmployeeAdmin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -762,6 +750,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A871EC492367BA210096FB51 /* XCRemoteSwiftPackageReference "puremvc-swift-multicore-framework" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PureMVC/puremvc-swift-multicore-framework";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A871EC4A2367BA210096FB51 /* PureMVC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A871EC492367BA210096FB51 /* XCRemoteSwiftPackageReference "puremvc-swift-multicore-framework" */;
+			productName = PureMVC;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A876422922549E62002FB773 /* Project object */;
 }

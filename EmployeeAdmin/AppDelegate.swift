@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        ApplicationFacade.getInstance().startup(self)
+        ApplicationFacade.getInstance(key: "EmployeeAdmin").startup(self)
         
         return true
     }
