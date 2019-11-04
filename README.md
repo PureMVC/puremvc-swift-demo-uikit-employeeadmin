@@ -13,7 +13,7 @@ This demo illustrates techniques for performing routine maintenance operations i
 ![PureMVC SWIFT Demo: Employee Admin](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Swift-EmployeeAdmin.png)
 
 ## Status
-Production - [Version 1.2](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/blob/master/VERSION)
+Production - [Version 1.3](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/blob/master/VERSION)
 
 ## License
 * PureMVC Swift Demo - Employee Admin - Copyright © 2015-2019 [Saad Shams](https://www.linkedin.com/in/muizz/)
