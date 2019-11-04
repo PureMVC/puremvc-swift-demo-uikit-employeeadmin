@@ -20,6 +20,16 @@ class UserList: UITableViewController, UserFormDelegate {
     weak var delegate: UserListDelegate?
     
     var userVOs: [UserVO]?
+
+    override func viewDidLoad() {
+        (UIApplication.shared.delegate as! AppDelegate).registerView(view: self);
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if let users = userVOs, tableView.numberOfRows(inSection: 0) != users.count {
+            tableView.insertRows(at: [IndexPath(row: users.count-1, section: 0)], with: UITableView.RowAnimation.automatic)
+        }
+    }
     
     // show details of the user
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -42,10 +52,7 @@ class UserList: UITableViewController, UserFormDelegate {
     // add user and roles
     func add(_ userVO: UserVO, roleVO: RoleVO) {
         delegate?.add(userVO, roleVO: roleVO)
-        userVOs?.append(userVO)
-        if let users = userVOs {
-            tableView.insertRows(at: [IndexPath(row: users.count-1, section: 0)], with: UITableView.RowAnimation.automatic)
-        }
+        userVOs?.append(userVO) // viewDidAppear
     }
     
     // update user and roles

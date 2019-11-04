@@ -7,6 +7,7 @@
 //
 
 import PureMVC
+import UIKit
 
 class ApplicationFacade: Facade {
     
@@ -15,6 +16,8 @@ class ApplicationFacade: Facade {
     
     static var DELETE_USER = "deleteUser"
     
+    static var REGISTER = "register"
+    
     /**
     Register Commands with the Controller
     */
@@ -22,6 +25,7 @@ class ApplicationFacade: Facade {
         super.initializeController()
         registerCommand(ApplicationFacade.STARTUP) { StartupCommand() }
         registerCommand(ApplicationFacade.DELETE_USER) { DeleteUserCommand() }
+        registerCommand(ApplicationFacade.REGISTER) { RegisterComand() }
     }
     
     /**
@@ -29,6 +33,10 @@ class ApplicationFacade: Facade {
     */
     class func getInstance(key: String) -> ApplicationFacade {
         return super.getInstance(key) { ApplicationFacade(key: key) } as! ApplicationFacade
+    }
+    
+    func registerView(view: UIResponder) {
+        sendNotification(ApplicationFacade.REGISTER, body: view)
     }
     
     /**

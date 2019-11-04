@@ -18,9 +18,8 @@ class PrepViewCommand: SimpleCommand {
     notification.
     */
     override func execute(_ notification: INotification) {
-        if let appDelegate = notification.body as? AppDelegate,
-            let employeeAdmin = appDelegate.window?.rootViewController as? EmployeeAdmin {
-            facade.registerMediator(EmployeeAdminMediator(viewComponent: employeeAdmin))
+        if let appDelegate = notification.body as? AppDelegate {
+            facade.registerMediator(ApplicationMediator(viewComponent: appDelegate))
         }
     }
     

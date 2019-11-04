@@ -26,11 +26,11 @@
 		A876428922549EE2002FB773 /* UserProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427522549EE2002FB773 /* UserProxy.swift */; };
 		A876428A22549EE2002FB773 /* RoleProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427622549EE2002FB773 /* RoleProxy.swift */; };
 		A876428B22549EE2002FB773 /* UserListMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427822549EE2002FB773 /* UserListMediator.swift */; };
-		A876428C22549EE2002FB773 /* EmployeeAdminMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427922549EE2002FB773 /* EmployeeAdminMediator.swift */; };
 		A876428D22549EE2002FB773 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427B22549EE2002FB773 /* UserRole.swift */; };
 		A876428E22549EE2002FB773 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427C22549EE2002FB773 /* UserList.swift */; };
 		A876428F22549EE2002FB773 /* UserForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427D22549EE2002FB773 /* UserForm.swift */; };
-		A876429622549FDE002FB773 /* EmployeeAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876429522549FDE002FB773 /* EmployeeAdmin.swift */; };
+		A8ADFF902370D04C0010C220 /* RegisterCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ADFF8F2370D04C0010C220 /* RegisterCommand.swift */; };
+		A8ADFF922370DBB70010C220 /* ApplicationMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ADFF912370DBB70010C220 /* ApplicationMediator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,11 +75,11 @@
 		A876427522549EE2002FB773 /* UserProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxy.swift; sourceTree = "<group>"; };
 		A876427622549EE2002FB773 /* RoleProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleProxy.swift; sourceTree = "<group>"; };
 		A876427822549EE2002FB773 /* UserListMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListMediator.swift; sourceTree = "<group>"; };
-		A876427922549EE2002FB773 /* EmployeeAdminMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeAdminMediator.swift; sourceTree = "<group>"; };
 		A876427B22549EE2002FB773 /* UserRole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
 		A876427C22549EE2002FB773 /* UserList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		A876427D22549EE2002FB773 /* UserForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserForm.swift; sourceTree = "<group>"; };
-		A876429522549FDE002FB773 /* EmployeeAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeAdmin.swift; sourceTree = "<group>"; };
+		A8ADFF8F2370D04C0010C220 /* RegisterCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCommand.swift; sourceTree = "<group>"; };
+		A8ADFF912370DBB70010C220 /* ApplicationMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMediator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,8 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				A876426222549EE2002FB773 /* org */,
-				A876423422549E62002FB773 /* AppDelegate.swift */,
-				A876429522549FDE002FB773 /* EmployeeAdmin.swift */,
 				A876423822549E62002FB773 /* Main.storyboard */,
 				A876423B22549E63002FB773 /* Assets.xcassets */,
 				A876423D22549E63002FB773 /* LaunchScreen.storyboard */,
@@ -203,10 +201,11 @@
 		A876426722549EE2002FB773 /* employeeadmin */ = {
 			isa = PBXGroup;
 			children = (
-				A876426D22549EE2002FB773 /* ApplicationFacade.swift */,
 				A876426822549EE2002FB773 /* controller */,
 				A876426E22549EE2002FB773 /* model */,
 				A876427722549EE2002FB773 /* view */,
+				A876426D22549EE2002FB773 /* ApplicationFacade.swift */,
+				A876423422549E62002FB773 /* AppDelegate.swift */,
 			);
 			path = employeeadmin;
 			sourceTree = "<group>";
@@ -218,6 +217,7 @@
 				A876426C22549EE2002FB773 /* PrepModelCommand.swift */,
 				A876426B22549EE2002FB773 /* PrepViewCommand.swift */,
 				A876426922549EE2002FB773 /* DeleteUserCommand.swift */,
+				A8ADFF8F2370D04C0010C220 /* RegisterCommand.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -255,7 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				A876427A22549EE2002FB773 /* components */,
-				A876427922549EE2002FB773 /* EmployeeAdminMediator.swift */,
+				A8ADFF912370DBB70010C220 /* ApplicationMediator.swift */,
 				A876427822549EE2002FB773 /* UserListMediator.swift */,
 			);
 			path = view;
@@ -409,15 +409,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A876428322549EE2002FB773 /* PrepModelCommand.swift in Sources */,
+				A8ADFF902370D04C0010C220 /* RegisterCommand.swift in Sources */,
 				A876428E22549EE2002FB773 /* UserList.swift in Sources */,
 				A876428A22549EE2002FB773 /* RoleProxy.swift in Sources */,
 				A876428822549EE2002FB773 /* DeptEnum.swift in Sources */,
 				A876428022549EE2002FB773 /* DeleteUserCommand.swift in Sources */,
 				A876428122549EE2002FB773 /* StartupCommand.swift in Sources */,
-				A876429622549FDE002FB773 /* EmployeeAdmin.swift in Sources */,
-				A876428C22549EE2002FB773 /* EmployeeAdminMediator.swift in Sources */,
 				A876428422549EE2002FB773 /* ApplicationFacade.swift in Sources */,
 				A876428222549EE2002FB773 /* PrepViewCommand.swift in Sources */,
+				A8ADFF922370DBB70010C220 /* ApplicationMediator.swift in Sources */,
 				A876428522549EE2002FB773 /* RoleVO.swift in Sources */,
 				A876428D22549EE2002FB773 /* UserRole.swift in Sources */,
 				A876428F22549EE2002FB773 /* UserForm.swift in Sources */,
