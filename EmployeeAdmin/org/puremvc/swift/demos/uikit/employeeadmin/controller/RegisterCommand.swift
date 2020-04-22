@@ -2,18 +2,24 @@
 //  RegisterCommand.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2020 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
 import PureMVC
+import UIKit
 
 class RegisterComand: SimpleCommand {
     
     override func execute(_ notification: INotification) {
         
-        if let userList = notification.body as? UserList {
-            facade.registerMediator(UserListMediator(viewComponent: userList))
+        if let viewComponent = notification.body as? UIViewController {
+            
+            if(facade.hasMediator(EmployeeAdminMediator.NAME + viewComponent.title!)) {
+                _ = facade.removeMediator(EmployeeAdminMediator.NAME + viewComponent.title!)
+            }
+            
+            facade.registerMediator(EmployeeAdminMediator(viewComponent: viewComponent))
         }
         
     }

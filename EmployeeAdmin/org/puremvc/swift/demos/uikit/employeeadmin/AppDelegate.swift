@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  EmployeeAdmin
 //
-//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2020 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
@@ -13,17 +13,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    static var facade: ApplicationFacade = ApplicationFacade.getInstance(key: "EmployeeAdmin")
+    var facade: ApplicationFacade = ApplicationFacade.getInstance(key: "EmployeeAdmin")
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-        AppDelegate.facade.startup(self)
+        facade.startup(self)
         return true
     }
     
     func registerView(view: UIResponder) {
-        AppDelegate.facade.registerView(view: view)
+        facade.registerView(view: view)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

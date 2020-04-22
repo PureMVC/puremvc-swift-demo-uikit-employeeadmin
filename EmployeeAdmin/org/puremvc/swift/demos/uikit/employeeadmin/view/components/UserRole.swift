@@ -2,22 +2,59 @@
 //  UserRole.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2020 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
 import UIKit
 
 protocol UserRoleDelegate: class {
-    func addRole(_ role: RoleEnum)
-    func removeRole(_ role: RoleEnum)
+    func getUserRoles(username: String) -> [RoleEnum]?
+}
+
+protocol UserRoleResponder: class {
+    func result(_ roles: [RoleEnum])
 }
 
 class UserRole: UITableViewController {
     
-    weak var delegate: UserRoleDelegate?
+    var username: String?
     
     var roles: [RoleEnum]?
+    
+    weak var responder: UserRoleResponder?
+    
+    weak var delegate: UserRoleDelegate?
+    
+    override func viewDidLoad() {
+        (UIApplication.shared.delegate as! AppDelegate).registerView(view: self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if roles == nil, let username = username { // roles were not passed, request roles from delegate
+            roles = delegate?.getUserRoles(username: username)
+        }
+        if roles == nil {
+            roles = [RoleEnum]()
+        }
+    }
+    
+    // MARK: - UITableViewDelegate
+    
+    // cell selected
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath as IndexPath)
+        
+        if cell!.accessoryType == UITableViewCell.AccessoryType.none {
+            cell!.accessoryType = UITableViewCell.AccessoryType.checkmark
+            roles?.append(RoleEnum.list[indexPath.row])
+            responder?.result(roles!)
+        } else {
+            cell!.accessoryType = UITableViewCell.AccessoryType.none
+            roles = roles?.filter() { $0 as AnyObject !== RoleEnum.list[indexPath.row] as AnyObject}
+            responder?.result(roles!)
+        }
+    }
     
     // cell content initialize - checkmark/none
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -33,19 +70,6 @@ class UserRole: UITableViewController {
         }
         
         return cell
-    }
-    
-    // cell selected
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath as IndexPath)
-        
-        if cell!.accessoryType == UITableViewCell.AccessoryType.none {
-            cell!.accessoryType = UITableViewCell.AccessoryType.checkmark
-            delegate?.addRole(RoleEnum.list[indexPath.row])
-        } else {
-            cell!.accessoryType = UITableViewCell.AccessoryType.none
-            delegate?.removeRole(RoleEnum.list[indexPath.row])
-        }
     }
     
     // number of rows

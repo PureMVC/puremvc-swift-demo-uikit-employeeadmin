@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cpK-zt-zHN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cpK-zt-zHN">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -45,10 +45,10 @@
             </objects>
             <point key="canvasLocation" x="3814" y="35"/>
         </scene>
-        <!--Profile-->
+        <!--UserForm-->
         <scene sceneID="gaF-e6-yX2">
             <objects>
-                <viewController storyboardIdentifier="UserForm" id="0g0-6m-0wk" customClass="UserForm" customModule="EmployeeAdmin" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserForm" title="UserForm" id="0g0-6m-0wk" customClass="UserForm" customModule="EmployeeAdmin" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1jW-cS-nYS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -170,8 +170,8 @@
                         <outlet property="confirmPassword" destination="I87-NB-G1a" id="SS6-4p-6Rh"/>
                         <outlet property="department" destination="Wdw-Zm-9MT" id="6MM-dK-kWT"/>
                         <outlet property="email" destination="SOT-mA-1cU" id="gJ0-vH-qVJ"/>
-                        <outlet property="fname" destination="b0l-ig-MTZ" id="JgS-SM-1E4"/>
-                        <outlet property="lname" destination="sVc-fQ-55F" id="Ejl-dC-zFy"/>
+                        <outlet property="first" destination="b0l-ig-MTZ" id="Pmf-se-RTm"/>
+                        <outlet property="last" destination="sVc-fQ-55F" id="FZw-gF-weX"/>
                         <outlet property="password" destination="kue-qd-Ye7" id="EkF-Mb-nAQ"/>
                         <outlet property="userRoles" destination="3B1-uL-AWl" id="KWY-gC-6WK"/>
                         <outlet property="username" destination="7Ay-SF-gb8" id="u71-1K-nSN"/>
@@ -182,10 +182,10 @@
             </objects>
             <point key="canvasLocation" x="4611.594202898551" y="34.821428571428569"/>
         </scene>
-        <!--User Role-->
+        <!--UserRole-->
         <scene sceneID="bWh-IT-2OE">
             <objects>
-                <tableViewController storyboardIdentifier="UserRole" id="d2K-ye-mz8" customClass="UserRole" customModule="EmployeeAdmin" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="UserRole" title="UserRole" id="d2K-ye-mz8" customClass="UserRole" customModule="EmployeeAdmin" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZXE-3J-CE5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

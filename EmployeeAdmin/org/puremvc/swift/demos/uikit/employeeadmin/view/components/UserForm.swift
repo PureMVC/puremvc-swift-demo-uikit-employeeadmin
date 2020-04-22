@@ -2,33 +2,37 @@
 //  UserForm.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2020 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
 import UIKit
 
 protocol UserFormDelegate : class {
-    func add(_ userVO: UserVO, roleVO: RoleVO)
-    func update(_ userVO: UserVO, roleVO: RoleVO)
+    func save(_ userVO: UserVO, roleVO: RoleVO)
+    func update(_ userVO: UserVO, roleVO: RoleVO?)
 }
 
-class UserForm: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UserRoleDelegate {
-    
-    weak var delegate: UserFormDelegate?
+class UserForm: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UserRoleResponder {
     
     var userVO: UserVO?
     
-    var roleVO: RoleVO? = RoleVO()
+    var roles: [RoleEnum]?
+    
+    weak var delegate: UserFormDelegate?
 
-    @IBOutlet weak var fname: UITextField!
-    @IBOutlet weak var lname: UITextField!
+    @IBOutlet weak var first: UITextField!
+    @IBOutlet weak var last: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var department: UIPickerView!
     @IBOutlet weak var userRoles: UITableView!
+    
+    override func viewDidLoad() {
+        (UIApplication.shared.delegate as! AppDelegate).registerView(view: self)
+    }
     
     // populate user details
     override func viewWillAppear(_ animated: Bool) {
@@ -37,8 +41,8 @@ class UserForm: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         userRoles.isScrollEnabled = false
         
         if let userVO = userVO {
-            fname.text = userVO.fname
-            lname.text = userVO.lname
+            first.text = userVO.first
+            last.text = userVO.last
             email.text = userVO.email
             username.text = userVO.username
             username.isEnabled = false
@@ -53,57 +57,32 @@ class UserForm: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         }
     }
     
-    // segue to User Roles
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let identifier = segue.identifier, identifier == "segueToUserRoles" {
-            if let userRole = segue.destination as? UserRole { // save temporary if user changed any values
-                userVO?.fname = fname.text ?? ""
-                userVO?.lname = lname.text ?? ""
-                userVO?.email = email.text ?? ""
-                userVO?.username = username.text ?? ""
-                userVO?.password = password.text ?? ""
-                userVO?.department = DeptEnum.comboList[department.selectedRow(inComponent: 0)]
-                userRole.roles = roleVO?.roles
-                userRole.delegate = self
-            }
-        }
-    }
-    
-    // UserRoleDelegate - add role to the user
-    func addRole(_ role: RoleEnum) {
-        roleVO?.roles.append(role)
-    }
-    
-    // UserRoleDelegate - remove role from the user
-    func removeRole(_ role: RoleEnum) {
-        if let index = roleVO?.roles.firstIndex(of: role) {
-            roleVO?.roles.remove(at: index)
-        }
-    }
-    
     // save or update
-    @IBAction func save(_ sender: Any) { // save rules
-        if userVO == nil {
-            userVO = UserVO()
-            userVO?.username = username.text!
-            roleVO?.username = username.text!
-        }
-        
-        if let userVO = userVO {
-            userVO.fname = fname.text ?? ""
-            userVO.lname = lname.text ?? ""
+    @IBAction func save(_ sender: Any) {
+        if userVO == nil { // new user
+            userVO = UserVO(username: username.text, first: first?.text, last: last.text, email: email.text, password: password.text, department: DeptEnum.comboList[department.selectedRow(inComponent: 0)])
+        } else if let userVO = userVO { // existing user
+            userVO.first = first.text ?? ""
+            userVO.last = last.text ?? ""
             userVO.email = email.text ?? ""
             userVO.password = password.text ?? ""
             userVO.department = DeptEnum.comboList[department.selectedRow(inComponent: 0)]
-            
-            if userVO.password == confirmPassword.text && userVO.isValid == true {
-                username.isEnabled ? delegate?.add(userVO, roleVO: roleVO!) : delegate?.update(userVO, roleVO: roleVO!)
-                self.navigationController?.popToRootViewController(animated: true)
+        }
+        
+        if userVO!.password == confirmPassword.text && userVO!.isValid == true { // validation
+            if username.isEnabled {
+                let roleVO: RoleVO = roles != nil ? RoleVO(username: userVO!.username, roles: roles!) : RoleVO(username: userVO!.username, roles: [RoleEnum]())
+                delegate?.save(userVO!, roleVO: roleVO)
             } else {
-                let alertController = UIAlertController(title: "Error", message:"Invalid Form Data.", preferredStyle: UIAlertController.Style.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alertController, animated: true, completion: nil)
+                let roleVO: RoleVO? = roles != nil ? RoleVO(username: userVO!.username, roles: roles!) : nil // user roles may not be updated
+                delegate?.update(userVO!, roleVO: roleVO)
             }
+            
+            self.navigationController?.popToRootViewController(animated: true)
+        } else {
+            let alertController = UIAlertController(title: "Error", message:"Invalid Form Data.", preferredStyle: UIAlertController.Style.alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
         }
     }
 
@@ -112,6 +91,26 @@ class UserForm: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         performSegue(withIdentifier: "segueToUserRoles", sender: userVO)
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    // segue to User Roles
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier, identifier == "segueToUserRoles" {
+            if let userRole = segue.destination as? UserRole {
+                userRole.username = userVO?.username
+                userRole.roles = roles
+                userRole.responder = self
+            }
+        }
+    }
+    
+    // MARK: - UserRoleResponder
+    
+    // add role to the user
+    func result(_ roles: [RoleEnum]) {
+        self.roles = roles
+    }
+    
+    // MARK: - UITableViewDelegate
     
     // UserRoles number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -124,6 +123,8 @@ class UserForm: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         cell.textLabel?.text = "User Roles"
         return cell
     }
+    
+    // MARK: - UIPickerViewDelegate
     
     // UIPickerViewDelegate
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

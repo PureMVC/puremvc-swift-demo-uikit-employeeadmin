@@ -2,34 +2,34 @@
 //  UserVO.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2020 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
 class UserVO {
     
     var username: String
-    var fname: String
-    var lname: String
+    var first: String
+    var last: String
     var email: String
     var password: String
     var department: DeptEnum
     
-    init(username: String?=nil, fname:String?=nil, lname:String?=nil, email:String?=nil, password:String?=nil, department:DeptEnum?=nil) {
+    init(username: String?, first:String?, last:String?, email:String?, password:String?, department:DeptEnum?) {
         self.username = username ?? ""
-        self.fname = fname ?? ""
-        self.lname = lname ?? ""
+        self.first = first ?? ""
+        self.last = last ?? ""
         self.email = email ?? ""
         self.password = password ?? ""
-        self.department = department ?? DeptEnum.NONE_SELECTED
+        self.department = department ?? .NONE_SELECTED
     }
     
     var isValid:Bool {
-        return username != "" && password != "" && !department.equals(DeptEnum.NONE_SELECTED)
+        return username != "" && first != "" && last != "" && email != "" && password != "" && !department.equals(.NONE_SELECTED)
     }
     
     var givenName: String {
-        return lname + ", " + fname
+        return last + ", " + first
     }
     
 }

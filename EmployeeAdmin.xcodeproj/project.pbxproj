@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A84A8F83244F6F9D0063D5BE /* EmployeeAdminMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84A8F82244F6F9D0063D5BE /* EmployeeAdminMediator.swift */; };
+		A84A8F8C244F6FD10063D5BE /* UserProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84A8F8B244F6FD10063D5BE /* UserProxyTest.swift */; };
+		A84A8F8E244F72D60063D5BE /* RoleProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84A8F8D244F72D60063D5BE /* RoleProxyTest.swift */; };
 		A871EC4B2367BA210096FB51 /* PureMVC in Frameworks */ = {isa = PBXBuildFile; productRef = A871EC4A2367BA210096FB51 /* PureMVC */; };
 		A876423522549E62002FB773 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876423422549E62002FB773 /* AppDelegate.swift */; };
 		A876423A22549E62002FB773 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A876423822549E62002FB773 /* Main.storyboard */; };
 		A876423C22549E63002FB773 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A876423B22549E63002FB773 /* Assets.xcassets */; };
 		A876423F22549E63002FB773 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A876423D22549E63002FB773 /* LaunchScreen.storyboard */; };
-		A876424A22549E63002FB773 /* EmployeeAdminTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876424922549E63002FB773 /* EmployeeAdminTests.swift */; };
 		A876425522549E63002FB773 /* EmployeeAdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876425422549E63002FB773 /* EmployeeAdminUITests.swift */; };
-		A876428022549EE2002FB773 /* DeleteUserCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876426922549EE2002FB773 /* DeleteUserCommand.swift */; };
 		A876428122549EE2002FB773 /* StartupCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876426A22549EE2002FB773 /* StartupCommand.swift */; };
 		A876428222549EE2002FB773 /* PrepViewCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876426B22549EE2002FB773 /* PrepViewCommand.swift */; };
 		A876428322549EE2002FB773 /* PrepModelCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876426C22549EE2002FB773 /* PrepModelCommand.swift */; };
@@ -25,7 +26,6 @@
 		A876428822549EE2002FB773 /* DeptEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427422549EE2002FB773 /* DeptEnum.swift */; };
 		A876428922549EE2002FB773 /* UserProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427522549EE2002FB773 /* UserProxy.swift */; };
 		A876428A22549EE2002FB773 /* RoleProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427622549EE2002FB773 /* RoleProxy.swift */; };
-		A876428B22549EE2002FB773 /* UserListMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427822549EE2002FB773 /* UserListMediator.swift */; };
 		A876428D22549EE2002FB773 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427B22549EE2002FB773 /* UserRole.swift */; };
 		A876428E22549EE2002FB773 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427C22549EE2002FB773 /* UserList.swift */; };
 		A876428F22549EE2002FB773 /* UserForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427D22549EE2002FB773 /* UserForm.swift */; };
@@ -51,6 +51,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A84A8F82244F6F9D0063D5BE /* EmployeeAdminMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeAdminMediator.swift; sourceTree = "<group>"; };
+		A84A8F8B244F6FD10063D5BE /* UserProxyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxyTest.swift; sourceTree = "<group>"; };
+		A84A8F8D244F72D60063D5BE /* RoleProxyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleProxyTest.swift; sourceTree = "<group>"; };
 		A876423122549E62002FB773 /* EmployeeAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmployeeAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A876423422549E62002FB773 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A876423922549E62002FB773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,12 +61,10 @@
 		A876423E22549E63002FB773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A876424022549E63002FB773 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A876424522549E63002FB773 /* EmployeeAdminTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmployeeAdminTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A876424922549E63002FB773 /* EmployeeAdminTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeAdminTests.swift; sourceTree = "<group>"; };
 		A876424B22549E63002FB773 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A876425022549E63002FB773 /* EmployeeAdminUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmployeeAdminUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A876425422549E63002FB773 /* EmployeeAdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeAdminUITests.swift; sourceTree = "<group>"; };
 		A876425622549E63002FB773 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A876426922549EE2002FB773 /* DeleteUserCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteUserCommand.swift; sourceTree = "<group>"; };
 		A876426A22549EE2002FB773 /* StartupCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupCommand.swift; sourceTree = "<group>"; };
 		A876426B22549EE2002FB773 /* PrepViewCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepViewCommand.swift; sourceTree = "<group>"; };
 		A876426C22549EE2002FB773 /* PrepModelCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepModelCommand.swift; sourceTree = "<group>"; };
@@ -74,7 +75,6 @@
 		A876427422549EE2002FB773 /* DeptEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeptEnum.swift; sourceTree = "<group>"; };
 		A876427522549EE2002FB773 /* UserProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxy.swift; sourceTree = "<group>"; };
 		A876427622549EE2002FB773 /* RoleProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleProxy.swift; sourceTree = "<group>"; };
-		A876427822549EE2002FB773 /* UserListMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListMediator.swift; sourceTree = "<group>"; };
 		A876427B22549EE2002FB773 /* UserRole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
 		A876427C22549EE2002FB773 /* UserList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		A876427D22549EE2002FB773 /* UserForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserForm.swift; sourceTree = "<group>"; };
@@ -108,6 +108,63 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A84A8F84244F6FD10063D5BE /* org */ = {
+			isa = PBXGroup;
+			children = (
+				A84A8F85244F6FD10063D5BE /* puremvc */,
+			);
+			path = org;
+			sourceTree = "<group>";
+		};
+		A84A8F85244F6FD10063D5BE /* puremvc */ = {
+			isa = PBXGroup;
+			children = (
+				A84A8F86244F6FD10063D5BE /* swift */,
+			);
+			path = puremvc;
+			sourceTree = "<group>";
+		};
+		A84A8F86244F6FD10063D5BE /* swift */ = {
+			isa = PBXGroup;
+			children = (
+				A84A8F87244F6FD10063D5BE /* demos */,
+			);
+			path = swift;
+			sourceTree = "<group>";
+		};
+		A84A8F87244F6FD10063D5BE /* demos */ = {
+			isa = PBXGroup;
+			children = (
+				A84A8F88244F6FD10063D5BE /* uikit */,
+			);
+			path = demos;
+			sourceTree = "<group>";
+		};
+		A84A8F88244F6FD10063D5BE /* uikit */ = {
+			isa = PBXGroup;
+			children = (
+				A84A8F89244F6FD10063D5BE /* employeeadmin */,
+			);
+			path = uikit;
+			sourceTree = "<group>";
+		};
+		A84A8F89244F6FD10063D5BE /* employeeadmin */ = {
+			isa = PBXGroup;
+			children = (
+				A84A8F8A244F6FD10063D5BE /* model */,
+			);
+			path = employeeadmin;
+			sourceTree = "<group>";
+		};
+		A84A8F8A244F6FD10063D5BE /* model */ = {
+			isa = PBXGroup;
+			children = (
+				A84A8F8B244F6FD10063D5BE /* UserProxyTest.swift */,
+				A84A8F8D244F72D60063D5BE /* RoleProxyTest.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
 		A876422822549E62002FB773 = {
 			isa = PBXGroup;
 			children = (
@@ -143,7 +200,7 @@
 		A876424822549E63002FB773 /* EmployeeAdminTests */ = {
 			isa = PBXGroup;
 			children = (
-				A876424922549E63002FB773 /* EmployeeAdminTests.swift */,
+				A84A8F84244F6FD10063D5BE /* org */,
 				A876424B22549E63002FB773 /* Info.plist */,
 			);
 			path = EmployeeAdminTests;
@@ -216,7 +273,6 @@
 				A876426A22549EE2002FB773 /* StartupCommand.swift */,
 				A876426C22549EE2002FB773 /* PrepModelCommand.swift */,
 				A876426B22549EE2002FB773 /* PrepViewCommand.swift */,
-				A876426922549EE2002FB773 /* DeleteUserCommand.swift */,
 				A8ADFF8F2370D04C0010C220 /* RegisterCommand.swift */,
 			);
 			path = controller;
@@ -256,7 +312,7 @@
 			children = (
 				A876427A22549EE2002FB773 /* components */,
 				A8ADFF912370DBB70010C220 /* ApplicationMediator.swift */,
-				A876427822549EE2002FB773 /* UserListMediator.swift */,
+				A84A8F82244F6F9D0063D5BE /* EmployeeAdminMediator.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -413,7 +469,7 @@
 				A876428E22549EE2002FB773 /* UserList.swift in Sources */,
 				A876428A22549EE2002FB773 /* RoleProxy.swift in Sources */,
 				A876428822549EE2002FB773 /* DeptEnum.swift in Sources */,
-				A876428022549EE2002FB773 /* DeleteUserCommand.swift in Sources */,
+				A84A8F83244F6F9D0063D5BE /* EmployeeAdminMediator.swift in Sources */,
 				A876428122549EE2002FB773 /* StartupCommand.swift in Sources */,
 				A876428422549EE2002FB773 /* ApplicationFacade.swift in Sources */,
 				A876428222549EE2002FB773 /* PrepViewCommand.swift in Sources */,
@@ -425,7 +481,6 @@
 				A876428722549EE2002FB773 /* RoleEnum.swift in Sources */,
 				A876423522549E62002FB773 /* AppDelegate.swift in Sources */,
 				A876428922549EE2002FB773 /* UserProxy.swift in Sources */,
-				A876428B22549EE2002FB773 /* UserListMediator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,7 +488,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A876424A22549E63002FB773 /* EmployeeAdminTests.swift in Sources */,
+				A84A8F8E244F72D60063D5BE /* RoleProxyTest.swift in Sources */,
+				A84A8F8C244F6FD10063D5BE /* UserProxyTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -757,7 +813,7 @@
 			repositoryURL = "https://github.com/PureMVC/puremvc-swift-multicore-framework";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.4.0;
+				minimumVersion = 1.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

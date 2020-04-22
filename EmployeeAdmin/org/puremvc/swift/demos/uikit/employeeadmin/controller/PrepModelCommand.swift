@@ -2,7 +2,7 @@
 //  PrepModelCommand.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2020 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
@@ -18,9 +18,9 @@ class PrepModelCommand: SimpleCommand {
         let userProxy = UserProxy()
         
         //Populate it with dummy data
-        userProxy.addItem(UserVO(username: "lstooge", fname: "Larry", lname: "Stooge", email: "larry@stooges.com", password: "ijk456", department: DeptEnum.ACCT))
-        userProxy.addItem(UserVO(username: "cstooge", fname: "Curly", lname: "Stooge", email: "curly@stooges.com", password: "xyz987", department: DeptEnum.SALES))
-        userProxy.addItem(UserVO(username: "mstooge", fname: "Moe", lname: "Stooge", email: "moe@stooges.com", password: "abc123", department: DeptEnum.PLANT))
+        userProxy.addItem(UserVO(username: "lstooge", first: "Larry", last: "Stooge", email: "larry@stooges.com", password: "ijk456", department: .ACCT))
+        userProxy.addItem(UserVO(username: "cstooge", first: "Curly", last: "Stooge", email: "curly@stooges.com", password: "xyz987", department: .SALES))
+        userProxy.addItem(UserVO(username: "mstooge", first: "Moe", last: "Stooge", email: "moe@stooges.com", password: "abc123", department: .PLANT))
         
         // register it
         facade.registerProxy(userProxy)
@@ -29,9 +29,9 @@ class PrepModelCommand: SimpleCommand {
         let roleProxy = RoleProxy()
         
         //Populate it with dummy data 
-        roleProxy.addItem(RoleVO(username: "lstooge", roles: [RoleEnum.PAYROLL, RoleEnum.EMP_BENEFITS]))
-        roleProxy.addItem(RoleVO(username: "cstooge", roles: [RoleEnum.ACCT_PAY, RoleEnum.ACCT_RCV, RoleEnum.GEN_LEDGER]))
-        roleProxy.addItem(RoleVO(username: "mstooge", roles: [RoleEnum.PRODUCTION, RoleEnum.SALES, RoleEnum.SHIPPING]))
+        roleProxy.addItem(RoleVO(username: "lstooge", roles: [.PAYROLL, .EMP_BENEFITS]))
+        roleProxy.addItem(RoleVO(username: "cstooge", roles: [.ACCT_PAY, .ACCT_RCV, .GEN_LEDGER]))
+        roleProxy.addItem(RoleVO(username: "mstooge", roles: [.PRODUCTION, .SALES, .SHIPPING]))
         
         // register it
         facade.registerProxy(roleProxy)

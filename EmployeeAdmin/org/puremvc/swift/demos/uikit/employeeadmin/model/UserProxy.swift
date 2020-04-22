@@ -2,7 +2,7 @@
 //  UserProxy.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2015-2019 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2020 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
@@ -13,13 +13,13 @@ class UserProxy: Proxy {
     override class var NAME: String { return "UserProxy" }
     
     init() {
-        super.init(proxyName: UserProxy.NAME, data: [UserVO]())
+        super.init(name: UserProxy.NAME, data: [UserVO]())
     }
     
     // add an item to the data
-    func addItem(_ item: Any) {
+    func addItem(_ item: UserVO) {
         var users = data as! [UserVO]
-        users.append(item as! UserVO)
+        users.append(item)
         data = users
     }
     
@@ -37,11 +37,10 @@ class UserProxy: Proxy {
     }
     
     // delete an item in the data
-    func deleteItem(_ item: Any) {
-        let user = item as! UserVO
+    func deleteItem(_ username: String) {
         var users = data as! [UserVO]
         for (index, element) in users.enumerated() {
-            if (element.username == user.username) {
+            if (element.username == username) {
                 users.remove(at: index)
                 data = users
                 break
