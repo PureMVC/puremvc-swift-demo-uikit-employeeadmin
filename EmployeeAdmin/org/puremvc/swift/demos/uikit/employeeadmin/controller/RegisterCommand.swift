@@ -13,6 +13,10 @@ class RegisterComand: SimpleCommand {
     
     override func execute(_ notification: INotification) {
         
+        if let viewComponent = notification.body as? SceneDelegate {
+            facade.registerMediator(SceneMediator(viewComponent: viewComponent))
+        }
+        
         if let viewComponent = notification.body as? UIViewController {
             
             if(facade.hasMediator(EmployeeAdminMediator.NAME + viewComponent.title!)) {

@@ -7,98 +7,102 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A84A8F83244F6F9D0063D5BE /* EmployeeAdminMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84A8F82244F6F9D0063D5BE /* EmployeeAdminMediator.swift */; };
-		A84A8F8C244F6FD10063D5BE /* UserProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84A8F8B244F6FD10063D5BE /* UserProxyTest.swift */; };
-		A84A8F8E244F72D60063D5BE /* RoleProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84A8F8D244F72D60063D5BE /* RoleProxyTest.swift */; };
-		A871EC4B2367BA210096FB51 /* PureMVC in Frameworks */ = {isa = PBXBuildFile; productRef = A871EC4A2367BA210096FB51 /* PureMVC */; };
-		A876423522549E62002FB773 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876423422549E62002FB773 /* AppDelegate.swift */; };
-		A876423A22549E62002FB773 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A876423822549E62002FB773 /* Main.storyboard */; };
-		A876423C22549E63002FB773 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A876423B22549E63002FB773 /* Assets.xcassets */; };
-		A876423F22549E63002FB773 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A876423D22549E63002FB773 /* LaunchScreen.storyboard */; };
-		A876425522549E63002FB773 /* EmployeeAdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876425422549E63002FB773 /* EmployeeAdminUITests.swift */; };
-		A876428122549EE2002FB773 /* StartupCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876426A22549EE2002FB773 /* StartupCommand.swift */; };
-		A876428222549EE2002FB773 /* PrepViewCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876426B22549EE2002FB773 /* PrepViewCommand.swift */; };
-		A876428322549EE2002FB773 /* PrepModelCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876426C22549EE2002FB773 /* PrepModelCommand.swift */; };
-		A876428422549EE2002FB773 /* ApplicationFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876426D22549EE2002FB773 /* ApplicationFacade.swift */; };
-		A876428522549EE2002FB773 /* RoleVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427022549EE2002FB773 /* RoleVO.swift */; };
-		A876428622549EE2002FB773 /* UserVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427122549EE2002FB773 /* UserVO.swift */; };
-		A876428722549EE2002FB773 /* RoleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427322549EE2002FB773 /* RoleEnum.swift */; };
-		A876428822549EE2002FB773 /* DeptEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427422549EE2002FB773 /* DeptEnum.swift */; };
-		A876428922549EE2002FB773 /* UserProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427522549EE2002FB773 /* UserProxy.swift */; };
-		A876428A22549EE2002FB773 /* RoleProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427622549EE2002FB773 /* RoleProxy.swift */; };
-		A876428D22549EE2002FB773 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427B22549EE2002FB773 /* UserRole.swift */; };
-		A876428E22549EE2002FB773 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427C22549EE2002FB773 /* UserList.swift */; };
-		A876428F22549EE2002FB773 /* UserForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876427D22549EE2002FB773 /* UserForm.swift */; };
-		A8ADFF902370D04C0010C220 /* RegisterCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ADFF8F2370D04C0010C220 /* RegisterCommand.swift */; };
-		A8ADFF922370DBB70010C220 /* ApplicationMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ADFF912370DBB70010C220 /* ApplicationMediator.swift */; };
+		A814B40224537F73002D1415 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A814B40024537F73002D1415 /* Main.storyboard */; };
+		A814B40424537F75002D1415 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A814B40324537F75002D1415 /* Assets.xcassets */; };
+		A814B40724537F75002D1415 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A814B40524537F75002D1415 /* LaunchScreen.storyboard */; };
+		A814B41D24537F75002D1415 /* EmployeeAdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B41C24537F75002D1415 /* EmployeeAdminUITests.swift */; };
+		A814B44724537FA8002D1415 /* StartupCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43124537FA8002D1415 /* StartupCommand.swift */; };
+		A814B44824537FA8002D1415 /* PrepViewCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43224537FA8002D1415 /* PrepViewCommand.swift */; };
+		A814B44924537FA8002D1415 /* PrepModelCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43324537FA8002D1415 /* PrepModelCommand.swift */; };
+		A814B44A24537FA8002D1415 /* RegisterCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43424537FA8002D1415 /* RegisterCommand.swift */; };
+		A814B44B24537FA8002D1415 /* ApplicationFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43524537FA8002D1415 /* ApplicationFacade.swift */; };
+		A814B44C24537FA8002D1415 /* RoleVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43824537FA8002D1415 /* RoleVO.swift */; };
+		A814B44D24537FA8002D1415 /* UserVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43924537FA8002D1415 /* UserVO.swift */; };
+		A814B44E24537FA8002D1415 /* RoleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43B24537FA8002D1415 /* RoleEnum.swift */; };
+		A814B44F24537FA8002D1415 /* DeptEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43C24537FA8002D1415 /* DeptEnum.swift */; };
+		A814B45024537FA8002D1415 /* UserProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43D24537FA8002D1415 /* UserProxy.swift */; };
+		A814B45124537FA8002D1415 /* RoleProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43E24537FA8002D1415 /* RoleProxy.swift */; };
+		A814B45224537FA8002D1415 /* ApplicationMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44024537FA8002D1415 /* ApplicationMediator.swift */; };
+		A814B45324537FA8002D1415 /* EmployeeAdminMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44124537FA8002D1415 /* EmployeeAdminMediator.swift */; };
+		A814B45424537FA8002D1415 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44324537FA8002D1415 /* UserRole.swift */; };
+		A814B45524537FA8002D1415 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44424537FA8002D1415 /* UserList.swift */; };
+		A814B45624537FA8002D1415 /* UserForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44524537FA8002D1415 /* UserForm.swift */; };
+		A814B45724537FA8002D1415 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44624537FA8002D1415 /* AppDelegate.swift */; };
+		A814B45924538060002D1415 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B45824538060002D1415 /* SceneDelegate.swift */; };
+		A814B46324538080002D1415 /* RoleProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46124538080002D1415 /* RoleProxyTest.swift */; };
+		A814B46424538080002D1415 /* UserProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46224538080002D1415 /* UserProxyTest.swift */; };
+		A814B467245380B5002D1415 /* PureMVC in Frameworks */ = {isa = PBXBuildFile; productRef = A814B466245380B5002D1415 /* PureMVC */; };
+		A814B46924538142002D1415 /* SceneMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46824538142002D1415 /* SceneMediator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A876424622549E63002FB773 /* PBXContainerItemProxy */ = {
+		A814B40E24537F75002D1415 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A876422922549E62002FB773 /* Project object */;
+			containerPortal = A814B3EF24537F73002D1415 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A876423022549E62002FB773;
+			remoteGlobalIDString = A814B3F624537F73002D1415;
 			remoteInfo = EmployeeAdmin;
 		};
-		A876425122549E63002FB773 /* PBXContainerItemProxy */ = {
+		A814B41924537F75002D1415 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A876422922549E62002FB773 /* Project object */;
+			containerPortal = A814B3EF24537F73002D1415 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A876423022549E62002FB773;
+			remoteGlobalIDString = A814B3F624537F73002D1415;
 			remoteInfo = EmployeeAdmin;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A84A8F82244F6F9D0063D5BE /* EmployeeAdminMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeAdminMediator.swift; sourceTree = "<group>"; };
-		A84A8F8B244F6FD10063D5BE /* UserProxyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxyTest.swift; sourceTree = "<group>"; };
-		A84A8F8D244F72D60063D5BE /* RoleProxyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleProxyTest.swift; sourceTree = "<group>"; };
-		A876423122549E62002FB773 /* EmployeeAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmployeeAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A876423422549E62002FB773 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A876423922549E62002FB773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A876423B22549E63002FB773 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A876423E22549E63002FB773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A876424022549E63002FB773 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A876424522549E63002FB773 /* EmployeeAdminTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmployeeAdminTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A876424B22549E63002FB773 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A876425022549E63002FB773 /* EmployeeAdminUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmployeeAdminUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A876425422549E63002FB773 /* EmployeeAdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeAdminUITests.swift; sourceTree = "<group>"; };
-		A876425622549E63002FB773 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A876426A22549EE2002FB773 /* StartupCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupCommand.swift; sourceTree = "<group>"; };
-		A876426B22549EE2002FB773 /* PrepViewCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepViewCommand.swift; sourceTree = "<group>"; };
-		A876426C22549EE2002FB773 /* PrepModelCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepModelCommand.swift; sourceTree = "<group>"; };
-		A876426D22549EE2002FB773 /* ApplicationFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationFacade.swift; sourceTree = "<group>"; };
-		A876427022549EE2002FB773 /* RoleVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleVO.swift; sourceTree = "<group>"; };
-		A876427122549EE2002FB773 /* UserVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVO.swift; sourceTree = "<group>"; };
-		A876427322549EE2002FB773 /* RoleEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleEnum.swift; sourceTree = "<group>"; };
-		A876427422549EE2002FB773 /* DeptEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeptEnum.swift; sourceTree = "<group>"; };
-		A876427522549EE2002FB773 /* UserProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxy.swift; sourceTree = "<group>"; };
-		A876427622549EE2002FB773 /* RoleProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleProxy.swift; sourceTree = "<group>"; };
-		A876427B22549EE2002FB773 /* UserRole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
-		A876427C22549EE2002FB773 /* UserList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
-		A876427D22549EE2002FB773 /* UserForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserForm.swift; sourceTree = "<group>"; };
-		A8ADFF8F2370D04C0010C220 /* RegisterCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCommand.swift; sourceTree = "<group>"; };
-		A8ADFF912370DBB70010C220 /* ApplicationMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMediator.swift; sourceTree = "<group>"; };
+		A814B3F724537F73002D1415 /* EmployeeAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmployeeAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A814B40124537F73002D1415 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A814B40324537F75002D1415 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A814B40624537F75002D1415 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A814B40824537F75002D1415 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A814B40D24537F75002D1415 /* EmployeeAdminTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmployeeAdminTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A814B41324537F75002D1415 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A814B41824537F75002D1415 /* EmployeeAdminUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmployeeAdminUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A814B41C24537F75002D1415 /* EmployeeAdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeAdminUITests.swift; sourceTree = "<group>"; };
+		A814B41E24537F75002D1415 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A814B43124537FA8002D1415 /* StartupCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupCommand.swift; sourceTree = "<group>"; };
+		A814B43224537FA8002D1415 /* PrepViewCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepViewCommand.swift; sourceTree = "<group>"; };
+		A814B43324537FA8002D1415 /* PrepModelCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepModelCommand.swift; sourceTree = "<group>"; };
+		A814B43424537FA8002D1415 /* RegisterCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterCommand.swift; sourceTree = "<group>"; };
+		A814B43524537FA8002D1415 /* ApplicationFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationFacade.swift; sourceTree = "<group>"; };
+		A814B43824537FA8002D1415 /* RoleVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleVO.swift; sourceTree = "<group>"; };
+		A814B43924537FA8002D1415 /* UserVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVO.swift; sourceTree = "<group>"; };
+		A814B43B24537FA8002D1415 /* RoleEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleEnum.swift; sourceTree = "<group>"; };
+		A814B43C24537FA8002D1415 /* DeptEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeptEnum.swift; sourceTree = "<group>"; };
+		A814B43D24537FA8002D1415 /* UserProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxy.swift; sourceTree = "<group>"; };
+		A814B43E24537FA8002D1415 /* RoleProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleProxy.swift; sourceTree = "<group>"; };
+		A814B44024537FA8002D1415 /* ApplicationMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationMediator.swift; sourceTree = "<group>"; };
+		A814B44124537FA8002D1415 /* EmployeeAdminMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeAdminMediator.swift; sourceTree = "<group>"; };
+		A814B44324537FA8002D1415 /* UserRole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
+		A814B44424537FA8002D1415 /* UserList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
+		A814B44524537FA8002D1415 /* UserForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserForm.swift; sourceTree = "<group>"; };
+		A814B44624537FA8002D1415 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A814B45824538060002D1415 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A814B46124538080002D1415 /* RoleProxyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleProxyTest.swift; sourceTree = "<group>"; };
+		A814B46224538080002D1415 /* UserProxyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxyTest.swift; sourceTree = "<group>"; };
+		A814B46824538142002D1415 /* SceneMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneMediator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A876422E22549E62002FB773 /* Frameworks */ = {
+		A814B3F424537F73002D1415 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A871EC4B2367BA210096FB51 /* PureMVC in Frameworks */,
+				A814B467245380B5002D1415 /* PureMVC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A876424222549E63002FB773 /* Frameworks */ = {
+		A814B40A24537F75002D1415 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A876424D22549E63002FB773 /* Frameworks */ = {
+		A814B41524537F75002D1415 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -108,235 +112,237 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A84A8F84244F6FD10063D5BE /* org */ = {
+		A814B3EE24537F73002D1415 = {
 			isa = PBXGroup;
 			children = (
-				A84A8F85244F6FD10063D5BE /* puremvc */,
-			);
-			path = org;
-			sourceTree = "<group>";
-		};
-		A84A8F85244F6FD10063D5BE /* puremvc */ = {
-			isa = PBXGroup;
-			children = (
-				A84A8F86244F6FD10063D5BE /* swift */,
-			);
-			path = puremvc;
-			sourceTree = "<group>";
-		};
-		A84A8F86244F6FD10063D5BE /* swift */ = {
-			isa = PBXGroup;
-			children = (
-				A84A8F87244F6FD10063D5BE /* demos */,
-			);
-			path = swift;
-			sourceTree = "<group>";
-		};
-		A84A8F87244F6FD10063D5BE /* demos */ = {
-			isa = PBXGroup;
-			children = (
-				A84A8F88244F6FD10063D5BE /* uikit */,
-			);
-			path = demos;
-			sourceTree = "<group>";
-		};
-		A84A8F88244F6FD10063D5BE /* uikit */ = {
-			isa = PBXGroup;
-			children = (
-				A84A8F89244F6FD10063D5BE /* employeeadmin */,
-			);
-			path = uikit;
-			sourceTree = "<group>";
-		};
-		A84A8F89244F6FD10063D5BE /* employeeadmin */ = {
-			isa = PBXGroup;
-			children = (
-				A84A8F8A244F6FD10063D5BE /* model */,
-			);
-			path = employeeadmin;
-			sourceTree = "<group>";
-		};
-		A84A8F8A244F6FD10063D5BE /* model */ = {
-			isa = PBXGroup;
-			children = (
-				A84A8F8B244F6FD10063D5BE /* UserProxyTest.swift */,
-				A84A8F8D244F72D60063D5BE /* RoleProxyTest.swift */,
-			);
-			path = model;
-			sourceTree = "<group>";
-		};
-		A876422822549E62002FB773 = {
-			isa = PBXGroup;
-			children = (
-				A876423322549E62002FB773 /* EmployeeAdmin */,
-				A876424822549E63002FB773 /* EmployeeAdminTests */,
-				A876425322549E63002FB773 /* EmployeeAdminUITests */,
-				A876423222549E62002FB773 /* Products */,
+				A814B3F924537F73002D1415 /* EmployeeAdmin */,
+				A814B41024537F75002D1415 /* EmployeeAdminTests */,
+				A814B41B24537F75002D1415 /* EmployeeAdminUITests */,
+				A814B3F824537F73002D1415 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A876423222549E62002FB773 /* Products */ = {
+		A814B3F824537F73002D1415 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A876423122549E62002FB773 /* EmployeeAdmin.app */,
-				A876424522549E63002FB773 /* EmployeeAdminTests.xctest */,
-				A876425022549E63002FB773 /* EmployeeAdminUITests.xctest */,
+				A814B3F724537F73002D1415 /* EmployeeAdmin.app */,
+				A814B40D24537F75002D1415 /* EmployeeAdminTests.xctest */,
+				A814B41824537F75002D1415 /* EmployeeAdminUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A876423322549E62002FB773 /* EmployeeAdmin */ = {
+		A814B3F924537F73002D1415 /* EmployeeAdmin */ = {
 			isa = PBXGroup;
 			children = (
-				A876426222549EE2002FB773 /* org */,
-				A876423822549E62002FB773 /* Main.storyboard */,
-				A876423B22549E63002FB773 /* Assets.xcassets */,
-				A876423D22549E63002FB773 /* LaunchScreen.storyboard */,
-				A876424022549E63002FB773 /* Info.plist */,
+				A814B42A24537FA8002D1415 /* org */,
+				A814B40024537F73002D1415 /* Main.storyboard */,
+				A814B40324537F75002D1415 /* Assets.xcassets */,
+				A814B40524537F75002D1415 /* LaunchScreen.storyboard */,
+				A814B40824537F75002D1415 /* Info.plist */,
 			);
 			path = EmployeeAdmin;
 			sourceTree = "<group>";
 		};
-		A876424822549E63002FB773 /* EmployeeAdminTests */ = {
+		A814B41024537F75002D1415 /* EmployeeAdminTests */ = {
 			isa = PBXGroup;
 			children = (
-				A84A8F84244F6FD10063D5BE /* org */,
-				A876424B22549E63002FB773 /* Info.plist */,
+				A814B45A24538080002D1415 /* org */,
+				A814B41324537F75002D1415 /* Info.plist */,
 			);
 			path = EmployeeAdminTests;
 			sourceTree = "<group>";
 		};
-		A876425322549E63002FB773 /* EmployeeAdminUITests */ = {
+		A814B41B24537F75002D1415 /* EmployeeAdminUITests */ = {
 			isa = PBXGroup;
 			children = (
-				A876425422549E63002FB773 /* EmployeeAdminUITests.swift */,
-				A876425622549E63002FB773 /* Info.plist */,
+				A814B41C24537F75002D1415 /* EmployeeAdminUITests.swift */,
+				A814B41E24537F75002D1415 /* Info.plist */,
 			);
 			path = EmployeeAdminUITests;
 			sourceTree = "<group>";
 		};
-		A876426222549EE2002FB773 /* org */ = {
+		A814B42A24537FA8002D1415 /* org */ = {
 			isa = PBXGroup;
 			children = (
-				A876426322549EE2002FB773 /* puremvc */,
+				A814B42B24537FA8002D1415 /* puremvc */,
 			);
 			path = org;
 			sourceTree = "<group>";
 		};
-		A876426322549EE2002FB773 /* puremvc */ = {
+		A814B42B24537FA8002D1415 /* puremvc */ = {
 			isa = PBXGroup;
 			children = (
-				A876426422549EE2002FB773 /* swift */,
+				A814B42C24537FA8002D1415 /* swift */,
 			);
 			path = puremvc;
 			sourceTree = "<group>";
 		};
-		A876426422549EE2002FB773 /* swift */ = {
+		A814B42C24537FA8002D1415 /* swift */ = {
 			isa = PBXGroup;
 			children = (
-				A876426522549EE2002FB773 /* demos */,
+				A814B42D24537FA8002D1415 /* demos */,
 			);
 			path = swift;
 			sourceTree = "<group>";
 		};
-		A876426522549EE2002FB773 /* demos */ = {
+		A814B42D24537FA8002D1415 /* demos */ = {
 			isa = PBXGroup;
 			children = (
-				A876426622549EE2002FB773 /* uikit */,
+				A814B42E24537FA8002D1415 /* uikit */,
 			);
 			path = demos;
 			sourceTree = "<group>";
 		};
-		A876426622549EE2002FB773 /* uikit */ = {
+		A814B42E24537FA8002D1415 /* uikit */ = {
 			isa = PBXGroup;
 			children = (
-				A876426722549EE2002FB773 /* employeeadmin */,
+				A814B42F24537FA8002D1415 /* employeeadmin */,
 			);
 			path = uikit;
 			sourceTree = "<group>";
 		};
-		A876426722549EE2002FB773 /* employeeadmin */ = {
+		A814B42F24537FA8002D1415 /* employeeadmin */ = {
 			isa = PBXGroup;
 			children = (
-				A876426822549EE2002FB773 /* controller */,
-				A876426E22549EE2002FB773 /* model */,
-				A876427722549EE2002FB773 /* view */,
-				A876426D22549EE2002FB773 /* ApplicationFacade.swift */,
-				A876423422549E62002FB773 /* AppDelegate.swift */,
+				A814B43024537FA8002D1415 /* controller */,
+				A814B43624537FA8002D1415 /* model */,
+				A814B43F24537FA8002D1415 /* view */,
+				A814B44624537FA8002D1415 /* AppDelegate.swift */,
+				A814B45824538060002D1415 /* SceneDelegate.swift */,
+				A814B43524537FA8002D1415 /* ApplicationFacade.swift */,
 			);
 			path = employeeadmin;
 			sourceTree = "<group>";
 		};
-		A876426822549EE2002FB773 /* controller */ = {
+		A814B43024537FA8002D1415 /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				A876426A22549EE2002FB773 /* StartupCommand.swift */,
-				A876426C22549EE2002FB773 /* PrepModelCommand.swift */,
-				A876426B22549EE2002FB773 /* PrepViewCommand.swift */,
-				A8ADFF8F2370D04C0010C220 /* RegisterCommand.swift */,
+				A814B43124537FA8002D1415 /* StartupCommand.swift */,
+				A814B43224537FA8002D1415 /* PrepViewCommand.swift */,
+				A814B43324537FA8002D1415 /* PrepModelCommand.swift */,
+				A814B43424537FA8002D1415 /* RegisterCommand.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
 		};
-		A876426E22549EE2002FB773 /* model */ = {
+		A814B43624537FA8002D1415 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				A876426F22549EE2002FB773 /* vo */,
-				A876427222549EE2002FB773 /* enum */,
-				A876427522549EE2002FB773 /* UserProxy.swift */,
-				A876427622549EE2002FB773 /* RoleProxy.swift */,
+				A814B43724537FA8002D1415 /* vo */,
+				A814B43A24537FA8002D1415 /* enum */,
+				A814B43D24537FA8002D1415 /* UserProxy.swift */,
+				A814B43E24537FA8002D1415 /* RoleProxy.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
 		};
-		A876426F22549EE2002FB773 /* vo */ = {
+		A814B43724537FA8002D1415 /* vo */ = {
 			isa = PBXGroup;
 			children = (
-				A876427022549EE2002FB773 /* RoleVO.swift */,
-				A876427122549EE2002FB773 /* UserVO.swift */,
+				A814B43824537FA8002D1415 /* RoleVO.swift */,
+				A814B43924537FA8002D1415 /* UserVO.swift */,
 			);
 			path = vo;
 			sourceTree = "<group>";
 		};
-		A876427222549EE2002FB773 /* enum */ = {
+		A814B43A24537FA8002D1415 /* enum */ = {
 			isa = PBXGroup;
 			children = (
-				A876427322549EE2002FB773 /* RoleEnum.swift */,
-				A876427422549EE2002FB773 /* DeptEnum.swift */,
+				A814B43B24537FA8002D1415 /* RoleEnum.swift */,
+				A814B43C24537FA8002D1415 /* DeptEnum.swift */,
 			);
 			path = enum;
 			sourceTree = "<group>";
 		};
-		A876427722549EE2002FB773 /* view */ = {
+		A814B43F24537FA8002D1415 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				A876427A22549EE2002FB773 /* components */,
-				A8ADFF912370DBB70010C220 /* ApplicationMediator.swift */,
-				A84A8F82244F6F9D0063D5BE /* EmployeeAdminMediator.swift */,
+				A814B44224537FA8002D1415 /* components */,
+				A814B44024537FA8002D1415 /* ApplicationMediator.swift */,
+				A814B46824538142002D1415 /* SceneMediator.swift */,
+				A814B44124537FA8002D1415 /* EmployeeAdminMediator.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
 		};
-		A876427A22549EE2002FB773 /* components */ = {
+		A814B44224537FA8002D1415 /* components */ = {
 			isa = PBXGroup;
 			children = (
-				A876427C22549EE2002FB773 /* UserList.swift */,
-				A876427D22549EE2002FB773 /* UserForm.swift */,
-				A876427B22549EE2002FB773 /* UserRole.swift */,
+				A814B44324537FA8002D1415 /* UserRole.swift */,
+				A814B44424537FA8002D1415 /* UserList.swift */,
+				A814B44524537FA8002D1415 /* UserForm.swift */,
 			);
 			path = components;
+			sourceTree = "<group>";
+		};
+		A814B45A24538080002D1415 /* org */ = {
+			isa = PBXGroup;
+			children = (
+				A814B45B24538080002D1415 /* puremvc */,
+			);
+			path = org;
+			sourceTree = "<group>";
+		};
+		A814B45B24538080002D1415 /* puremvc */ = {
+			isa = PBXGroup;
+			children = (
+				A814B45C24538080002D1415 /* swift */,
+			);
+			path = puremvc;
+			sourceTree = "<group>";
+		};
+		A814B45C24538080002D1415 /* swift */ = {
+			isa = PBXGroup;
+			children = (
+				A814B45D24538080002D1415 /* demos */,
+			);
+			path = swift;
+			sourceTree = "<group>";
+		};
+		A814B45D24538080002D1415 /* demos */ = {
+			isa = PBXGroup;
+			children = (
+				A814B45E24538080002D1415 /* uikit */,
+			);
+			path = demos;
+			sourceTree = "<group>";
+		};
+		A814B45E24538080002D1415 /* uikit */ = {
+			isa = PBXGroup;
+			children = (
+				A814B45F24538080002D1415 /* employeeadmin */,
+			);
+			path = uikit;
+			sourceTree = "<group>";
+		};
+		A814B45F24538080002D1415 /* employeeadmin */ = {
+			isa = PBXGroup;
+			children = (
+				A814B46024538080002D1415 /* model */,
+			);
+			path = employeeadmin;
+			sourceTree = "<group>";
+		};
+		A814B46024538080002D1415 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				A814B46124538080002D1415 /* RoleProxyTest.swift */,
+				A814B46224538080002D1415 /* UserProxyTest.swift */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A876423022549E62002FB773 /* EmployeeAdmin */ = {
+		A814B3F624537F73002D1415 /* EmployeeAdmin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A876425922549E63002FB773 /* Build configuration list for PBXNativeTarget "EmployeeAdmin" */;
+			buildConfigurationList = A814B42124537F75002D1415 /* Build configuration list for PBXNativeTarget "EmployeeAdmin" */;
 			buildPhases = (
-				A876422D22549E62002FB773 /* Sources */,
-				A876422E22549E62002FB773 /* Frameworks */,
-				A876422F22549E62002FB773 /* Resources */,
+				A814B3F324537F73002D1415 /* Sources */,
+				A814B3F424537F73002D1415 /* Frameworks */,
+				A814B3F524537F73002D1415 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -344,72 +350,72 @@
 			);
 			name = EmployeeAdmin;
 			packageProductDependencies = (
-				A871EC4A2367BA210096FB51 /* PureMVC */,
+				A814B466245380B5002D1415 /* PureMVC */,
 			);
 			productName = EmployeeAdmin;
-			productReference = A876423122549E62002FB773 /* EmployeeAdmin.app */;
+			productReference = A814B3F724537F73002D1415 /* EmployeeAdmin.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A876424422549E63002FB773 /* EmployeeAdminTests */ = {
+		A814B40C24537F75002D1415 /* EmployeeAdminTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A876425C22549E63002FB773 /* Build configuration list for PBXNativeTarget "EmployeeAdminTests" */;
+			buildConfigurationList = A814B42424537F75002D1415 /* Build configuration list for PBXNativeTarget "EmployeeAdminTests" */;
 			buildPhases = (
-				A876424122549E63002FB773 /* Sources */,
-				A876424222549E63002FB773 /* Frameworks */,
-				A876424322549E63002FB773 /* Resources */,
+				A814B40924537F75002D1415 /* Sources */,
+				A814B40A24537F75002D1415 /* Frameworks */,
+				A814B40B24537F75002D1415 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				A876424722549E63002FB773 /* PBXTargetDependency */,
+				A814B40F24537F75002D1415 /* PBXTargetDependency */,
 			);
 			name = EmployeeAdminTests;
 			productName = EmployeeAdminTests;
-			productReference = A876424522549E63002FB773 /* EmployeeAdminTests.xctest */;
+			productReference = A814B40D24537F75002D1415 /* EmployeeAdminTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A876424F22549E63002FB773 /* EmployeeAdminUITests */ = {
+		A814B41724537F75002D1415 /* EmployeeAdminUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A876425F22549E63002FB773 /* Build configuration list for PBXNativeTarget "EmployeeAdminUITests" */;
+			buildConfigurationList = A814B42724537F75002D1415 /* Build configuration list for PBXNativeTarget "EmployeeAdminUITests" */;
 			buildPhases = (
-				A876424C22549E63002FB773 /* Sources */,
-				A876424D22549E63002FB773 /* Frameworks */,
-				A876424E22549E63002FB773 /* Resources */,
+				A814B41424537F75002D1415 /* Sources */,
+				A814B41524537F75002D1415 /* Frameworks */,
+				A814B41624537F75002D1415 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				A876425222549E63002FB773 /* PBXTargetDependency */,
+				A814B41A24537F75002D1415 /* PBXTargetDependency */,
 			);
 			name = EmployeeAdminUITests;
 			productName = EmployeeAdminUITests;
-			productReference = A876425022549E63002FB773 /* EmployeeAdminUITests.xctest */;
+			productReference = A814B41824537F75002D1415 /* EmployeeAdminUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A876422922549E62002FB773 /* Project object */ = {
+		A814B3EF24537F73002D1415 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1020;
-				ORGANIZATIONNAME = PureMVC;
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = "Saad Shams";
 				TargetAttributes = {
-					A876423022549E62002FB773 = {
-						CreatedOnToolsVersion = 10.2;
+					A814B3F624537F73002D1415 = {
+						CreatedOnToolsVersion = 11.4.1;
 					};
-					A876424422549E63002FB773 = {
-						CreatedOnToolsVersion = 10.2;
-						TestTargetID = A876423022549E62002FB773;
+					A814B40C24537F75002D1415 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = A814B3F624537F73002D1415;
 					};
-					A876424F22549E63002FB773 = {
-						CreatedOnToolsVersion = 10.2;
-						TestTargetID = A876423022549E62002FB773;
+					A814B41724537F75002D1415 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = A814B3F624537F73002D1415;
 					};
 				};
 			};
-			buildConfigurationList = A876422C22549E62002FB773 /* Build configuration list for PBXProject "EmployeeAdmin" */;
+			buildConfigurationList = A814B3F224537F73002D1415 /* Build configuration list for PBXProject "EmployeeAdmin" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -417,40 +423,40 @@
 				en,
 				Base,
 			);
-			mainGroup = A876422822549E62002FB773;
+			mainGroup = A814B3EE24537F73002D1415;
 			packageReferences = (
-				A871EC492367BA210096FB51 /* XCRemoteSwiftPackageReference "puremvc-swift-multicore-framework" */,
+				A814B465245380B5002D1415 /* XCRemoteSwiftPackageReference "puremvc-swift-multicore-framework" */,
 			);
-			productRefGroup = A876423222549E62002FB773 /* Products */;
+			productRefGroup = A814B3F824537F73002D1415 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A876423022549E62002FB773 /* EmployeeAdmin */,
-				A876424422549E63002FB773 /* EmployeeAdminTests */,
-				A876424F22549E63002FB773 /* EmployeeAdminUITests */,
+				A814B3F624537F73002D1415 /* EmployeeAdmin */,
+				A814B40C24537F75002D1415 /* EmployeeAdminTests */,
+				A814B41724537F75002D1415 /* EmployeeAdminUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A876422F22549E62002FB773 /* Resources */ = {
+		A814B3F524537F73002D1415 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A876423F22549E63002FB773 /* LaunchScreen.storyboard in Resources */,
-				A876423C22549E63002FB773 /* Assets.xcassets in Resources */,
-				A876423A22549E62002FB773 /* Main.storyboard in Resources */,
+				A814B40724537F75002D1415 /* LaunchScreen.storyboard in Resources */,
+				A814B40424537F75002D1415 /* Assets.xcassets in Resources */,
+				A814B40224537F73002D1415 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A876424322549E63002FB773 /* Resources */ = {
+		A814B40B24537F75002D1415 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A876424E22549E63002FB773 /* Resources */ = {
+		A814B41624537F75002D1415 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -460,75 +466,77 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A876422D22549E62002FB773 /* Sources */ = {
+		A814B3F324537F73002D1415 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A876428322549EE2002FB773 /* PrepModelCommand.swift in Sources */,
-				A8ADFF902370D04C0010C220 /* RegisterCommand.swift in Sources */,
-				A876428E22549EE2002FB773 /* UserList.swift in Sources */,
-				A876428A22549EE2002FB773 /* RoleProxy.swift in Sources */,
-				A876428822549EE2002FB773 /* DeptEnum.swift in Sources */,
-				A84A8F83244F6F9D0063D5BE /* EmployeeAdminMediator.swift in Sources */,
-				A876428122549EE2002FB773 /* StartupCommand.swift in Sources */,
-				A876428422549EE2002FB773 /* ApplicationFacade.swift in Sources */,
-				A876428222549EE2002FB773 /* PrepViewCommand.swift in Sources */,
-				A8ADFF922370DBB70010C220 /* ApplicationMediator.swift in Sources */,
-				A876428522549EE2002FB773 /* RoleVO.swift in Sources */,
-				A876428D22549EE2002FB773 /* UserRole.swift in Sources */,
-				A876428F22549EE2002FB773 /* UserForm.swift in Sources */,
-				A876428622549EE2002FB773 /* UserVO.swift in Sources */,
-				A876428722549EE2002FB773 /* RoleEnum.swift in Sources */,
-				A876423522549E62002FB773 /* AppDelegate.swift in Sources */,
-				A876428922549EE2002FB773 /* UserProxy.swift in Sources */,
+				A814B44C24537FA8002D1415 /* RoleVO.swift in Sources */,
+				A814B45024537FA8002D1415 /* UserProxy.swift in Sources */,
+				A814B45224537FA8002D1415 /* ApplicationMediator.swift in Sources */,
+				A814B45424537FA8002D1415 /* UserRole.swift in Sources */,
+				A814B44D24537FA8002D1415 /* UserVO.swift in Sources */,
+				A814B45324537FA8002D1415 /* EmployeeAdminMediator.swift in Sources */,
+				A814B44924537FA8002D1415 /* PrepModelCommand.swift in Sources */,
+				A814B45724537FA8002D1415 /* AppDelegate.swift in Sources */,
+				A814B44B24537FA8002D1415 /* ApplicationFacade.swift in Sources */,
+				A814B44724537FA8002D1415 /* StartupCommand.swift in Sources */,
+				A814B45624537FA8002D1415 /* UserForm.swift in Sources */,
+				A814B45924538060002D1415 /* SceneDelegate.swift in Sources */,
+				A814B45524537FA8002D1415 /* UserList.swift in Sources */,
+				A814B45124537FA8002D1415 /* RoleProxy.swift in Sources */,
+				A814B44E24537FA8002D1415 /* RoleEnum.swift in Sources */,
+				A814B46924538142002D1415 /* SceneMediator.swift in Sources */,
+				A814B44A24537FA8002D1415 /* RegisterCommand.swift in Sources */,
+				A814B44824537FA8002D1415 /* PrepViewCommand.swift in Sources */,
+				A814B44F24537FA8002D1415 /* DeptEnum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A876424122549E63002FB773 /* Sources */ = {
+		A814B40924537F75002D1415 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A84A8F8E244F72D60063D5BE /* RoleProxyTest.swift in Sources */,
-				A84A8F8C244F6FD10063D5BE /* UserProxyTest.swift in Sources */,
+				A814B46324538080002D1415 /* RoleProxyTest.swift in Sources */,
+				A814B46424538080002D1415 /* UserProxyTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A876424C22549E63002FB773 /* Sources */ = {
+		A814B41424537F75002D1415 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A876425522549E63002FB773 /* EmployeeAdminUITests.swift in Sources */,
+				A814B41D24537F75002D1415 /* EmployeeAdminUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A876424722549E63002FB773 /* PBXTargetDependency */ = {
+		A814B40F24537F75002D1415 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A876423022549E62002FB773 /* EmployeeAdmin */;
-			targetProxy = A876424622549E63002FB773 /* PBXContainerItemProxy */;
+			target = A814B3F624537F73002D1415 /* EmployeeAdmin */;
+			targetProxy = A814B40E24537F75002D1415 /* PBXContainerItemProxy */;
 		};
-		A876425222549E63002FB773 /* PBXTargetDependency */ = {
+		A814B41A24537F75002D1415 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A876423022549E62002FB773 /* EmployeeAdmin */;
-			targetProxy = A876425122549E63002FB773 /* PBXContainerItemProxy */;
+			target = A814B3F624537F73002D1415 /* EmployeeAdmin */;
+			targetProxy = A814B41924537F75002D1415 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A876423822549E62002FB773 /* Main.storyboard */ = {
+		A814B40024537F73002D1415 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A876423922549E62002FB773 /* Base */,
+				A814B40124537F73002D1415 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		A876423D22549E63002FB773 /* LaunchScreen.storyboard */ = {
+		A814B40524537F75002D1415 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A876423E22549E63002FB773 /* Base */,
+				A814B40624537F75002D1415 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -536,7 +544,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		A876425722549E63002FB773 /* Debug */ = {
+		A814B41F24537F75002D1415 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -568,7 +576,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -587,7 +594,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -597,7 +604,7 @@
 			};
 			name = Debug;
 		};
-		A876425822549E63002FB773 /* Release */ = {
+		A814B42024537F75002D1415 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -629,7 +636,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -642,7 +648,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -652,12 +658,11 @@
 			};
 			name = Release;
 		};
-		A876425A22549E63002FB773 /* Debug */ = {
+		A814B42224537F75002D1415 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = EmployeeAdmin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -670,12 +675,11 @@
 			};
 			name = Debug;
 		};
-		A876425B22549E63002FB773 /* Release */ = {
+		A814B42324537F75002D1415 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = EmployeeAdmin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -688,13 +692,14 @@
 			};
 			name = Release;
 		};
-		A876425D22549E63002FB773 /* Debug */ = {
+		A814B42524537F75002D1415 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = EmployeeAdminTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -708,13 +713,14 @@
 			};
 			name = Debug;
 		};
-		A876425E22549E63002FB773 /* Release */ = {
+		A814B42624537F75002D1415 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = EmployeeAdminTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -728,7 +734,7 @@
 			};
 			name = Release;
 		};
-		A876426022549E63002FB773 /* Debug */ = {
+		A814B42824537F75002D1415 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -747,7 +753,7 @@
 			};
 			name = Debug;
 		};
-		A876426122549E63002FB773 /* Release */ = {
+		A814B42924537F75002D1415 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -769,38 +775,38 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A876422C22549E62002FB773 /* Build configuration list for PBXProject "EmployeeAdmin" */ = {
+		A814B3F224537F73002D1415 /* Build configuration list for PBXProject "EmployeeAdmin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A876425722549E63002FB773 /* Debug */,
-				A876425822549E63002FB773 /* Release */,
+				A814B41F24537F75002D1415 /* Debug */,
+				A814B42024537F75002D1415 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A876425922549E63002FB773 /* Build configuration list for PBXNativeTarget "EmployeeAdmin" */ = {
+		A814B42124537F75002D1415 /* Build configuration list for PBXNativeTarget "EmployeeAdmin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A876425A22549E63002FB773 /* Debug */,
-				A876425B22549E63002FB773 /* Release */,
+				A814B42224537F75002D1415 /* Debug */,
+				A814B42324537F75002D1415 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A876425C22549E63002FB773 /* Build configuration list for PBXNativeTarget "EmployeeAdminTests" */ = {
+		A814B42424537F75002D1415 /* Build configuration list for PBXNativeTarget "EmployeeAdminTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A876425D22549E63002FB773 /* Debug */,
-				A876425E22549E63002FB773 /* Release */,
+				A814B42524537F75002D1415 /* Debug */,
+				A814B42624537F75002D1415 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A876425F22549E63002FB773 /* Build configuration list for PBXNativeTarget "EmployeeAdminUITests" */ = {
+		A814B42724537F75002D1415 /* Build configuration list for PBXNativeTarget "EmployeeAdminUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A876426022549E63002FB773 /* Debug */,
-				A876426122549E63002FB773 /* Release */,
+				A814B42824537F75002D1415 /* Debug */,
+				A814B42924537F75002D1415 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -808,7 +814,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A871EC492367BA210096FB51 /* XCRemoteSwiftPackageReference "puremvc-swift-multicore-framework" */ = {
+		A814B465245380B5002D1415 /* XCRemoteSwiftPackageReference "puremvc-swift-multicore-framework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/PureMVC/puremvc-swift-multicore-framework";
 			requirement = {
@@ -819,12 +825,12 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A871EC4A2367BA210096FB51 /* PureMVC */ = {
+		A814B466245380B5002D1415 /* PureMVC */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A871EC492367BA210096FB51 /* XCRemoteSwiftPackageReference "puremvc-swift-multicore-framework" */;
+			package = A814B465245380B5002D1415 /* XCRemoteSwiftPackageReference "puremvc-swift-multicore-framework" */;
 			productName = PureMVC;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = A876422922549E62002FB773 /* Project object */;
+	rootObject = A814B3EF24537F73002D1415 /* Project object */;
 }
