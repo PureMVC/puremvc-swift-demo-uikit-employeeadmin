@@ -22,14 +22,14 @@ class ApplicationFacade: Facade {
     override func initializeController() {
         super.initializeController()
         registerCommand(ApplicationFacade.STARTUP) { StartupCommand() }
-        registerCommand(ApplicationFacade.REGISTER) { RegisterComand() }
+        registerCommand(ApplicationFacade.REGISTER) { RegisterCommand() }
     }
     
     /**
     Singleton Factory Method
     */
     class func getInstance(key: String) -> ApplicationFacade {
-        return Facade.getInstance(key) { k in ApplicationFacade(key: k) } as! ApplicationFacade
+        Facade.getInstance(key) { k in ApplicationFacade(key: k) } as! ApplicationFacade
     }
     
     func registerView(view: UIResponder) {

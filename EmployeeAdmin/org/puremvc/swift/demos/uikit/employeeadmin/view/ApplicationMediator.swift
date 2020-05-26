@@ -10,7 +10,7 @@ import PureMVC
 
 class ApplicationMediator: Mediator {
     
-    override class var NAME: String { return "ApplicationMediator" }
+    override class var NAME: String { "ApplicationMediator" }
     
     init(viewComponent: AppDelegate) {
         super.init(name: ApplicationMediator.NAME, viewComponent: viewComponent)

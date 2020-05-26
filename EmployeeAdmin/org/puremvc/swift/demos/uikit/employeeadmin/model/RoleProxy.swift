@@ -10,7 +10,7 @@ import PureMVC
 
 class RoleProxy: Proxy {
     
-    override class var NAME: String { return "RoleProxy" }
+    override class var NAME: String { "RoleProxy" }
     
     init() {
         super.init(name: RoleProxy.NAME, data: [RoleVO]())
@@ -58,7 +58,7 @@ class RoleProxy: Proxy {
     }
     
     var roles: [RoleVO] {
-        return data as! [RoleVO]
+        data as! [RoleVO]
     }
     
 }

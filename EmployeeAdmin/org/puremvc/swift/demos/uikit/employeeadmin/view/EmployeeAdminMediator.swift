@@ -14,7 +14,7 @@ class EmployeeAdminMediator: Mediator, UserListDelegate, UserFormDelegate, UserR
     var userProxy: UserProxy?
     var roleProxy: RoleProxy?
     
-    override class var NAME: String { return "EmployeeAdminMediator" }
+    override class var NAME: String { "EmployeeAdminMediator" }
     
     init(viewComponent: UIViewController) {
         super.init(name: EmployeeAdminMediator.NAME + viewComponent.title!, viewComponent: viewComponent)
@@ -37,7 +37,7 @@ class EmployeeAdminMediator: Mediator, UserListDelegate, UserFormDelegate, UserR
     }
     
     func users() -> [UserVO] {
-        return userProxy!.users
+        userProxy!.users
     }
     
     func save(_ userVO: UserVO, roleVO: RoleVO) {
@@ -58,7 +58,7 @@ class EmployeeAdminMediator: Mediator, UserListDelegate, UserFormDelegate, UserR
     }
     
     func getUserRoles(username: String) -> [RoleEnum]? {
-        return roleProxy!.getUserRoles(username)
+        roleProxy!.getUserRoles(username)
     }
     
 }

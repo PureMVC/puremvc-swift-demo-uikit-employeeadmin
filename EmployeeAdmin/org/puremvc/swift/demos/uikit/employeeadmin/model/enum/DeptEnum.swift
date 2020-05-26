@@ -18,7 +18,7 @@ enum DeptEnum: String {
     case HUMAN_RESOURCES = "Human Resources"
     
     static var list: [DeptEnum] {
-        return [
+        [
             ACCT,
             SALES,
             PLANT,
@@ -36,6 +36,6 @@ enum DeptEnum: String {
     }
     
     func equals(_ deptEnum: DeptEnum) -> Bool {
-        return self == deptEnum
+        self == deptEnum
     }
 }
