@@ -10,7 +10,7 @@ import PureMVC
 
 class UserProxy: Proxy {
     
-    override class var NAME: String { return "UserProxy" }
+    override class var NAME: String { "UserProxy" }
     
     init() {
         super.init(name: UserProxy.NAME, data: [UserVO]())
@@ -49,7 +49,7 @@ class UserProxy: Proxy {
     }
     
     var users: [UserVO] {
-        return data as! [UserVO]
+        data as! [UserVO]
     }
     
 }

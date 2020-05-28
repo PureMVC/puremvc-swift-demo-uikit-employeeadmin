@@ -74,7 +74,7 @@ class UserRole: UITableViewController {
     
     // number of rows
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return RoleEnum.list.count
+        RoleEnum.list.count
     }
 
 }

@@ -25,11 +25,11 @@ class UserVO {
     }
     
     var isValid:Bool {
-        return username != "" && first != "" && last != "" && email != "" && password != "" && !department.equals(.NONE_SELECTED)
+        username != "" && first != "" && last != "" && email != "" && password != "" && !department.equals(.NONE_SELECTED)
     }
     
     var givenName: String {
-        return last + ", " + first
+        last + ", " + first
     }
     
 }

@@ -69,7 +69,7 @@ class UserList: UITableViewController {
     
     // number of rows
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userVOs?.count ?? 0
+        userVOs?.count ?? 0
     }
     
     // cell contents

@@ -113,9 +113,7 @@ class UserForm: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     // MARK: - UITableViewDelegate
     
     // UserRoles number of rows
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
     
     // UserRoles cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -128,17 +126,15 @@ class UserForm: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     
     // UIPickerViewDelegate
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return DeptEnum.comboList[row].rawValue
+        DeptEnum.comboList[row].rawValue
     }
     
     // UIPickerViewDataSource number of components
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
+    func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
     
     // UIPickerViewDataSource number of rows
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return DeptEnum.comboList.count
+        DeptEnum.comboList.count
     }
     
     // resign keyboard

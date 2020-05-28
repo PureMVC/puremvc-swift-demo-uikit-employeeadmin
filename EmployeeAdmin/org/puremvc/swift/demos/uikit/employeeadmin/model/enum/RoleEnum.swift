@@ -25,7 +25,7 @@ enum RoleEnum: String {
     case RETURNS = "Returns"
     
     static var list: [RoleEnum] {
-        return [
+        [
             ADMIN,
             ACCT_PAY,
             ACCT_RCV,
@@ -50,6 +50,6 @@ enum RoleEnum: String {
     }
     
     func equals(_ roleEnum: RoleEnum) -> Bool {
-        return self == roleEnum
+        self == roleEnum
     }
 }

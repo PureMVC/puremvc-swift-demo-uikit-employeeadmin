@@ -1,5 +1,5 @@
 //
-//  ApplicationMediator.swift
+//  SceneMediator.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
 //  Copyright(c) 2020 Saad Shams <saad.shams@puremvc.org>
@@ -10,10 +10,10 @@ import PureMVC
 
 class SceneMediator: Mediator {
     
-    override class var NAME: String { return "SceneMediator" }
+    override class var NAME: String { "SceneMediator" }
     
     init(viewComponent: SceneDelegate) {
-        super.init(name: ApplicationMediator.NAME, viewComponent: viewComponent)
+        super.init(name: SceneMediator.NAME, viewComponent: viewComponent)
     }
     
 }

@@ -9,23 +9,23 @@
 import PureMVC
 import UIKit
 
-class RegisterComand: SimpleCommand {
+class RegisterCommand: SimpleCommand {
     
     override func execute(_ notification: INotification) {
-        
-        if let viewComponent = notification.body as? SceneDelegate {
-            facade.registerMediator(SceneMediator(viewComponent: viewComponent))
-        }
-        
-        if let viewComponent = notification.body as? UIViewController {
+
+        switch notification.body {
             
-            if(facade.hasMediator(EmployeeAdminMediator.NAME + viewComponent.title!)) {
-                _ = facade.removeMediator(EmployeeAdminMediator.NAME + viewComponent.title!)
-            }
+            case let viewComponent as SceneDelegate:
+                facade.registerMediator(SceneMediator(viewComponent: viewComponent))
             
-            facade.registerMediator(EmployeeAdminMediator(viewComponent: viewComponent))
+            case let viewComponent as UIViewController:
+                if(facade.hasMediator(EmployeeAdminMediator.NAME + viewComponent.title!)) {
+                    _ = facade.removeMediator(EmployeeAdminMediator.NAME + viewComponent.title!)
+                }
+                facade.registerMediator(EmployeeAdminMediator(viewComponent: viewComponent))
+            
+            default:
+                break
         }
-        
     }
-    
 }
