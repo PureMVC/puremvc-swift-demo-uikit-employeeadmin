@@ -9,12 +9,13 @@
 import PureMVC
 import UIKit
 
-class EmployeeAdminMediator: Mediator, UserListDelegate, UserFormDelegate, UserRoleDelegate {
-
-    var userProxy: UserProxy?
-    var roleProxy: RoleProxy?
+class EmployeeAdminMediator: Mediator {
     
     override class var NAME: String { "EmployeeAdminMediator" }
+
+    var userProxy: UserProxy?
+    
+    var roleProxy: RoleProxy?
     
     init(viewComponent: UIViewController) {
         super.init(name: EmployeeAdminMediator.NAME + viewComponent.title!, viewComponent: viewComponent)
@@ -35,11 +36,20 @@ class EmployeeAdminMediator: Mediator, UserListDelegate, UserFormDelegate, UserR
             print("default")
         }
     }
-    
+}
+
+extension EmployeeAdminMediator: UserListDelegate {
     func users() -> [UserVO] {
         userProxy!.users
     }
     
+    func delete(_ userVO: UserVO) {
+        userProxy!.deleteItem(userVO.username)
+        roleProxy!.deleteItem(userVO.username)
+    }
+}
+
+extension EmployeeAdminMediator: UserFormDelegate {
     func save(_ userVO: UserVO, roleVO: RoleVO) {
         userProxy!.addItem(userVO)
         roleProxy!.addItem(roleVO)
@@ -51,14 +61,10 @@ class EmployeeAdminMediator: Mediator, UserListDelegate, UserFormDelegate, UserR
             roleProxy!.updateUserRoles(username: userVO.username, role: roleVO.roles)
         }
     }
-    
-    func delete(_ userVO: UserVO) {
-        userProxy!.deleteItem(userVO.username)
-        roleProxy!.deleteItem(userVO.username)
-    }
-    
+}
+
+extension EmployeeAdminMediator: UserRoleDelegate {
     func getUserRoles(username: String) -> [RoleEnum]? {
         roleProxy!.getUserRoles(username)
     }
-    
 }

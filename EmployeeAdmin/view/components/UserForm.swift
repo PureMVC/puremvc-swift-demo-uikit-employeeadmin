@@ -13,7 +13,7 @@ protocol UserFormDelegate : class {
     func update(_ userVO: UserVO, roleVO: RoleVO?)
 }
 
-class UserForm: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UserRoleResponder {
+class UserForm: UIViewController {
     
     var userVO: UserVO?
     
@@ -61,12 +61,12 @@ class UserForm: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     @IBAction func save(_ sender: Any) {
         if userVO == nil { // new user
             userVO = UserVO(username: username.text, first: first?.text, last: last.text, email: email.text, password: password.text, department: DeptEnum.comboList[department.selectedRow(inComponent: 0)])
-        } else if let userVO = userVO { // existing user
-            userVO.first = first.text ?? ""
-            userVO.last = last.text ?? ""
-            userVO.email = email.text ?? ""
-            userVO.password = password.text ?? ""
-            userVO.department = DeptEnum.comboList[department.selectedRow(inComponent: 0)]
+        } else { // existing user
+            userVO?.first = first.text ?? ""
+            userVO?.last = last.text ?? ""
+            userVO?.email = email.text ?? ""
+            userVO?.password = password.text ?? ""
+            userVO?.department = DeptEnum.comboList[department.selectedRow(inComponent: 0)]
         }
         
         if userVO!.password == confirmPassword.text && userVO!.isValid == true { // validation
@@ -86,61 +86,69 @@ class UserForm: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         }
     }
 
-    // Seque to UserRoles
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "segueToUserRoles", sender: userVO)
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
     // segue to User Roles
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier, identifier == "segueToUserRoles" {
             if let userRole = segue.destination as? UserRole {
+                
+                userVO?.first = first.text ?? "" // retain any form changes before the segue
+                userVO?.last = last.text ?? ""
+                userVO?.email = email.text ?? ""
+                userVO?.password = password.text ?? ""
+                userVO?.department = DeptEnum.comboList[department.selectedRow(inComponent: 0)]
+                
                 userRole.username = userVO?.username
                 userRole.roles = roles
                 userRole.responder = self
             }
         }
     }
-    
-    // MARK: - UserRoleResponder
-    
-    // add role to the user
-    func result(_ roles: [RoleEnum]) {
-        self.roles = roles
-    }
-    
-    // MARK: - UITableViewDelegate
-    
-    // UserRoles number of rows
+}
+
+extension UserForm: UITableViewDataSource, UITableViewDelegate {
+    // number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
     
-    // UserRoles cells
+    // cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userRolesCell", for: indexPath as IndexPath)
         cell.textLabel?.text = "User Roles"
         return cell
     }
     
-    // MARK: - UIPickerViewDelegate
-    
-    // UIPickerViewDelegate
+    // Seque to UserRoles
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "segueToUserRoles", sender: userVO)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension UserForm: UIPickerViewDataSource, UIPickerViewDelegate {
+    // title
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         DeptEnum.comboList[row].rawValue
     }
     
-    // UIPickerViewDataSource number of components
+    // number of components
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
     
-    // UIPickerViewDataSource number of rows
+    // number of rows
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         DeptEnum.comboList.count
     }
-    
+}
+
+extension UserForm: UITextFieldDelegate {
     // resign keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
+}
+
+extension UserForm: UserRoleResponder {
+    // add role to the user
+    func result(_ roles: [RoleEnum]) {
+        self.roles = roles
+    }
 }

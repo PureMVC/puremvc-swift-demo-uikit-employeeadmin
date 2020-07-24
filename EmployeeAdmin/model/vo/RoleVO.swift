@@ -6,7 +6,7 @@
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
-class RoleVO {
+struct RoleVO {
     
     var username: String
     var roles: [RoleEnum]

@@ -33,6 +33,8 @@
 		A814B46424538080002D1415 /* UserProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46224538080002D1415 /* UserProxyTest.swift */; };
 		A814B467245380B5002D1415 /* PureMVC in Frameworks */ = {isa = PBXBuildFile; productRef = A814B466245380B5002D1415 /* PureMVC */; };
 		A814B46924538142002D1415 /* SceneMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46824538142002D1415 /* SceneMediator.swift */; };
+		A89BCF1D24CA4A6600EB734A /* DeptEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43C24537FA8002D1415 /* DeptEnum.swift */; };
+		A89BCF1E24CA59A700EB734A /* RoleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43B24537FA8002D1415 /* RoleEnum.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,7 +137,12 @@
 		A814B3F924537F73002D1415 /* EmployeeAdmin */ = {
 			isa = PBXGroup;
 			children = (
-				A814B42A24537FA8002D1415 /* org */,
+				A814B43024537FA8002D1415 /* controller */,
+				A814B43624537FA8002D1415 /* model */,
+				A814B43F24537FA8002D1415 /* view */,
+				A814B43524537FA8002D1415 /* ApplicationFacade.swift */,
+				A814B44624537FA8002D1415 /* AppDelegate.swift */,
+				A814B45824538060002D1415 /* SceneDelegate.swift */,
 				A814B40024537F73002D1415 /* Main.storyboard */,
 				A814B40324537F75002D1415 /* Assets.xcassets */,
 				A814B40524537F75002D1415 /* LaunchScreen.storyboard */,
@@ -147,7 +154,7 @@
 		A814B41024537F75002D1415 /* EmployeeAdminTests */ = {
 			isa = PBXGroup;
 			children = (
-				A814B45A24538080002D1415 /* org */,
+				A814B46024538080002D1415 /* model */,
 				A814B41324537F75002D1415 /* Info.plist */,
 			);
 			path = EmployeeAdminTests;
@@ -160,59 +167,6 @@
 				A814B41E24537F75002D1415 /* Info.plist */,
 			);
 			path = EmployeeAdminUITests;
-			sourceTree = "<group>";
-		};
-		A814B42A24537FA8002D1415 /* org */ = {
-			isa = PBXGroup;
-			children = (
-				A814B42B24537FA8002D1415 /* puremvc */,
-			);
-			path = org;
-			sourceTree = "<group>";
-		};
-		A814B42B24537FA8002D1415 /* puremvc */ = {
-			isa = PBXGroup;
-			children = (
-				A814B42C24537FA8002D1415 /* swift */,
-			);
-			path = puremvc;
-			sourceTree = "<group>";
-		};
-		A814B42C24537FA8002D1415 /* swift */ = {
-			isa = PBXGroup;
-			children = (
-				A814B42D24537FA8002D1415 /* demos */,
-			);
-			path = swift;
-			sourceTree = "<group>";
-		};
-		A814B42D24537FA8002D1415 /* demos */ = {
-			isa = PBXGroup;
-			children = (
-				A814B42E24537FA8002D1415 /* uikit */,
-			);
-			path = demos;
-			sourceTree = "<group>";
-		};
-		A814B42E24537FA8002D1415 /* uikit */ = {
-			isa = PBXGroup;
-			children = (
-				A814B42F24537FA8002D1415 /* employeeadmin */,
-			);
-			path = uikit;
-			sourceTree = "<group>";
-		};
-		A814B42F24537FA8002D1415 /* employeeadmin */ = {
-			isa = PBXGroup;
-			children = (
-				A814B43024537FA8002D1415 /* controller */,
-				A814B43624537FA8002D1415 /* model */,
-				A814B43F24537FA8002D1415 /* view */,
-				A814B44624537FA8002D1415 /* AppDelegate.swift */,
-				A814B45824538060002D1415 /* SceneDelegate.swift */,
-				A814B43524537FA8002D1415 /* ApplicationFacade.swift */,
-			);
-			path = employeeadmin;
 			sourceTree = "<group>";
 		};
 		A814B43024537FA8002D1415 /* controller */ = {
@@ -269,59 +223,11 @@
 		A814B44224537FA8002D1415 /* components */ = {
 			isa = PBXGroup;
 			children = (
-				A814B44324537FA8002D1415 /* UserRole.swift */,
 				A814B44424537FA8002D1415 /* UserList.swift */,
 				A814B44524537FA8002D1415 /* UserForm.swift */,
+				A814B44324537FA8002D1415 /* UserRole.swift */,
 			);
 			path = components;
-			sourceTree = "<group>";
-		};
-		A814B45A24538080002D1415 /* org */ = {
-			isa = PBXGroup;
-			children = (
-				A814B45B24538080002D1415 /* puremvc */,
-			);
-			path = org;
-			sourceTree = "<group>";
-		};
-		A814B45B24538080002D1415 /* puremvc */ = {
-			isa = PBXGroup;
-			children = (
-				A814B45C24538080002D1415 /* swift */,
-			);
-			path = puremvc;
-			sourceTree = "<group>";
-		};
-		A814B45C24538080002D1415 /* swift */ = {
-			isa = PBXGroup;
-			children = (
-				A814B45D24538080002D1415 /* demos */,
-			);
-			path = swift;
-			sourceTree = "<group>";
-		};
-		A814B45D24538080002D1415 /* demos */ = {
-			isa = PBXGroup;
-			children = (
-				A814B45E24538080002D1415 /* uikit */,
-			);
-			path = demos;
-			sourceTree = "<group>";
-		};
-		A814B45E24538080002D1415 /* uikit */ = {
-			isa = PBXGroup;
-			children = (
-				A814B45F24538080002D1415 /* employeeadmin */,
-			);
-			path = uikit;
-			sourceTree = "<group>";
-		};
-		A814B45F24538080002D1415 /* employeeadmin */ = {
-			isa = PBXGroup;
-			children = (
-				A814B46024538080002D1415 /* model */,
-			);
-			path = employeeadmin;
 			sourceTree = "<group>";
 		};
 		A814B46024538080002D1415 /* model */ = {
@@ -505,7 +411,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A89BCF1E24CA59A700EB734A /* RoleEnum.swift in Sources */,
 				A814B41D24537F75002D1415 /* EmployeeAdminUITests.swift in Sources */,
+				A89BCF1D24CA4A6600EB734A /* DeptEnum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -823,7 +731,7 @@
 			repositoryURL = "https://github.com/PureMVC/puremvc-swift-multicore-framework";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.0;
+				minimumVersion = 1.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

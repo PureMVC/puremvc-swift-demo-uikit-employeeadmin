@@ -13,13 +13,15 @@ protocol UserListDelegate: class {
     func delete(_ userVO: UserVO)
 }
 
-class UserList: UITableViewController {
+class UserList: UIViewController {
     
     var userVOs: [UserVO]?
     
     var indexPath: IndexPath?
     
     weak var delegate: UserListDelegate?
+    
+    @IBOutlet var tableView: UITableView!
 
     override func viewDidLoad() {
         (UIApplication.shared.delegate as! AppDelegate).registerView(view: self);
@@ -49,34 +51,35 @@ class UserList: UITableViewController {
             }
         }
     }
+}
+
+extension UserList: UITableViewDataSource {
+    // number of rows
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        userVOs?.count ?? 0
+    }
     
-    // MARK: - UITableViewDelegate
-    
+    // cell contents
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserListCell", for: indexPath as IndexPath)
+        cell.textLabel?.text = userVOs?[indexPath.row].givenName
+        return cell
+    }
+}
+
+extension UserList: UITableViewDelegate {
     // show details of the user
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.indexPath = indexPath
         self.performSegue(withIdentifier: "segueToUserForm", sender: userVOs![indexPath.row])
     }
     
     // delete user from the tableView and model
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
             delegate?.delete(userVOs![indexPath.row])
             userVOs?.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
-    
-    // number of rows
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        userVOs?.count ?? 0
-    }
-    
-    // cell contents
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UserListCell", for: indexPath as IndexPath)
-        cell.textLabel?.text = userVOs?[indexPath.row].givenName
-        return cell
-    }
-
 }

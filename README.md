@@ -4,20 +4,24 @@ This demo illustrates techniques for performing routine maintenance operations i
 
 * [Discussion](http://forums.puremvc.org/index.php?topic=2117.0)
 
+## Screenshot
+![PureMVC SWIFT Demo: Employee Admin](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Swift-EmployeeAdmin.png)
+
+## Tests
+* [XCode UI Tests](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Swift-iOS-EmployeeAdmin-UITests.gif)
+* [Unit Tests](http://puremvc.github.io/pages/images/screenshots/PureMVC-Shot-Swift-iOS-EmployeeAdmin-UnitTests.png)
+
+## Status
+Production - [Version 1.4](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/blob/master/VERSION)
+
 ## Platforms / Technologies
 * [Cocoa Touch/UIKit](http://en.wikipedia.org/wiki/Cocoa_Touch)
 * [Swift](http://en.wikipedia.org/wiki/Swift_(programming_language))
 * [iOS](http://en.wikipedia.org/wiki/IOS)
 
-## Screenshot
-![PureMVC SWIFT Demo: Employee Admin](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Swift-EmployeeAdmin.png)
-
-## Status
-Production - [Version 1.3](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/blob/master/VERSION)
-
 ## License
-* PureMVC Swift Demo - Employee Admin - Copyright © 2015-2019 [Saad Shams](https://www.linkedin.com/in/muizz/)
-* PureMVC - Copyright © 2015-2019 [Futurescale, Inc.](http://futurescale.com)
+* PureMVC Swift Demo - Employee Admin - Copyright © 2020 [Saad Shams](https://www.linkedin.com/in/muizz/)
+* PureMVC - Copyright © 2020 [Futurescale, Inc.](http://futurescale.com)
 * All rights reserved.
 
 * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

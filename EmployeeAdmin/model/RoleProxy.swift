@@ -18,16 +18,14 @@ class RoleProxy: Proxy {
     
     // add an item to the data
     func addItem(_ item: RoleVO) {
-        var roles = data as! [RoleVO]
         roles.append(item)
-        data = roles;
     }
     
     // update user roles
     func updateUserRoles(username: String, role: [RoleEnum]) {
-        for (_, element) in roles.enumerated() {
+        for (index, element) in roles.enumerated() {
             if (element.username == username) {
-                element.roles = role
+                roles[index].roles = role
                 break
             }
         }
@@ -35,30 +33,28 @@ class RoleProxy: Proxy {
     
     // get a users roles
     func getUserRoles(_ username: String) -> [RoleEnum]? {
-        var userRoles: [RoleEnum]?
-        let roles = data as! [RoleVO]
+        var roleEnums: [RoleEnum]?
         for (index, element) in roles.enumerated() {
             if (element.username == username) {
-                userRoles = roles[index].roles
+                roleEnums = roles[index].roles
             }
         }
-        return userRoles
+        return roleEnums
     }
     
     // delete an item from the data
     func deleteItem(_ username: String) {
-        var roles = data as! [RoleVO]
         for (index, element) in roles.enumerated() {
             if(element.username == username) {
                 roles.remove(at: index)
-                data = roles
                 break
             }
         }
     }
     
     var roles: [RoleVO] {
-        data as! [RoleVO]
+        get { data as! [RoleVO] }
+        set { data = newValue }
     }
     
 }

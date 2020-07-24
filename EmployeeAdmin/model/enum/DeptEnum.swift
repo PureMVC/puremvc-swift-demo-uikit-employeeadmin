@@ -8,7 +8,7 @@
 
 enum DeptEnum: String {
     
-    case NONE_SELECTED = "--Select Department"
+    case NONE_SELECTED = "--Select Department--"
     case ACCT = "Accounting"
     case SALES = "Sales"
     case PLANT = "Plant"

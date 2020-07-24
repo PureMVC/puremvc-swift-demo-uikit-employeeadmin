@@ -16,7 +16,7 @@ protocol UserRoleResponder: class {
     func result(_ roles: [RoleEnum])
 }
 
-class UserRole: UITableViewController {
+class UserRole: UIViewController {
     
     var username: String?
     
@@ -38,26 +38,17 @@ class UserRole: UITableViewController {
             roles = [RoleEnum]()
         }
     }
-    
-    // MARK: - UITableViewDelegate
-    
-    // cell selected
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath as IndexPath)
-        
-        if cell!.accessoryType == UITableViewCell.AccessoryType.none {
-            cell!.accessoryType = UITableViewCell.AccessoryType.checkmark
-            roles?.append(RoleEnum.list[indexPath.row])
-            responder?.result(roles!)
-        } else {
-            cell!.accessoryType = UITableViewCell.AccessoryType.none
-            roles = roles?.filter() { $0 as AnyObject !== RoleEnum.list[indexPath.row] as AnyObject}
-            responder?.result(roles!)
-        }
+
+}
+
+extension UserRole: UITableViewDataSource {
+    // number of rows
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        RoleEnum.list.count
     }
     
     // cell content initialize - checkmark/none
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserRoleCell", for: indexPath)
         
         let role = RoleEnum.list[indexPath.row].rawValue
@@ -71,10 +62,21 @@ class UserRole: UITableViewController {
         
         return cell
     }
-    
-    // number of rows
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        RoleEnum.list.count
-    }
+}
 
+extension UserRole: UITableViewDelegate {
+    // cell selected
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath as IndexPath)
+        
+        if cell!.accessoryType == UITableViewCell.AccessoryType.none {
+            cell!.accessoryType = UITableViewCell.AccessoryType.checkmark
+            roles?.append(RoleEnum.list[indexPath.row])
+            responder?.result(roles!)
+        } else {
+            cell!.accessoryType = UITableViewCell.AccessoryType.none
+            roles = roles?.filter() { $0 as AnyObject !== RoleEnum.list[indexPath.row] as AnyObject}
+            responder?.result(roles!)
+        }
+    }
 }
