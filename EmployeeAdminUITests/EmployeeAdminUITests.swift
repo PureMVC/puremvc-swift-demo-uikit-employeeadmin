@@ -23,27 +23,27 @@ class EmployeeAdminUITests: XCTestCase {
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
     
-//    func testList() { // disable hardware keyboard
-//        let app = XCUIApplication()
-//        XCTAssertEqual(app.tables.staticTexts.count, 3)
-//        app.tables.cells.element(boundBy: 0).tap()
-//    }
-//
-//    func testLarry() {
-//        let app = XCUIApplication()
-//        app.tables.cells.element(boundBy: 0).tap()
-//
-//        XCTAssertEqual(app.textFields["First Name"].value as! String, "Larry")
-//        XCTAssertEqual(app.textFields["Last Name"].value as! String, "Stooge")
-//        XCTAssertEqual(app.textFields["Email"].value as! String, "larry@stooges.com")
-//        XCTAssertFalse(app.textFields["Username"].isEnabled)
-//        XCTAssertEqual(app.textFields["Username"].value as! String, "lstooge")
-//        XCTAssertNotEqual((app.secureTextFields["Password"].value as! String).count, 0)
-//        XCTAssertNotEqual((app.secureTextFields["Confirm"].value as! String).count, 0)
-//        XCTAssertEqual(app.pickerWheels.element.value as! String, DeptEnum.ACCT.rawValue)
-//
-//        app.navigationBars["Profile"].buttons["Users"].tap()
-//    }
+    func testList() { // disable hardware keyboard
+        let app = XCUIApplication()
+        XCTAssertEqual(app.tables.staticTexts.count, 3)
+        app.tables.cells.element(boundBy: 0).tap()
+    }
+    
+    func testLarry() {
+        let app = XCUIApplication()
+        app.tables.cells.element(boundBy: 0).tap()
+        
+        XCTAssertEqual(app.textFields["First Name"].value as! String, "Larry")
+        XCTAssertEqual(app.textFields["Last Name"].value as! String, "Stooge")
+        XCTAssertEqual(app.textFields["Email"].value as! String, "larry@stooges.com")
+        XCTAssertFalse(app.textFields["Username"].isEnabled)
+        XCTAssertEqual(app.textFields["Username"].value as! String, "lstooge")
+        XCTAssertNotEqual((app.secureTextFields["Password"].value as! String).count, 0)
+        XCTAssertNotEqual((app.secureTextFields["Confirm"].value as! String).count, 0)
+        XCTAssertEqual(app.pickerWheels.element.value as! String, DeptEnum.ACCT.rawValue)
+        
+        app.navigationBars["Profile"].buttons["Users"].tap()
+    }
     
     func testCurly() {
         let app = XCUIApplication()
@@ -167,28 +167,28 @@ class EmployeeAdminUITests: XCTestCase {
         app.navigationBars["Profile"].buttons["Users"].tap()
     }
     
-//    func testInvalidEntry() {
-//        let app = XCUIApplication()
-//        app.navigationBars["Users"].buttons["Add"].tap()
-//
-//        app.navigationBars["Profile"].buttons["Save"].tap() // save
-//
-//        XCTAssertEqual(app.alerts.element.label, "Error")
-//        XCTAssert(app.alerts.element.staticTexts["Invalid Form Data."].exists)
-//    }
-//
-//    func testInvalidPassword() {
-//        let app = XCUIApplication()
-//        app.navigationBars["Users"].buttons["Add"].tap()
-//
-//        app.secureTextFields["Password"].tap(); app.secureTextFields["Password"].typeText("abc123")
-//        app.secureTextFields["Confirm"].tap(); app.secureTextFields["Confirm"].typeText("ijk456")
-//
-//        app.navigationBars["Profile"].buttons["Save"].tap() // save
-//
-//        XCTAssertEqual(app.alerts.element.label, "Error")
-//        XCTAssert(app.alerts.element.staticTexts["Invalid Form Data."].exists)
-//    }
+    func testInvalidEntry() {
+        let app = XCUIApplication()
+        app.navigationBars["Users"].buttons["Add"].tap()
+
+        app.navigationBars["Profile"].buttons["Save"].tap() // save
+
+        XCTAssertEqual(app.alerts.element.label, "Error")
+        XCTAssert(app.alerts.element.staticTexts["Invalid Form Data."].exists)
+    }
+
+    func testInvalidPassword() {
+        let app = XCUIApplication()
+        app.navigationBars["Users"].buttons["Add"].tap()
+
+        app.secureTextFields["Password"].tap(); app.secureTextFields["Password"].typeText("abc123")
+        app.secureTextFields["Confirm"].tap(); app.secureTextFields["Confirm"].typeText("ijk456")
+
+        app.navigationBars["Profile"].buttons["Save"].tap() // save
+
+        XCTAssertEqual(app.alerts.element.label, "Error")
+        XCTAssert(app.alerts.element.staticTexts["Invalid Form Data."].exists)
+    }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
