@@ -1,9 +1,9 @@
 //
 //  EmployeeAdminUITests.swift
-//  EmployeeAdminUITests
+//  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Created by Saad Shams on 4/3/19.
-//  Copyright © 2019 PureMVC. All rights reserved.
+//  Copyright(c) 2020 Saad Shams <saad.shams@puremvc.org>
+//  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
 import XCTest
@@ -21,6 +21,10 @@ class EmployeeAdminUITests: XCTestCase {
         XCUIApplication().launch()
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+    }
+    
+    override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
     func testList() { // disable hardware keyboard
@@ -97,8 +101,8 @@ class EmployeeAdminUITests: XCTestCase {
         app.textFields["Email"].tap(); app.textFields["Email"].typeText("joe@stooges.com")
         XCTAssertTrue(app.textFields["Username"].isEnabled)
         app.textFields["Username"].tap(); app.textFields["Username"].typeText("jstooge")
-        app.secureTextFields["Password"].tap(); app.secureTextFields["Password"].typeText("abc123")
-        app.secureTextFields["Confirm"].tap(); app.secureTextFields["Confirm"].typeText("abc123")
+        app.secureTextFields["Password"].tap(); app.secureTextFields["Password"].typeText("abc123\n") // Dismiss keyboard by \n to get rid of the strong password autofill
+        app.secureTextFields["Confirm"].tap(); app.secureTextFields["Confirm"].typeText("abc123\n")
         app.pickerWheels.element.adjust(toPickerWheelValue: DeptEnum.SHIPPING.rawValue)
         app.navigationBars["Profile"].buttons["Save"].tap()
         
@@ -139,8 +143,8 @@ class EmployeeAdminUITests: XCTestCase {
         app.textFields["Email"].tap(); app.textFields["Email"].typeText("shemp@stooges.com")
         XCTAssertTrue(app.textFields["Username"].isEnabled)
         app.textFields["Username"].tap(); app.textFields["Username"].typeText("sshemp")
-        app.secureTextFields["Password"].tap(); app.secureTextFields["Password"].typeText("xyz987")
-        app.secureTextFields["Confirm"].tap(); app.secureTextFields["Confirm"].typeText("xyz987")
+        app.secureTextFields["Password"].tap(); app.secureTextFields["Password"].typeText("xyz987\n"); // Dismiss keyboard by \n to get rid of the strong password autofill
+        app.secureTextFields["Confirm"].tap(); app.secureTextFields["Confirm"].typeText("xyz987\n");
         app.pickerWheels.element.adjust(toPickerWheelValue: DeptEnum.ACCT.rawValue)
         app.navigationBars["Profile"].buttons["Save"].tap()
         
@@ -188,10 +192,6 @@ class EmployeeAdminUITests: XCTestCase {
 
         XCTAssertEqual(app.alerts.element.label, "Error")
         XCTAssert(app.alerts.element.staticTexts["Invalid Form Data."].exists)
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
 }

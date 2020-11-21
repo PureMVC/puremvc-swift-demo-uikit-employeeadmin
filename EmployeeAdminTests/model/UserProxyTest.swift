@@ -10,17 +10,20 @@ import XCTest
 @testable import EmployeeAdmin
 
 class UserProxyTest: XCTestCase {
+    
+    var userProxy: UserProxy!
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        userProxy = UserProxy()
     }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        userProxy = nil
     }
 
     func testAddItem() {
-        let userProxy = UserProxy()
         userProxy.addItem(UserVO(username: "jstooge", first: "Joe", last: "Stooge", email: "joe@stooges.com", password: "abc123", department: DeptEnum.SHIPPING))
         
         XCTAssertEqual(userProxy.users.count, 1)
@@ -35,7 +38,6 @@ class UserProxyTest: XCTestCase {
     }
     
     func testupdateItem() {
-        let userProxy = UserProxy()
         userProxy.addItem(UserVO(username: "jstooge", first: "Joe", last: "Stooge", email: "joe@stooges.com", password: "abc123", department: DeptEnum.SHIPPING))
         
         userProxy.updateItem(UserVO(username: "jstooge", first: "Joe1", last: "Stooge1", email: "joe1@stooges.com", password: "xyz987", department: DeptEnum.QC))
@@ -49,7 +51,6 @@ class UserProxyTest: XCTestCase {
     }
     
     func testDeleteItem() {
-        let userProxy = UserProxy()
         userProxy.addItem(UserVO(username: "jstooge", first: "Joe", last: "Stooge", email: "joe@stooges.com", password: "abc123", department: DeptEnum.SHIPPING))
         userProxy.addItem(UserVO(username: "sstooge", first: "Shemp", last: "Stooge", email: "shemp@stooges.com", password: "xyz987", department: DeptEnum.QC))
         

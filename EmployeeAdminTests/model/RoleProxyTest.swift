@@ -11,23 +11,25 @@ import XCTest
 
 class RoleProxyTest: XCTestCase {
 
+    var roleProxy: RoleProxy!
+    
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        roleProxy = RoleProxy()
     }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        roleProxy = nil
     }
 
     func testAddItem() {
-        let roleProxy = RoleProxy()
         roleProxy.addItem(RoleVO(username: "jstooge", roles: [.SALES, .RETURNS, .SHIPPING]))
         
         XCTAssertEqual(roleProxy.roles.count, 1)
     }
     
     func testGetRoleVO() {
-        let roleProxy = RoleProxy()
         roleProxy.addItem(RoleVO(username: "jstooge", roles: [.SALES, .RETURNS, .SHIPPING]))
         
         let roles = roleProxy.getUserRoles("jstooge")!
@@ -38,7 +40,6 @@ class RoleProxyTest: XCTestCase {
     }
     
     func testUpdateUserRoles() {
-        let roleProxy = RoleProxy()
         roleProxy.addItem(RoleVO(username: "jstooge", roles: [.SALES, .RETURNS, .SHIPPING]))
         roleProxy.addItem(RoleVO(username: "sstooge", roles: [.ADMIN, .ACCT_PAY]))
         
@@ -50,7 +51,6 @@ class RoleProxyTest: XCTestCase {
     }
     
     func testDeleteItem() {
-        let roleProxy = RoleProxy()
         roleProxy.addItem(RoleVO(username: "jstooge", roles: [.SALES, .RETURNS, .SHIPPING]))
         roleProxy.addItem(RoleVO(username: "sstooge", roles: [.ADMIN, .ACCT_PAY]))
         
