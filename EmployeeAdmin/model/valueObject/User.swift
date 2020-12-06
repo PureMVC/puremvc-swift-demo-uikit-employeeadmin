@@ -1,0 +1,37 @@
+//
+//  User.swift
+//  PureMVC SWIFT Demo - EmployeeAdmin
+//
+//  Copyright(c) 2020 Saad Shams <saad.shams@puremvc.org>
+//  Your reuse is governed by the Creative Commons Attribution 3.0 License
+//
+
+struct User {
+    
+    var id: Int64?
+    var username: String?
+    var first: String?
+    var last: String?
+    var email: String?
+    var password: String?
+    var department: Department?
+    
+    init(id: Int64?, username: String?, first:String?, last:String?, email:String?, password:String?, department:Department?) {
+        self.id = id
+        self.username = username ?? ""
+        self.first = first ?? ""
+        self.last = last ?? ""
+        self.email = email ?? ""
+        self.password = password ?? ""
+        self.department = department ?? nil
+    }
+    
+    var isValid:Bool {
+        username != "" && first != "" && last != "" && email != "" && password != "" && department != nil && department!.id != 0
+    }
+    
+    var givenName: String? {
+        [last, first].compactMap { $0 }.joined(separator: ", ")
+    }
+    
+}

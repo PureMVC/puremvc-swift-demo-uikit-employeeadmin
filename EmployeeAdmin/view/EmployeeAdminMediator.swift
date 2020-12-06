@@ -9,7 +9,7 @@
 import PureMVC
 import UIKit
 
-class EmployeeAdminMediator: Mediator {
+class EmployeeAdminMediator: Mediator { 
     
     override class var NAME: String { "EmployeeAdminMediator" }
 
@@ -39,32 +39,69 @@ class EmployeeAdminMediator: Mediator {
 }
 
 extension EmployeeAdminMediator: UserListDelegate {
-    func users() -> [UserVO] {
-        userProxy!.users
+    
+    func findAll() throws -> [User]? {
+        return try userProxy?.findAll()
     }
     
-    func delete(_ userVO: UserVO) {
-        userProxy!.deleteItem(userVO.username)
-        roleProxy!.deleteItem(userVO.username)
+    func deleteById(_ id: Int64?) throws -> Int32? {
+        if let id = id {
+            return try userProxy?.deleteById(id)
+        } else {
+            return nil
+        }
     }
+    
 }
 
 extension EmployeeAdminMediator: UserFormDelegate {
-    func save(_ userVO: UserVO, roleVO: RoleVO) {
-        userProxy!.addItem(userVO)
-        roleProxy!.addItem(roleVO)
-    }
     
-    func update(_ userVO: UserVO, roleVO: RoleVO?) {
-        userProxy!.updateItem(userVO)
-        if let roleVO = roleVO {
-            roleProxy!.updateUserRoles(username: userVO.username, role: roleVO.roles)
+    func findById(_ id: Int64?) throws -> User? {
+        if let id = id {
+            return try userProxy?.findById(id)
+        } else {
+            return nil
         }
     }
+    
+    func save(_ user: User?, roles: [Role]?) throws {
+        if let user = user {
+            let id = try userProxy?.save(user)
+            
+            if let id = id, let roles = roles {
+                _ = try roleProxy?.updateByUserId(id, roles: roles.compactMap { $0.id })
+            }
+        }
+    }
+    
+    func update(_ user: User?, roles: [Role]?) throws {
+        if let user = user {
+            _ = try userProxy?.update(user)
+            
+            if let id = user.id, let roles = roles {
+                _ = try roleProxy?.updateByUserId(id, roles: roles.compactMap { $0.id })
+            }
+        }
+    }
+    
+    func findAllDepartments() throws -> [Department]? {
+        return try userProxy?.findAllDepartments()
+    }
+    
 }
 
 extension EmployeeAdminMediator: UserRoleDelegate {
-    func getUserRoles(username: String) -> [RoleEnum]? {
-        roleProxy!.getUserRoles(username)
+    
+    func findAllRoles() throws -> [Role]? {
+        try roleProxy?.findAll()
     }
+    
+    func findRolesById(id: Int64?) throws -> [Role]? {
+        if let id = id {
+            return try roleProxy?.findByUserId(id)
+        } else {
+            return nil
+        }
+    }
+    
 }

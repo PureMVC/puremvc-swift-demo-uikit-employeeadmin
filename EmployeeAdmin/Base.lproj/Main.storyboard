@@ -111,7 +111,7 @@
                                     <outlet property="delegate" destination="0g0-6m-0wk" id="63R-Cc-tfJ"/>
                                 </connections>
                             </pickerView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3B1-uL-AWl">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3B1-uL-AWl">
                                 <rect key="frame" x="20" y="453" width="374" height="78"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -208,6 +208,9 @@
                             <outlet property="delegate" destination="d2K-ye-mz8" id="8gA-Cq-JaH"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="tableView" destination="ZXE-3J-CE5" id="XIJ-9J-yXY"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vAE-Fg-jfR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

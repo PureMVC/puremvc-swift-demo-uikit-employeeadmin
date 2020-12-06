@@ -32,6 +32,9 @@ class ApplicationFacade: Facade {
         Facade.getInstance(key) { k in ApplicationFacade(key: k) } as! ApplicationFacade
     }
     
+    /**
+    register mediator for the view
+     */
     func registerView(view: UIResponder) {
         sendNotification(ApplicationFacade.REGISTER, body: view)
     }
@@ -39,8 +42,8 @@ class ApplicationFacade: Facade {
     /**
     Start the application
     */
-    func startup(_ appDelegate: AppDelegate) {
-        sendNotification(ApplicationFacade.STARTUP, body: appDelegate)
+    func startup(_ window: UIWindow?) {
+        sendNotification(ApplicationFacade.STARTUP)
     }
     
 }

@@ -12,14 +12,10 @@
 		A814B40724537F75002D1415 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A814B40524537F75002D1415 /* LaunchScreen.storyboard */; };
 		A814B41D24537F75002D1415 /* EmployeeAdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B41C24537F75002D1415 /* EmployeeAdminUITests.swift */; };
 		A814B44724537FA8002D1415 /* StartupCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43124537FA8002D1415 /* StartupCommand.swift */; };
-		A814B44824537FA8002D1415 /* PrepViewCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43224537FA8002D1415 /* PrepViewCommand.swift */; };
-		A814B44924537FA8002D1415 /* PrepModelCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43324537FA8002D1415 /* PrepModelCommand.swift */; };
 		A814B44A24537FA8002D1415 /* RegisterCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43424537FA8002D1415 /* RegisterCommand.swift */; };
 		A814B44B24537FA8002D1415 /* ApplicationFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43524537FA8002D1415 /* ApplicationFacade.swift */; };
-		A814B44C24537FA8002D1415 /* RoleVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43824537FA8002D1415 /* RoleVO.swift */; };
-		A814B44D24537FA8002D1415 /* UserVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43924537FA8002D1415 /* UserVO.swift */; };
-		A814B44E24537FA8002D1415 /* RoleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43B24537FA8002D1415 /* RoleEnum.swift */; };
-		A814B44F24537FA8002D1415 /* DeptEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43C24537FA8002D1415 /* DeptEnum.swift */; };
+		A814B44C24537FA8002D1415 /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43824537FA8002D1415 /* Role.swift */; };
+		A814B44D24537FA8002D1415 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43924537FA8002D1415 /* User.swift */; };
 		A814B45024537FA8002D1415 /* UserProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43D24537FA8002D1415 /* UserProxy.swift */; };
 		A814B45124537FA8002D1415 /* RoleProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43E24537FA8002D1415 /* RoleProxy.swift */; };
 		A814B45224537FA8002D1415 /* ApplicationMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44024537FA8002D1415 /* ApplicationMediator.swift */; };
@@ -33,8 +29,7 @@
 		A814B46424538080002D1415 /* UserProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46224538080002D1415 /* UserProxyTest.swift */; };
 		A814B467245380B5002D1415 /* PureMVC in Frameworks */ = {isa = PBXBuildFile; productRef = A814B466245380B5002D1415 /* PureMVC */; };
 		A814B46924538142002D1415 /* SceneMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46824538142002D1415 /* SceneMediator.swift */; };
-		A89BCF1D24CA4A6600EB734A /* DeptEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43C24537FA8002D1415 /* DeptEnum.swift */; };
-		A89BCF1E24CA59A700EB734A /* RoleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43B24537FA8002D1415 /* RoleEnum.swift */; };
+		A870F4B72569DD4200CB7EBF /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = A870F4B62569DD4200CB7EBF /* Department.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,14 +61,10 @@
 		A814B41C24537F75002D1415 /* EmployeeAdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeAdminUITests.swift; sourceTree = "<group>"; };
 		A814B41E24537F75002D1415 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A814B43124537FA8002D1415 /* StartupCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupCommand.swift; sourceTree = "<group>"; };
-		A814B43224537FA8002D1415 /* PrepViewCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepViewCommand.swift; sourceTree = "<group>"; };
-		A814B43324537FA8002D1415 /* PrepModelCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrepModelCommand.swift; sourceTree = "<group>"; };
 		A814B43424537FA8002D1415 /* RegisterCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterCommand.swift; sourceTree = "<group>"; };
 		A814B43524537FA8002D1415 /* ApplicationFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationFacade.swift; sourceTree = "<group>"; };
-		A814B43824537FA8002D1415 /* RoleVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleVO.swift; sourceTree = "<group>"; };
-		A814B43924537FA8002D1415 /* UserVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVO.swift; sourceTree = "<group>"; };
-		A814B43B24537FA8002D1415 /* RoleEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleEnum.swift; sourceTree = "<group>"; };
-		A814B43C24537FA8002D1415 /* DeptEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeptEnum.swift; sourceTree = "<group>"; };
+		A814B43824537FA8002D1415 /* Role.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
+		A814B43924537FA8002D1415 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A814B43D24537FA8002D1415 /* UserProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxy.swift; sourceTree = "<group>"; };
 		A814B43E24537FA8002D1415 /* RoleProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleProxy.swift; sourceTree = "<group>"; };
 		A814B44024537FA8002D1415 /* ApplicationMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationMediator.swift; sourceTree = "<group>"; };
@@ -86,6 +77,7 @@
 		A814B46124538080002D1415 /* RoleProxyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleProxyTest.swift; sourceTree = "<group>"; };
 		A814B46224538080002D1415 /* UserProxyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxyTest.swift; sourceTree = "<group>"; };
 		A814B46824538142002D1415 /* SceneMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneMediator.swift; sourceTree = "<group>"; };
+		A870F4B62569DD4200CB7EBF /* Department.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Department.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,8 +165,6 @@
 			isa = PBXGroup;
 			children = (
 				A814B43124537FA8002D1415 /* StartupCommand.swift */,
-				A814B43224537FA8002D1415 /* PrepViewCommand.swift */,
-				A814B43324537FA8002D1415 /* PrepModelCommand.swift */,
 				A814B43424537FA8002D1415 /* RegisterCommand.swift */,
 			);
 			path = controller;
@@ -183,30 +173,21 @@
 		A814B43624537FA8002D1415 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				A814B43724537FA8002D1415 /* vo */,
-				A814B43A24537FA8002D1415 /* enum */,
+				A814B43724537FA8002D1415 /* valueObject */,
 				A814B43D24537FA8002D1415 /* UserProxy.swift */,
 				A814B43E24537FA8002D1415 /* RoleProxy.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
 		};
-		A814B43724537FA8002D1415 /* vo */ = {
+		A814B43724537FA8002D1415 /* valueObject */ = {
 			isa = PBXGroup;
 			children = (
-				A814B43824537FA8002D1415 /* RoleVO.swift */,
-				A814B43924537FA8002D1415 /* UserVO.swift */,
+				A814B43824537FA8002D1415 /* Role.swift */,
+				A814B43924537FA8002D1415 /* User.swift */,
+				A870F4B62569DD4200CB7EBF /* Department.swift */,
 			);
-			path = vo;
-			sourceTree = "<group>";
-		};
-		A814B43A24537FA8002D1415 /* enum */ = {
-			isa = PBXGroup;
-			children = (
-				A814B43B24537FA8002D1415 /* RoleEnum.swift */,
-				A814B43C24537FA8002D1415 /* DeptEnum.swift */,
-			);
-			path = enum;
+			path = valueObject;
 			sourceTree = "<group>";
 		};
 		A814B43F24537FA8002D1415 /* view */ = {
@@ -310,6 +291,7 @@
 				TargetAttributes = {
 					A814B3F624537F73002D1415 = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1220;
 					};
 					A814B40C24537F75002D1415 = {
 						CreatedOnToolsVersion = 11.4.1;
@@ -376,13 +358,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A814B44C24537FA8002D1415 /* RoleVO.swift in Sources */,
+				A814B44C24537FA8002D1415 /* Role.swift in Sources */,
 				A814B45024537FA8002D1415 /* UserProxy.swift in Sources */,
 				A814B45224537FA8002D1415 /* ApplicationMediator.swift in Sources */,
 				A814B45424537FA8002D1415 /* UserRole.swift in Sources */,
-				A814B44D24537FA8002D1415 /* UserVO.swift in Sources */,
+				A814B44D24537FA8002D1415 /* User.swift in Sources */,
 				A814B45324537FA8002D1415 /* EmployeeAdminMediator.swift in Sources */,
-				A814B44924537FA8002D1415 /* PrepModelCommand.swift in Sources */,
+				A870F4B72569DD4200CB7EBF /* Department.swift in Sources */,
 				A814B45724537FA8002D1415 /* AppDelegate.swift in Sources */,
 				A814B44B24537FA8002D1415 /* ApplicationFacade.swift in Sources */,
 				A814B44724537FA8002D1415 /* StartupCommand.swift in Sources */,
@@ -390,11 +372,8 @@
 				A814B45924538060002D1415 /* SceneDelegate.swift in Sources */,
 				A814B45524537FA8002D1415 /* UserList.swift in Sources */,
 				A814B45124537FA8002D1415 /* RoleProxy.swift in Sources */,
-				A814B44E24537FA8002D1415 /* RoleEnum.swift in Sources */,
 				A814B46924538142002D1415 /* SceneMediator.swift in Sources */,
 				A814B44A24537FA8002D1415 /* RegisterCommand.swift in Sources */,
-				A814B44824537FA8002D1415 /* PrepViewCommand.swift in Sources */,
-				A814B44F24537FA8002D1415 /* DeptEnum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,9 +390,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A89BCF1E24CA59A700EB734A /* RoleEnum.swift in Sources */,
 				A814B41D24537F75002D1415 /* EmployeeAdminUITests.swift in Sources */,
-				A89BCF1D24CA4A6600EB734A /* DeptEnum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +549,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = EmployeeAdmin/Info.plist;
@@ -582,6 +560,8 @@
 				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.puremvc.EmployeeAdmin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -591,6 +571,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = EmployeeAdmin/Info.plist;
@@ -601,6 +582,7 @@
 				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.puremvc.EmployeeAdmin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -35,8 +35,9 @@ class EmployeeAdminUITests: XCTestCase {
     
     func testLarry() {
         let app = XCUIApplication()
+
         app.tables.cells.element(boundBy: 0).tap()
-        
+
         XCTAssertEqual(app.textFields["First Name"].value as! String, "Larry")
         XCTAssertEqual(app.textFields["Last Name"].value as! String, "Stooge")
         XCTAssertEqual(app.textFields["Email"].value as! String, "larry@stooges.com")
@@ -44,44 +45,44 @@ class EmployeeAdminUITests: XCTestCase {
         XCTAssertEqual(app.textFields["Username"].value as! String, "lstooge")
         XCTAssertNotEqual((app.secureTextFields["Password"].value as! String).count, 0)
         XCTAssertNotEqual((app.secureTextFields["Confirm"].value as! String).count, 0)
-        XCTAssertEqual(app.pickerWheels.element.value as! String, DeptEnum.ACCT.rawValue)
-        
+        XCTAssertEqual(app.pickerWheels.element.value as! String, "Accounting")
+
         app.navigationBars["Profile"].buttons["Users"].tap()
     }
     
-    func testCurly() {
+    func testCurly() { // disable hardware keyboard
         let app = XCUIApplication()
         app.tables.cells.element(boundBy: 1).tap()
-        
+
         // update roles
         app.tables.cells.staticTexts["User Roles"].tap()
         app.tables.cells.element(boundBy: 0).tap();
         app.navigationBars["UserRole"].buttons["Profile"].tap() // back from user role
-        
+
         // update details
         app.textFields["First Name"].tap(); app.textFields["First Name"].typeText("1")
         app.textFields["Last Name"].tap(); app.textFields["Last Name"].typeText("1")
         app.textFields["Email"].tap(); app.textFields["Email"].typeText("1")
         XCTAssertFalse(app.textFields["Username"].isEnabled)
-        app.pickerWheels.element.adjust(toPickerWheelValue: DeptEnum.ACCT.rawValue)
+        app.pickerWheels.element.adjust(toPickerWheelValue: "Accounting")
         app.navigationBars["Profile"].buttons["Save"].tap() // save
-        
+
         // Select Curly
         _ = app.tables.cells.element(boundBy: 1).waitForExistence(timeout: 1)
         app.tables.cells.element(boundBy: 1).tap()
-        
+
         // verify roles
         app.tables.cells.staticTexts["User Roles"].tap()
         _ = app.tables.cells.element(boundBy: 1).waitForExistence(timeout: 1)
          XCTAssertEqual(app.tables.cells.element(boundBy: 0).isSelected, true)
         app.navigationBars["UserRole"].buttons["Profile"].tap() // back from user role
-        
+
         // verify details
         XCTAssertEqual(app.textFields["First Name"].value as! String, "Curly1")
         XCTAssertEqual(app.textFields["Last Name"].value as! String, "Stooge1")
         XCTAssertEqual(app.textFields["Email"].value as! String, "curly@stooges1.com")
         XCTAssertFalse(app.textFields["Username"].isEnabled)
-        XCTAssertEqual(app.pickerWheels.element.value as! String, DeptEnum.ACCT.rawValue)
+        XCTAssertEqual(app.pickerWheels.element.value as! String, "Accounting")
         app.navigationBars["Profile"].buttons["Users"].tap() // back from user form without saving
     }
     
@@ -103,7 +104,7 @@ class EmployeeAdminUITests: XCTestCase {
         app.textFields["Username"].tap(); app.textFields["Username"].typeText("jstooge")
         app.secureTextFields["Password"].tap(); app.secureTextFields["Password"].typeText("abc123\n") // Dismiss keyboard by \n to get rid of the strong password autofill
         app.secureTextFields["Confirm"].tap(); app.secureTextFields["Confirm"].typeText("abc123\n")
-        app.pickerWheels.element.adjust(toPickerWheelValue: DeptEnum.SHIPPING.rawValue)
+        app.pickerWheels.element.adjust(toPickerWheelValue: "Shipping")
         app.navigationBars["Profile"].buttons["Save"].tap()
         
         // verify new record
@@ -123,7 +124,7 @@ class EmployeeAdminUITests: XCTestCase {
         XCTAssertEqual(app.textFields["Email"].value as! String, "joe@stooges.com")
         XCTAssertFalse(app.textFields["Username"].isEnabled)
         XCTAssertEqual(app.textFields["Username"].value as! String, "jstooge")
-        XCTAssertEqual(app.pickerWheels.element.value as! String, DeptEnum.SHIPPING.rawValue)
+        XCTAssertEqual(app.pickerWheels.element.value as! String, "Shipping")
         app.navigationBars["Profile"].buttons["Users"].tap() // back from user form without saving
         
         // delete user
@@ -145,7 +146,7 @@ class EmployeeAdminUITests: XCTestCase {
         app.textFields["Username"].tap(); app.textFields["Username"].typeText("sshemp")
         app.secureTextFields["Password"].tap(); app.secureTextFields["Password"].typeText("xyz987\n"); // Dismiss keyboard by \n to get rid of the strong password autofill
         app.secureTextFields["Confirm"].tap(); app.secureTextFields["Confirm"].typeText("xyz987\n");
-        app.pickerWheels.element.adjust(toPickerWheelValue: DeptEnum.ACCT.rawValue)
+        app.pickerWheels.element.adjust(toPickerWheelValue: "Accounting")
         app.navigationBars["Profile"].buttons["Save"].tap()
         
         // verify new record
@@ -169,6 +170,12 @@ class EmployeeAdminUITests: XCTestCase {
         XCTAssertEqual(app.tables.cells.element(boundBy: 1).isSelected, true)
         app.navigationBars["UserRole"].buttons["Profile"].tap() // back from user role
         app.navigationBars["Profile"].buttons["Users"].tap()
+        
+        // delete user
+        XCTAssertEqual(app.tables.staticTexts.count, 4)
+        app.tables.cells.element(boundBy: 3).swipeLeft()
+        app.tables.cells.element(boundBy: 3).buttons["Delete"].tap()
+        XCTAssertEqual(app.tables.staticTexts.count, 3)
     }
     
     func testInvalidEntry() {

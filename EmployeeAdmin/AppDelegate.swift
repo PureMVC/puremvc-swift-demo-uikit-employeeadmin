@@ -17,8 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-
-        facade.startup(self)
+        facade.startup(window)
+        
+        let alert = UIAlertController(title: "Error", message: "ABc", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        
+        window?.rootViewController?.present(alert, animated: true, completion: nil)
+    
         return true
     }
     
@@ -49,4 +54,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-

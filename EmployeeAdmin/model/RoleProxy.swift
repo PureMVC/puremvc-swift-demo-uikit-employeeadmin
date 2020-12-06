@@ -7,54 +7,67 @@
 //
 
 import PureMVC
+import Foundation
+import SQLite3
 
 class RoleProxy: Proxy {
     
     override class var NAME: String { "RoleProxy" }
     
-    init() {
-        super.init(name: RoleProxy.NAME, data: [RoleVO]())
+    internal var database: OpaquePointer!
+    
+    init(_ database: OpaquePointer) {
+        super.init(name: RoleProxy.NAME, data: [Role]())
+        self.database = database
     }
     
-    // add an item to the data
-    func addItem(_ item: RoleVO) {
-        roles.append(item)
-    }
-    
-    // update user roles
-    func updateUserRoles(username: String, role: [RoleEnum]) {
-        for (index, element) in roles.enumerated() {
-            if (element.username == username) {
-                roles[index].roles = role
-                break
-            }
+    func findAll() throws -> [Role]? {
+        var statement: OpaquePointer? = nil
+        let sql = "SELECT id, name FROM role"
+        
+        guard sqlite3_prepare_v2(database, sql, -1, &statement, nil) == SQLITE_OK else {
+            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
         }
-    }
-    
-    // get a users roles
-    func getUserRoles(_ username: String) -> [RoleEnum]? {
-        var roleEnums: [RoleEnum]?
-        for (index, element) in roles.enumerated() {
-            if (element.username == username) {
-                roleEnums = roles[index].roles
-            }
+        
+        defer { sqlite3_finalize(statement) }
+        
+        var roles: [Role] = []
+        while sqlite3_step(statement) == SQLITE_ROW {
+            roles.append(Role(id: sqlite3_column_int64(statement, 0), name: String(cString: sqlite3_column_text(statement, 1))))
         }
-        return roleEnums
+        return roles
     }
     
-    // delete an item from the data
-    func deleteItem(_ username: String) {
-        for (index, element) in roles.enumerated() {
-            if(element.username == username) {
-                roles.remove(at: index)
-                break
-            }
+    func findByUserId(_ id: Int64) throws -> [Role]? {
+        var statement: OpaquePointer? = nil
+        let sql = "SELECT id, name FROM role INNER JOIN user_role ON role.id = user_role.role_id WHERE user_id = @user_id"
+        
+        guard sqlite3_prepare(database, sql, -1, &statement, nil) == SQLITE_OK else {
+            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
         }
+               
+        defer { sqlite3_finalize(statement) }
+                
+        guard sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, "@user_id"), id) == SQLITE_OK else {
+            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
+        }
+        
+        var roles: [Role] = []
+        while sqlite3_step(statement) == SQLITE_ROW {
+            roles.append(Role(id: sqlite3_column_int64(statement, 0), name: String(cString: sqlite3_column_text(statement, 1))))
+        }
+        return roles
     }
     
-    var roles: [RoleVO] {
-        get { data as! [RoleVO] }
-        set { data = newValue }
+    func updateByUserId(_ id: Int64, roles: [Int64]) throws -> Int32? {
+        let values = roles.map { "(\(id), \($0))" }.joined(separator: ", ")
+        let sql = "BEGIN TRANSACTION; DELETE FROM user_role WHERE user_id = \(id);" + (values.count > 0 ? "INSERT INTO user_role(user_id, role_id) VALUES\(values);" : "") + "COMMIT;"
+        
+        guard sqlite3_exec(database, sql, nil, nil, nil) == SQLITE_OK else {
+            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
+        }
+        
+        return sqlite3_changes(database)
     }
     
 }
