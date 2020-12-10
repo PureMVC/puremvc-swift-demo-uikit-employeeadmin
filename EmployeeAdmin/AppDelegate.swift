@@ -19,11 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         facade.startup(window)
         
-        let alert = UIAlertController(title: "Error", message: "ABc", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        
-        window?.rootViewController?.present(alert, animated: true, completion: nil)
-    
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+//            let alert = UIAlertController(title: "Error", message: "ABc", preferredStyle: UIAlertController.Style.alert)
+//            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+//
+//            self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+//        })
+
         return true
     }
     

@@ -7,6 +7,14 @@ This demo illustrates techniques for performing routine maintenance operations i
 ## Screenshot
 ![PureMVC SWIFT Demo: Employee Admin](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Swift-EmployeeAdmin.png)
 
+## Installation
+
+Clone and Install a microservice before running the application
+
+git clone https://github.com/PureMVC/puremvc-js-demo-microservice-employeeadmin.git
+cd puremvc-js-demo-microservice-employeeadmin
+docker-compose-up
+
 ## Tests
 * [XCode UI Tests](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Swift-iOS-EmployeeAdmin-UITests.gif)
 * [Unit Tests](http://puremvc.github.io/pages/images/screenshots/PureMVC-Shot-Swift-iOS-EmployeeAdmin-UnitTests.png)

@@ -36,71 +36,70 @@ class EmployeeAdminMediator: Mediator {
             print("default")
         }
     }
+    
 }
 
 extension EmployeeAdminMediator: UserListDelegate {
     
-    func findAll() throws -> [User]? {
-        return try userProxy?.findAll()
+    func findAll(_ completion: @escaping ([User]?, NSException?) -> Void) {
+        userProxy?.findAll(completion)
     }
     
-    func deleteById(_ id: Int64?) throws -> Int32? {
+    func deleteById(_ id: Int?, _ completion: @escaping (Int?, NSException?) -> Void) {
         if let id = id {
-            return try userProxy?.deleteById(id)
+            userProxy?.deleteById(id, completion)
         } else {
-            return nil
+            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Id can't be nil.", userInfo: nil))
         }
     }
     
 }
 
 extension EmployeeAdminMediator: UserFormDelegate {
-    
-    func findById(_ id: Int64?) throws -> User? {
+ 
+    func findById(_ id: Int?, _ completion: @escaping (User?, NSException?) -> Void) {
         if let id = id {
-            return try userProxy?.findById(id)
+            userProxy?.findById(id, completion)
         } else {
-            return nil
+            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Id can't be nil.", userInfo: nil))
         }
     }
     
-    func save(_ user: User?, roles: [Role]?) throws {
+    func save(_ user: User?, roles: [Role]?, completion: @escaping (Int?, NSException?) -> Void) {
         if let user = user {
-            let id = try userProxy?.save(user)
-            
-            if let id = id, let roles = roles {
-                _ = try roleProxy?.updateByUserId(id, roles: roles.compactMap { $0.id })
-            }
+            userProxy?.save(user, completion: completion)
+        } else {
+            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "User can't be nil.", userInfo: nil))
         }
     }
     
-    func update(_ user: User?, roles: [Role]?) throws {
+    func update(_ user: User?, roles: [Role]?, completion: @escaping (Int?, NSException?) -> Void) {
+        if let roles = roles, let id = user?.id {
+            roleProxy?.updateByUserId(id, roles: roles) { _,_ in }
+        }
+        
         if let user = user {
-            _ = try userProxy?.update(user)
-            
-            if let id = user.id, let roles = roles {
-                _ = try roleProxy?.updateByUserId(id, roles: roles.compactMap { $0.id })
-            }
+            userProxy?.update(user, completion: completion)
         }
     }
     
-    func findAllDepartments() throws -> [Department]? {
-        return try userProxy?.findAllDepartments()
+    func findAllDepartments(_ completion: @escaping ([Department]?, NSException?) -> Void) {
+        userProxy?.findAllDepartments(completion)
     }
     
 }
 
 extension EmployeeAdminMediator: UserRoleDelegate {
-    
-    func findAllRoles() throws -> [Role]? {
-        try roleProxy?.findAll()
+
+    func findAllRoles(_ completion: @escaping ([Role]?, NSException?) -> Void){
+        roleProxy?.findAll(completion)
     }
     
-    func findRolesById(id: Int64?) throws -> [Role]? {
+    func findRolesById(_ id: Int?, _ completion: @escaping ([Role]?, NSException?) -> Void) {
         if let id = id {
-            return try roleProxy?.findByUserId(id)
+            roleProxy?.findByUserId(id, completion)
         } else {
-            return nil
+            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Id can't be nil.", userInfo: nil))
         }
     }
     

@@ -9,8 +9,8 @@
 import UIKit
 
 protocol UserRoleDelegate: class {
-    func findAllRoles() throws -> [Role]?
-    func findRolesById(id: Int64?) throws -> [Role]?
+    func findAllRoles(_ completion: @escaping ([Role]?, NSException?) -> Void)
+    func findRolesById(_ id: Int?, _ completion: @escaping ([Role]?, NSException?) -> Void)
 }
 
 protocol UserRoleResponder: class {
@@ -19,7 +19,7 @@ protocol UserRoleResponder: class {
 
 class UserRole: UIViewController {
     
-    var id: Int64?
+    var id: Int?
     
     var roles: [Role]?
         
@@ -32,7 +32,7 @@ class UserRole: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
-        (UIApplication.shared.delegate as! AppDelegate).registerView(view: self)
+        (UIApplication.shared.delegate as? AppDelegate)?.registerView(view: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,23 +40,27 @@ class UserRole: UIViewController {
         
         group.enter()
         DispatchQueue.global().async { [weak self] in // UI Data
-            do {
-                self?.dataSource = try self?.delegate?.findAllRoles()
-                group.leave()
-            } catch let error as NSError {
-                self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)")
-            }
+            self?.delegate?.findAllRoles({ (roles, exception) in
+                if let exception = exception {
+                    DispatchQueue.main.async { self?.fault(exception) }
+                } else {
+                    self?.dataSource = roles
+                }
+            })
+            group.leave()
         }
         
         if roles == nil && id != nil { // User Data
             group.enter()
             DispatchQueue.global().async { [weak self] in
-                do {
-                    self?.roles = try self?.delegate?.findRolesById(id: self?.id)
-                    group.leave()
-                } catch let error as NSError {
-                    self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)")
-                }
+                self?.delegate?.findRolesById(self?.id, { (roles, exception) in
+                    if let exception = exception {
+                        self?.fault(exception)
+                    } else {
+                        self?.roles = roles
+                        group.leave()
+                    }
+                })
             }
         }
         
@@ -68,8 +72,8 @@ class UserRole: UIViewController {
         }
     }
     
-    func fault(_ message: String) {
-        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
+    func fault(_ exception: NSException) {
+        let alertController = UIAlertController(title: "Error", message: exception.description, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }

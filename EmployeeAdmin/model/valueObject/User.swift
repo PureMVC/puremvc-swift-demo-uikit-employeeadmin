@@ -6,9 +6,9 @@
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
-struct User {
+struct User: Decodable, Encodable {
     
-    var id: Int64?
+    var id: Int?
     var username: String?
     var first: String?
     var last: String?
@@ -16,7 +16,7 @@ struct User {
     var password: String?
     var department: Department?
     
-    init(id: Int64?, username: String?, first:String?, last:String?, email:String?, password:String?, department:Department?) {
+    init(id: Int?, username: String?, first:String?, last:String?, email:String?, password:String?, department:Department?) {
         self.id = id
         self.username = username ?? ""
         self.first = first ?? ""

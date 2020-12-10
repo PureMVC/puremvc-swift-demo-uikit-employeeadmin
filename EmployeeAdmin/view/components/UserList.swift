@@ -9,8 +9,8 @@
 import UIKit
 
 protocol UserListDelegate: class {
-    func findAll() throws -> [User]?
-    func deleteById(_ id: Int64?) throws -> Int32?
+    func findAll(_ completion: @escaping ([User]?, NSException?) -> Void)
+    func deleteById(_ id: Int?, _ completion: @escaping (Int?, NSException?) -> Void)
 }
 
 class UserList: UIViewController {
@@ -24,18 +24,20 @@ class UserList: UIViewController {
     @IBOutlet var tableView: UITableView!
 
     override func viewDidLoad() {
-        (UIApplication.shared.delegate as! AppDelegate).registerView(view: self);
+        (UIApplication.shared.delegate as? AppDelegate)?.registerView(view: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        DispatchQueue.global().async { [weak self] in
-            do {
-                self?.users = try self?.delegate?.findAll()
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self?.delegate?.findAll() { users, exception in
                 DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+                    if let exception = exception {
+                        self?.fault(exception)
+                    } else {
+                        self?.users = users
+                        self?.tableView.reloadData()
+                    }
                 }
-            } catch let error as NSError {
-                DispatchQueue.main.async { self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)") }
             }
         }
     }
@@ -53,15 +55,15 @@ class UserList: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { // segue to UserForm to show user details
         if let identifier = segue.identifier, identifier == "segueToUserForm" {
             if let userForm = segue.destination as? UserForm {
-                if let id = sender as? Int64 { // existing vs. new user
+                if let id = sender as? Int { // existing vs. new user
                     userForm.id = id
                 }
             }
         }
     }
     
-    func fault(_ message: String) {
-        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
+    func fault(_ exception: NSException) {
+        let alertController = UIAlertController(title: "Error", message: exception.description, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
@@ -93,16 +95,13 @@ extension UserList: UITableViewDelegate {
         if editingStyle == UITableViewCell.EditingStyle.delete {
             
             DispatchQueue.global().async { [weak self] in
-                do {
-                    _ = try self?.delegate?.deleteById(self?.users?[indexPath.row].id)
-                    self?.users?.remove(at: indexPath.row)
-                    
+                self?.delegate?.deleteById(self?.users?[indexPath.row].id) { modified, exception in
                     DispatchQueue.main.async {
+                        self?.users?.remove(at: indexPath.row)
                         self?.tableView.deleteRows(at: [indexPath], with: .automatic)
                     }
-                } catch let error as NSError {
-                    DispatchQueue.main.async { self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)") }
                 }
+
             }
             
         }

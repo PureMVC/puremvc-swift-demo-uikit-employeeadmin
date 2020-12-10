@@ -9,15 +9,15 @@
 import UIKit
 
 protocol UserFormDelegate : class {
-    func findById(_ id: Int64?) throws -> User?
-    func save(_ user: User?, roles: [Role]?) throws
-    func update(_ user: User?, roles: [Role]?) throws
-    func findAllDepartments() throws -> [Department]?
+    func findById(_ id: Int?, _ completion: @escaping (User?, NSException?) -> Void)
+    func save(_ user: User?, roles: [Role]?, completion: @escaping (Int?, NSException?) -> Void)
+    func update(_ user: User?, roles: [Role]?, completion: @escaping (Int?, NSException?) -> Void)
+    func findAllDepartments(_ completion: @escaping ([Department]?, NSException?) -> Void)
 }
 
 class UserForm: UIViewController {
     
-    var id: Int64?
+    var id: Int?
     
     var user: User?
     
@@ -37,7 +37,7 @@ class UserForm: UIViewController {
     @IBOutlet weak var userRoles: UITableView!
     
     override func viewDidLoad() {
-        (UIApplication.shared.delegate as! AppDelegate).registerView(view: self)
+        (UIApplication.shared.delegate as? AppDelegate)?.registerView(view: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,26 +49,26 @@ class UserForm: UIViewController {
         
         group.enter()
         DispatchQueue.global().async { [weak self] in // UI data
-            do {
-                if let departments = try self?.delegate?.findAllDepartments() {
-                    self?.departments?.append(contentsOf: departments)
+            self?.delegate?.findAllDepartments({ (departments, exception) in
+                if let exception = exception {
+                    DispatchQueue.main.async { self?.fault(exception) }
+                } else {
+                    self?.departments?.append(contentsOf: departments ?? [])
+                    group.leave()
                 }
-                group.leave()
-            } catch let error as NSError {
-                DispatchQueue.main.async { self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)") }
-            }
+            })
         }
         
         if self.user == nil { // User data
             group.enter()
             DispatchQueue.global().async { [weak self] in
-                do {
-                    if let user = try self?.delegate?.findById(self?.id) {
+                self?.delegate?.findById(self?.id) { (user, exception) in
+                    if let exception = exception {
+                        self?.fault(exception)
+                    } else {
                         self?.user = user
+                        group.leave()
                     }
-                    group.leave()
-                } catch let error as NSError {
-                    DispatchQueue.main.async { self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)") }
                 }
             }
         }
@@ -82,8 +82,8 @@ class UserForm: UIViewController {
                 self?.email.text = user.email
                 self?.username.text = user.username
                 self?.username.isEnabled = false
-                self?.password.text = user.password
-                self?.confirmPassword.text = user.password
+                self?.password.text = "temp"
+                self?.confirmPassword.text = "temp"
                 self?.department.selectRow(Int(user.department?.id ?? 0), inComponent: 0, animated: true)
             }
         }
@@ -94,42 +94,46 @@ class UserForm: UIViewController {
         if user == nil { // new user
             user = User(id: nil, username: username.text, first: first?.text,
                         last: last.text, email: email.text, password: password.text,
-                        department: Department(id: Int64(department.selectedRow(inComponent: 0)), name: nil))
+                        department: Department(id: department.selectedRow(inComponent: 0), name: nil))
         } else { // existing user
             user?.first = first.text ?? ""
             user?.last = last.text ?? ""
             user?.email = email.text ?? ""
             user?.password = password.text ?? ""
-            user?.department?.id = Int64(department.selectedRow(inComponent: 0))
+            user?.department?.id = department.selectedRow(inComponent: 0)
             user?.department?.name = departments?[department.selectedRow(inComponent: 0)].name
         }
         
         if user!.password == confirmPassword.text && user!.isValid == true { // validation
             if user?.id == nil {
                 DispatchQueue.global().async { [weak self] in
-                    do {
-                        try self?.delegate?.save(self?.user, roles: self?.roles)
-                        DispatchQueue.main.async { [weak self] in
-                            self?.navigationController?.popToRootViewController(animated: true)
+                    self?.delegate?.save(self?.user, roles: self?.roles, completion: { (id, exception) in
+                        if let exception = exception {
+                            self?.fault(exception)
+                        } else {
+                            self?.user?.id = id
+                            
+                            DispatchQueue.main.async {
+                                self?.navigationController?.popToRootViewController(animated: true)
+                            }
                         }
-                    } catch let error as NSError {
-                        DispatchQueue.main.async { self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)") }
-                    }
+                    })
                 }
             } else {
                 DispatchQueue.global().async { [weak self] in
-                    do {
-                        try self?.delegate?.update(self?.user, roles: self?.roles)
-                        DispatchQueue.main.async { [weak self] in
-                            self?.navigationController?.popToRootViewController(animated: true)
+                    self?.delegate?.update(self?.user, roles: self?.roles, completion: { (modified, exception) in
+                        if let exception = exception {
+                            self?.fault(exception)
+                        } else {
+                            DispatchQueue.main.async { [weak self] in
+                                self?.navigationController?.popToRootViewController(animated: true)
+                            }
                         }
-                    } catch let error as NSError {
-                        DispatchQueue.main.async { self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)") }
-                    }
+                    })
                 }
             }
         } else {
-            fault("Invalid Form Data.")
+            fault(NSException(name: NSExceptionName(rawValue: "Error"), reason: "Invalid Form Data.", userInfo: nil))
         }
     }
 
@@ -140,7 +144,7 @@ class UserForm: UIViewController {
                 user?.last = last.text ?? ""
                 user?.email = email.text ?? ""
                 user?.password = password.text ?? ""
-                user?.department?.id = Int64(department.selectedRow(inComponent: 0))
+                user?.department?.id = department.selectedRow(inComponent: 0)
                 
                 userRole.id = user?.id
                 userRole.roles = roles // previous selection if any
@@ -149,8 +153,8 @@ class UserForm: UIViewController {
         }
     }
     
-    func fault(_ message: String) {
-        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
+    func fault(_ exception: NSException) {
+        let alertController = UIAlertController(title: "Error", message: exception.description, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
