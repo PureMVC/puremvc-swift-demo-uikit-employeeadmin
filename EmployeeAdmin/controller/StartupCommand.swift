@@ -44,13 +44,13 @@ class StartupCommand: SimpleCommand {
                     }
                 } catch let error as NSError  {
                     alert.message = error.description
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0, execute: {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now(), execute: {
                         window?.rootViewController?.present(alert, animated: true, completion: nil)
                     })
                 }
             } else {
                 alert.message = String(cString: sqlite3_errmsg(database))
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0, execute: {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now(), execute: {
                     window?.rootViewController?.present(alert, animated: true, completion: nil)
                 })
             }
@@ -61,13 +61,13 @@ class StartupCommand: SimpleCommand {
                 }
             } catch let error as NSError {
                 alert.message = error.description
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0, execute: {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now(), execute: {
                     window?.rootViewController?.present(alert, animated: true, completion: nil)
                 })
             }
         } else { // Error opening database
             alert.message = String(cString: sqlite3_errmsg(database))
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0, execute: {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now(), execute: {
                 window?.rootViewController?.present(alert, animated: true, completion: nil)
             })
         }
