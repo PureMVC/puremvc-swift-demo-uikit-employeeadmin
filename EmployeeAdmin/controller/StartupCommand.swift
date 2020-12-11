@@ -15,8 +15,19 @@ class StartupCommand: SimpleCommand {
     
     override func execute(_ notification: INotification) {
         
+
+        
         var database: OpaquePointer? = nil
         let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("employeeadmin.sqlite")
+        
+        let window = notification.body as? UIWindow
+        let alert = UIAlertController(title: "Error", message: "", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        
+        alert.message = "hello world"
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+            window?.rootViewController?.present(alert, animated: true, completion: nil)
+        })
                 
         if FileManager.default.fileExists(atPath: url.path) == false { // Initialize (One time)
             if sqlite3_open_v2(url.path, &database, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK { // Serialized mode
@@ -39,10 +50,16 @@ class StartupCommand: SimpleCommand {
                         throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
                     }
                 } catch let error as NSError  {
-                    print(error.description)
+                    alert.message = error.description
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+                        window?.rootViewController?.present(alert, animated: true, completion: nil)
+                    })
                 }
             } else {
-                print(String(cString: sqlite3_errmsg(database)))
+                alert.message = String(cString: sqlite3_errmsg(database))
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+                    window?.rootViewController?.present(alert, animated: true, completion: nil)
+                })
             }
         } else if sqlite3_open_v2(url.path, &database, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK { // Existing database (Serialized mode)
             do {
@@ -50,10 +67,16 @@ class StartupCommand: SimpleCommand {
                     throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
                 }
             } catch let error as NSError {
-                print(error.description)
+                alert.message = error.description
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+                    window?.rootViewController?.present(alert, animated: true, completion: nil)
+                })
             }
         } else { // Error opening database
-            print(String(cString: sqlite3_errmsg(database)))
+            alert.message = String(cString: sqlite3_errmsg(database))
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+                window?.rootViewController?.present(alert, animated: true, completion: nil)
+            })
         }
 
         facade.registerProxy(UserProxy(database!))
