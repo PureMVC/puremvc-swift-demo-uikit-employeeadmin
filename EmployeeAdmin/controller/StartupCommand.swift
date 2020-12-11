@@ -14,21 +14,14 @@ import UIKit
 class StartupCommand: SimpleCommand {
     
     override func execute(_ notification: INotification) {
-        
 
-        
-        var database: OpaquePointer? = nil
-        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("employeeadmin.sqlite")
-        
         let window = notification.body as? UIWindow
         let alert = UIAlertController(title: "Error", message: "", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         
-        alert.message = "hello world"
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
-            window?.rootViewController?.present(alert, animated: true, completion: nil)
-        })
-                
+        var database: OpaquePointer? = nil
+        let url = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("employeeadmin.sqlite")
+                        
         if FileManager.default.fileExists(atPath: url.path) == false { // Initialize (One time)
             if sqlite3_open_v2(url.path, &database, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK { // Serialized mode
                 do {
@@ -47,17 +40,17 @@ class StartupCommand: SimpleCommand {
                         sqlite3_exec(database, "CREATE TABLE user_role(user_id INTEGER NOT NULL, role_id INTEGER NOT NULL, PRIMARY KEY(user_id, role_id), FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE NO ACTION, FOREIGN KEY(role_id) REFERENCES role(id) ON DELETE CASCADE ON UPDATE NO ACTION)", nil, nil, nil) == SQLITE_OK &&
                         sqlite3_exec(database, "INSERT INTO user_role(user_id, role_id) VALUES(1, 4), (2, 3), (2, 5), (3, 8), (3, 10), (3, 13)", nil, nil, nil) == SQLITE_OK
                     else {
-                        throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
+                        throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
                     }
                 } catch let error as NSError  {
                     alert.message = error.description
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0, execute: {
                         window?.rootViewController?.present(alert, animated: true, completion: nil)
                     })
                 }
             } else {
                 alert.message = String(cString: sqlite3_errmsg(database))
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0, execute: {
                     window?.rootViewController?.present(alert, animated: true, completion: nil)
                 })
             }
@@ -68,19 +61,22 @@ class StartupCommand: SimpleCommand {
                 }
             } catch let error as NSError {
                 alert.message = error.description
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0, execute: {
                     window?.rootViewController?.present(alert, animated: true, completion: nil)
                 })
             }
         } else { // Error opening database
             alert.message = String(cString: sqlite3_errmsg(database))
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0, execute: {
                 window?.rootViewController?.present(alert, animated: true, completion: nil)
             })
         }
 
-        facade.registerProxy(UserProxy(database!))
-        facade.registerProxy(RoleProxy(database!))
+        if let database = database {
+            facade.registerProxy(UserProxy(database))
+            facade.registerProxy(RoleProxy(database))
+        }
+        
     }
     
 }

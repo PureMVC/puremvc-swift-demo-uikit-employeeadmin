@@ -15,9 +15,6 @@ class RegisterCommand: SimpleCommand {
 
         switch notification.body {
             
-            case let viewComponent as SceneDelegate:
-                facade.registerMediator(SceneMediator(viewComponent: viewComponent))
-            
             case let viewComponent as UIViewController:
                 if(facade.hasMediator(EmployeeAdminMediator.NAME + viewComponent.title!)) {
                     facade.removeMediator(EmployeeAdminMediator.NAME + viewComponent.title!)

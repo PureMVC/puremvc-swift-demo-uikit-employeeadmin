@@ -63,10 +63,17 @@ class RoleProxy: Proxy {
         let values = roles.map { "(\(id), \($0))" }.joined(separator: ", ")
         let sql = "BEGIN TRANSACTION; DELETE FROM user_role WHERE user_id = \(id);" + (values.count > 0 ? "INSERT INTO user_role(user_id, role_id) VALUES\(values);" : "") + "COMMIT;"
         
-        guard sqlite3_exec(database, sql, nil, nil, nil) == SQLITE_OK else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
+        do {
+            guard sqlite3_exec(database, sql, nil, nil, nil) == SQLITE_OK else {
+                throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
+            }
+        } catch let error as NSError {
+            guard sqlite3_exec(database, "ROLLBACK", nil, nil, nil) == SQLITE_OK else {
+                throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
+            }
+            throw error
         }
-        
+
         return sqlite3_changes(database)
     }
     

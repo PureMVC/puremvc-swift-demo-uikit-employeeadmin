@@ -68,12 +68,9 @@ class UserProxyTest: XCTestCase {
         do {
             if let users = try userProxy.findAll() {
                 XCTAssertEqual(users.count, 3)
-                XCTAssertEqual(users[0].username!, "lstooge")
+                XCTAssertEqual(users[0].id, 1)
                 XCTAssertEqual(users[0].first!, "Larry")
                 XCTAssertEqual(users[0].last!, "Stooge")
-                XCTAssertEqual(users[0].email!, "larry@stooges.com")
-                XCTAssertEqual(users[0].password!, "ijk456")
-                XCTAssertEqual(users[0].department!.id, 1)
             }
         } catch let error as NSError {
             XCTFail(error.description)

@@ -24,11 +24,9 @@
 		A814B45524537FA8002D1415 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44424537FA8002D1415 /* UserList.swift */; };
 		A814B45624537FA8002D1415 /* UserForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44524537FA8002D1415 /* UserForm.swift */; };
 		A814B45724537FA8002D1415 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44624537FA8002D1415 /* AppDelegate.swift */; };
-		A814B45924538060002D1415 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B45824538060002D1415 /* SceneDelegate.swift */; };
 		A814B46324538080002D1415 /* RoleProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46124538080002D1415 /* RoleProxyTest.swift */; };
 		A814B46424538080002D1415 /* UserProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46224538080002D1415 /* UserProxyTest.swift */; };
 		A814B467245380B5002D1415 /* PureMVC in Frameworks */ = {isa = PBXBuildFile; productRef = A814B466245380B5002D1415 /* PureMVC */; };
-		A814B46924538142002D1415 /* SceneMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46824538142002D1415 /* SceneMediator.swift */; };
 		A870F4B72569DD4200CB7EBF /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = A870F4B62569DD4200CB7EBF /* Department.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,10 +71,8 @@
 		A814B44424537FA8002D1415 /* UserList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		A814B44524537FA8002D1415 /* UserForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserForm.swift; sourceTree = "<group>"; };
 		A814B44624537FA8002D1415 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A814B45824538060002D1415 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A814B46124538080002D1415 /* RoleProxyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleProxyTest.swift; sourceTree = "<group>"; };
 		A814B46224538080002D1415 /* UserProxyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxyTest.swift; sourceTree = "<group>"; };
-		A814B46824538142002D1415 /* SceneMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneMediator.swift; sourceTree = "<group>"; };
 		A870F4B62569DD4200CB7EBF /* Department.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Department.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,7 +130,6 @@
 				A814B43F24537FA8002D1415 /* view */,
 				A814B43524537FA8002D1415 /* ApplicationFacade.swift */,
 				A814B44624537FA8002D1415 /* AppDelegate.swift */,
-				A814B45824538060002D1415 /* SceneDelegate.swift */,
 				A814B40024537F73002D1415 /* Main.storyboard */,
 				A814B40324537F75002D1415 /* Assets.xcassets */,
 				A814B40524537F75002D1415 /* LaunchScreen.storyboard */,
@@ -195,7 +190,6 @@
 			children = (
 				A814B44224537FA8002D1415 /* components */,
 				A814B44024537FA8002D1415 /* ApplicationMediator.swift */,
-				A814B46824538142002D1415 /* SceneMediator.swift */,
 				A814B44124537FA8002D1415 /* EmployeeAdminMediator.swift */,
 			);
 			path = view;
@@ -369,10 +363,8 @@
 				A814B44B24537FA8002D1415 /* ApplicationFacade.swift in Sources */,
 				A814B44724537FA8002D1415 /* StartupCommand.swift in Sources */,
 				A814B45624537FA8002D1415 /* UserForm.swift in Sources */,
-				A814B45924538060002D1415 /* SceneDelegate.swift in Sources */,
 				A814B45524537FA8002D1415 /* UserList.swift in Sources */,
 				A814B45124537FA8002D1415 /* RoleProxy.swift in Sources */,
-				A814B46924538142002D1415 /* SceneMediator.swift in Sources */,
 				A814B44A24537FA8002D1415 /* RegisterCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

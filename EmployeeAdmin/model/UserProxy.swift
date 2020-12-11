@@ -87,8 +87,8 @@ class UserProxy: Proxy {
         guard sqlite3_step(statement) == SQLITE_DONE else {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 3, userInfo: nil)
         }
-        let id = sqlite3_last_insert_rowid(database)
-        return id
+        
+        return sqlite3_last_insert_rowid(database)
     }
     
     func update(_ user: User) throws -> Int32? {
@@ -143,6 +143,7 @@ class UserProxy: Proxy {
         while sqlite3_step(statement) == SQLITE_ROW {
             departments.append(Department(id: sqlite3_column_int64(statement, 0), name: String(cString: sqlite3_column_text(statement, 1))))
         }
+        
         return departments
     }
     

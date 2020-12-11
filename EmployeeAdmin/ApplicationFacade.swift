@@ -43,7 +43,7 @@ class ApplicationFacade: Facade {
     Start the application
     */
     func startup(_ window: UIWindow?) {
-        sendNotification(ApplicationFacade.STARTUP)
+        sendNotification(ApplicationFacade.STARTUP, body: window)
     }
     
 }
