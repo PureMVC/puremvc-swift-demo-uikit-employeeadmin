@@ -29,7 +29,10 @@ class RoleProxy: Proxy {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
         }
         
-        defer { sqlite3_finalize(statement) }
+        defer {
+            sqlite3_finalize(statement)
+            sqlite3_db_cacheflush(database)
+        }
         
         var roles: [Role] = []
         while sqlite3_step(statement) == SQLITE_ROW {
@@ -46,7 +49,10 @@ class RoleProxy: Proxy {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
         }
                
-        defer { sqlite3_finalize(statement) }
+        defer {
+            sqlite3_finalize(statement)
+            sqlite3_db_cacheflush(database)
+        }
                 
         guard sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, "@user_id"), id) == SQLITE_OK else {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
@@ -62,6 +68,10 @@ class RoleProxy: Proxy {
     func updateByUserId(_ id: Int64, roles: [Int64]) throws -> Int32? {
         let values = roles.map { "(\(id), \($0))" }.joined(separator: ", ")
         let sql = "BEGIN TRANSACTION; DELETE FROM user_role WHERE user_id = \(id);" + (values.count > 0 ? "INSERT INTO user_role(user_id, role_id) VALUES\(values);" : "") + "COMMIT;"
+        
+        defer {
+            sqlite3_db_cacheflush(database)
+        }
         
         do {
             guard sqlite3_exec(database, sql, nil, nil, nil) == SQLITE_OK else {

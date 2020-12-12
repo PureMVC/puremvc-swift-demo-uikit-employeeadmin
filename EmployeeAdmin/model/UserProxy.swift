@@ -29,7 +29,10 @@ class UserProxy: Proxy {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
         }
         
-        defer { sqlite3_finalize(statement) }
+        defer {
+            sqlite3_finalize(statement)
+            sqlite3_db_cacheflush(database)
+        }
         
         var users: [User] = []
         while sqlite3_step(statement) == SQLITE_ROW {
@@ -47,7 +50,10 @@ class UserProxy: Proxy {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
         }
         
-        defer { sqlite3_finalize(statement) }
+        defer {
+            sqlite3_finalize(statement)
+            sqlite3_db_cacheflush(database)
+        }
         
         guard sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, "@id"), id) == SQLITE_OK else {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
@@ -71,7 +77,10 @@ class UserProxy: Proxy {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
         }
         
-        defer { sqlite3_finalize(statement) }
+        defer {
+            sqlite3_finalize(statement)
+            sqlite3_db_cacheflush(database)
+        }
         
         guard
             sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@username"), ((user.username ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
@@ -99,7 +108,7 @@ class UserProxy: Proxy {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
         }
         
-        defer { sqlite3_finalize(statement) }
+        defer { sqlite3_finalize(statement); sqlite3_db_cacheflush(database); }
         
         guard
             sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@first"), ((user.first ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
@@ -122,6 +131,10 @@ class UserProxy: Proxy {
     func deleteById(_ id: Int64) throws -> Int32? {
         let sql = "DELETE FROM user WHERE id = \(id)"
         
+        defer {
+            sqlite3_db_cacheflush(database)
+        }
+        
         guard sqlite3_exec(database, sql, nil, nil, nil) == SQLITE_OK else {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
         }
@@ -137,7 +150,10 @@ class UserProxy: Proxy {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
         }
         
-        defer { sqlite3_finalize(statement) }
+        defer {
+            sqlite3_finalize(statement)
+            sqlite3_db_cacheflush(database)
+        }
         
         var departments: [Department] = []
         while sqlite3_step(statement) == SQLITE_ROW {
