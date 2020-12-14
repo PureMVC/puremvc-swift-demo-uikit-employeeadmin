@@ -12,8 +12,11 @@ import Foundation
 class UserProxy: Proxy {
        
     override class var NAME: String { "UserProxy" }
+    
+    private var session: URLSession
         
-    init() {
+    init(session: URLSession) {
+        self.session = session
         super.init(name: UserProxy.NAME, data: nil)
     }
     
@@ -22,7 +25,7 @@ class UserProxy: Proxy {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
                 return
@@ -51,7 +54,7 @@ class UserProxy: Proxy {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
                 return
@@ -78,11 +81,11 @@ class UserProxy: Proxy {
     func save(_ user: User, completion: @escaping (Int?, NSException?) -> Void) {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees")!)
         request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? JSONEncoder().encode(user)
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
                 return
@@ -109,11 +112,11 @@ class UserProxy: Proxy {
     func update(_ user: User, completion: @escaping (Int?, NSException?) -> Void) {
         var request = URLRequest(url: URL(string: "http://localhost/employees/\(user.id ?? 0)")!)
         request.httpMethod = "PUT"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? JSONEncoder().encode(user)
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
                 return
@@ -141,7 +144,7 @@ class UserProxy: Proxy {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)")!)
         request.httpMethod = "DELETE"
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
                 return
@@ -161,7 +164,7 @@ class UserProxy: Proxy {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
                 return

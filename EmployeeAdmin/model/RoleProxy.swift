@@ -13,7 +13,10 @@ class RoleProxy: Proxy {
     
     override class var NAME: String { "RoleProxy" }
         
-    init() {
+    private var session: URLSession
+    
+    init(session: URLSession) {
+        self.session = session
         super.init(name: RoleProxy.NAME, data: [Role]())
     }
     
@@ -22,7 +25,7 @@ class RoleProxy: Proxy {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
                 return
@@ -51,7 +54,7 @@ class RoleProxy: Proxy {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
                 return
@@ -79,9 +82,10 @@ class RoleProxy: Proxy {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)/roles")!)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? JSONEncoder().encode(roles.map{ $0.id })
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
                 return

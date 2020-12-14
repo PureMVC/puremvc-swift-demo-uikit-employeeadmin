@@ -18,13 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         facade.startup(window)
-        
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
-//            let alert = UIAlertController(title: "Error", message: "ABc", preferredStyle: UIAlertController.Style.alert)
-//            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-//
-//            self.window?.rootViewController?.present(alert, animated: true, completion: nil)
-//        })
 
         return true
     }

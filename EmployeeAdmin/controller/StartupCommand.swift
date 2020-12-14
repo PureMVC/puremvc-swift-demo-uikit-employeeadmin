@@ -13,8 +13,14 @@ import UIKit
 class StartupCommand: SimpleCommand {
     
     override func execute(_ notification: INotification) {
-        facade.registerProxy(UserProxy())
-        facade.registerProxy(RoleProxy())
+        
+        let configuration = URLSessionConfiguration.default
+        configuration.allowsConstrainedNetworkAccess = true
+        configuration.allowsExpensiveNetworkAccess = true
+        let session = URLSession(configuration: configuration)
+                
+        facade.registerProxy(UserProxy(session: session))
+        facade.registerProxy(RoleProxy(session: session))
     }
     
 }
