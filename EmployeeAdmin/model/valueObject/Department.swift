@@ -13,12 +13,12 @@ struct Department {
     var id: Int64?
     var name: String?
     
-    init(id: Int64?, name: String?) {
+    init(id: Int64? = nil, name: String? = nil) {
         self.id = id
         self.name = name
     }
     
-    init(_ statement: OpaquePointer?) {
+    init(_ statement: OpaquePointer? = nil) {
         if sqlite3_column_int64(statement, 0) != 0 { id = sqlite3_column_int64(statement, 0) }
         if sqlite3_column_text(statement, 1) != nil { name = String(cString: sqlite3_column_text(statement, 1)) }
     }

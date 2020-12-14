@@ -18,7 +18,7 @@ struct User {
     var password: String?
     var department: Department?
     
-    init(id: Int64? = nil, username: String?, first:String?, last:String?, email:String?, password:String?, department:Department?) {
+    init(id: Int64? = nil, username: String? = nil, first:String? = nil, last:String? = nil, email:String? = nil, password:String? = nil, department:Department? = nil) {
         self.id = id
         self.username = username ?? ""
         self.first = first ?? ""
@@ -28,7 +28,7 @@ struct User {
         self.department = department ?? nil
     }
     
-    init(_ statement: OpaquePointer?) {
+    init(_ statement: OpaquePointer? = nil) {
         if sqlite3_column_int64(statement, 0) != 0 { id = sqlite3_column_int64(statement, 0) }
         if sqlite3_column_text(statement, 1) != nil { username = String(cString: sqlite3_column_text(statement, 1)) }
         if sqlite3_column_text(statement, 1) != nil { first = String(cString: sqlite3_column_text(statement, 2)) }
