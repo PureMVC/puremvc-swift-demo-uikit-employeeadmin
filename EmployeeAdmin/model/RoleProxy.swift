@@ -36,7 +36,7 @@ class RoleProxy: Proxy {
         
         var roles: [Role] = []
         while sqlite3_step(statement) == SQLITE_ROW {
-            roles.append(Role(id: sqlite3_column_int64(statement, 0), name: String(cString: sqlite3_column_text(statement, 1))))
+            roles.append(Role(statement))
         }
         return roles
     }
@@ -60,7 +60,7 @@ class RoleProxy: Proxy {
         
         var roles: [Role] = []
         while sqlite3_step(statement) == SQLITE_ROW {
-            roles.append(Role(id: sqlite3_column_int64(statement, 0), name: String(cString: sqlite3_column_text(statement, 1))))
+            roles.append(Role(statement))
         }
         return roles
     }

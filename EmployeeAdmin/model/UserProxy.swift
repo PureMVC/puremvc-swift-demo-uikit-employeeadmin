@@ -44,7 +44,10 @@ class UserProxy: Proxy {
     
     func findById(_ id: Int64) throws -> User? {
         var statement: OpaquePointer? = nil
-        let sql = "SELECT user.*, department.name AS 'department_name' FROM user INNER JOIN department ON user.department_id = department.id WHERE user.id = @id"
+        let sql = """
+                    SELECT user.id, username, first, last, email, password, department_id, department.name AS 'department_name' FROM user
+                    INNER JOIN department ON user.department_id = department.id WHERE user.id = @id
+                """
         
         guard sqlite3_prepare(database, sql, -1, &statement, nil) == SQLITE_OK else {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
@@ -60,10 +63,7 @@ class UserProxy: Proxy {
         }
         
         if sqlite3_step(statement) == SQLITE_ROW {
-            return User(id: sqlite3_column_int64(statement, 0), username: String(cString: sqlite3_column_text(statement, 1)),
-                        first: String(cString: sqlite3_column_text(statement, 2)), last: String(cString: sqlite3_column_text(statement, 3)),
-                        email: String(cString: sqlite3_column_text(statement, 4)), password: String(cString: sqlite3_column_text(statement, 5)),
-                        department: Department(id: sqlite3_column_int64(statement, 6), name: String(cString: sqlite3_column_text(statement, 7))))
+            return User(statement)
         } else {
             return nil
         }
@@ -108,7 +108,10 @@ class UserProxy: Proxy {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
         }
         
-        defer { sqlite3_finalize(statement); sqlite3_db_cacheflush(database); }
+        defer {
+            sqlite3_finalize(statement)
+            sqlite3_db_cacheflush(database)
+        }
         
         guard
             sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@first"), ((user.first ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
@@ -157,7 +160,7 @@ class UserProxy: Proxy {
         
         var departments: [Department] = []
         while sqlite3_step(statement) == SQLITE_ROW {
-            departments.append(Department(id: sqlite3_column_int64(statement, 0), name: String(cString: sqlite3_column_text(statement, 1))))
+            departments.append(Department(statement))
         }
         
         return departments

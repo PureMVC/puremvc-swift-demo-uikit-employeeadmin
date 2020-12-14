@@ -6,6 +6,8 @@
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
+import SQLite3
+
 struct Department {
     
     var id: Int64?
@@ -14,6 +16,11 @@ struct Department {
     init(id: Int64?, name: String?) {
         self.id = id
         self.name = name
+    }
+    
+    init(_ statement: OpaquePointer?) {
+        if sqlite3_column_int64(statement, 0) != 0 { id = sqlite3_column_int64(statement, 0) }
+        if sqlite3_column_text(statement, 1) != nil { name = String(cString: sqlite3_column_text(statement, 1)) }
     }
     
 }
