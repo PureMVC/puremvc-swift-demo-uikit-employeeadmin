@@ -14,11 +14,11 @@ class RoleProxy: Proxy {
     
     override class var NAME: String { "RoleProxy" }
     
-    internal var database: OpaquePointer!
+    private var database: OpaquePointer
     
     init(_ database: OpaquePointer) {
-        super.init(name: RoleProxy.NAME, data: [Role]())
         self.database = database
+        super.init(name: RoleProxy.NAME, data: [Role]())
     }
     
     func findAll() throws -> [Role]? {

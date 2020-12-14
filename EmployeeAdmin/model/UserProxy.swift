@@ -14,11 +14,11 @@ class UserProxy: Proxy {
        
     override class var NAME: String { "UserProxy" }
     
-    internal var database: OpaquePointer! = nil
+    private var database: OpaquePointer
     
     init(_ database: OpaquePointer) {
-        super.init(name: UserProxy.NAME, data: [User]())
         self.database = database
+        super.init(name: UserProxy.NAME, data: [User]())
     }
     
     func findAll() throws -> [User]? {
