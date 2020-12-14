@@ -193,7 +193,7 @@ class EmployeeAdminUITests: XCTestCase {
         app.navigationBars["Users"].buttons["Add"].tap()
 
         app.secureTextFields["Password"].tap(); app.secureTextFields["Password"].typeText("abc123")
-        app.secureTextFields["Confirm"].tap(); app.secureTextFields["Confirm"].typeText("ijk456")
+        app.secureTextFields["Confirm"].tap(); app.secureTextFields["Confirm"].typeText("ijk456\n")
 
         app.navigationBars["Profile"].buttons["Save"].tap() // save
 

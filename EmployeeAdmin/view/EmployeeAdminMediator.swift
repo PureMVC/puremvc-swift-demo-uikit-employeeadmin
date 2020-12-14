@@ -60,8 +60,6 @@ extension EmployeeAdminMediator: UserFormDelegate {
     func findById(_ id: Int?, _ completion: @escaping (User?, NSException?) -> Void) {
         if let id = id {
             userProxy?.findById(id, completion)
-        } else {
-            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Id can't be nil.", userInfo: nil))
         }
     }
     

@@ -31,13 +31,8 @@ class UserProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
-            }
-            
-            guard let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Did not receive data.", userInfo: nil))
                 return
             }
             
@@ -60,13 +55,8 @@ class UserProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
-            }
-            
-            guard let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Did not receive data.", userInfo: nil))
                 return
             }
             
@@ -91,18 +81,18 @@ class UserProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 201 else {
+            guard let response = response as? HTTPURLResponse, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
                 return
             }
             
-            guard let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Did not receive data.", userInfo: nil))
-                return
-            }
-            
             do {
-                completion(try JSONDecoder().decode(User.self, from: data).id, nil)
+                if response.statusCode == 201 {
+                    completion(try JSONDecoder().decode(User.self, from: data).id, nil)
+                } else {
+                    let exception = try JSONDecoder().decode(Exception.self, from: data)
+                    completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "\(exception.code ?? 0): \(exception.message ?? "")", userInfo: nil))
+                }
             } catch let error {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
             }
@@ -110,7 +100,7 @@ class UserProxy: Proxy {
     }
     
     func update(_ user: User, completion: @escaping (Int?, NSException?) -> Void) {
-        var request = URLRequest(url: URL(string: "http://localhost/employees/\(user.id ?? 0)")!)
+        var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(user.id ?? 0)")!)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -122,13 +112,8 @@ class UserProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
-            }
-            
-            guard let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Did not receive data.", userInfo: nil))
                 return
             }
             
@@ -170,13 +155,8 @@ class UserProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
-            }
-            
-            guard let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Did not receive data.", userInfo: nil))
                 return
             }
             

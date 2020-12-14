@@ -16,14 +16,14 @@ struct User: Decodable, Encodable {
     var password: String?
     var department: Department?
     
-    init(id: Int?, username: String?, first:String?, last:String?, email:String?, password:String?, department:Department?) {
+    init(id: Int? = nil, username: String? = nil, first:String? = nil, last:String? = nil, email:String? = nil, password:String? = nil, department:Department? = nil) {
         self.id = id
-        self.username = username ?? ""
-        self.first = first ?? ""
-        self.last = last ?? ""
-        self.email = email ?? ""
-        self.password = password ?? ""
-        self.department = department ?? nil
+        self.username = username
+        self.first = first
+        self.last = last
+        self.email = email
+        self.password = password
+        self.department = department
     }
     
     var isValid:Bool {

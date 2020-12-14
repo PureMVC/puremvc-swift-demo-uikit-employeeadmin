@@ -16,7 +16,7 @@ class UserProxyTest: XCTestCase {
         
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        userProxy = UserProxy()
+        userProxy = UserProxy(session: URLSession.shared)
     }
 
     override func tearDown() {
@@ -36,12 +36,10 @@ class UserProxyTest: XCTestCase {
             }
             
             XCTAssertEqual(users.count, 3)
-            XCTAssertEqual(users[0].username!, "lstooge")
             XCTAssertEqual(users[0].first!, "Larry")
             XCTAssertEqual(users[0].last!, "Stooge")
-            XCTAssertEqual(users[0].email!, "larry@stooges.com")
+            XCTAssertNil(users[0].email)
             XCTAssertNil(users[0].password)
-            XCTAssertEqual(users[0].department!.id, 1)
             
             e.fulfill()
         }
@@ -60,7 +58,7 @@ class UserProxyTest: XCTestCase {
                 XCTAssertEqual(user.first!, "Larry")
                 XCTAssertEqual(user.last!, "Stooge")
                 XCTAssertEqual(user.email!, "larry@stooges.com")
-                XCTAssertNil(user.password)
+                XCTAssertEqual(user.password, "ijk456")
                 XCTAssertEqual(user.department!.id, 1)
             } else {
                 XCTFail("User not Found")
@@ -89,7 +87,7 @@ class UserProxyTest: XCTestCase {
         let e = expectation(description: "testSave")
                 
         let user = User(id: 0, username: "jstooge", first: "Joe", last: "Stooge", email: "joe@stooges.com", password: "abc123", department: Department(id: 3, name: "Shipping"))
-        userProxy.save(user) { id, exception in
+        userProxy.save(user) { [weak self] id, exception in
             
             guard let id = id else {
                 XCTFail(exception!.description)
@@ -98,7 +96,9 @@ class UserProxyTest: XCTestCase {
             }
             
             XCTAssertNotNil(id)
-            e.fulfill()
+            self?.userProxy.deleteById(id) { (modified, _) in // reset
+                e.fulfill()
+            }
         }
         
         waitForExpectations(timeout: 10, handler: nil)
@@ -131,13 +131,12 @@ class UserProxyTest: XCTestCase {
         
         userProxy.deleteById(40) { modified, exception in
             
-            guard let modified = modified else {
-                XCTFail(exception!.description)
+            if exception == nil {
+                XCTFail("Shouldn' have success")
                 e.fulfill()
                 return
             }
             
-            XCTAssertEqual(modified, 1)
             e.fulfill()
         }
         

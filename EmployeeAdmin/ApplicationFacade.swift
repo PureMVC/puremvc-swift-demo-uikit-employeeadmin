@@ -42,8 +42,8 @@ class ApplicationFacade: Facade {
     /**
     Start the application
     */
-    func startup(_ window: UIWindow?) {
-        sendNotification(ApplicationFacade.STARTUP)
+    func startup(_ delegate: AppDelegate) {
+        sendNotification(ApplicationFacade.STARTUP, body: delegate)
     }
     
 }

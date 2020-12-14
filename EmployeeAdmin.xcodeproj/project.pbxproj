@@ -30,6 +30,7 @@
 		A814B467245380B5002D1415 /* PureMVC in Frameworks */ = {isa = PBXBuildFile; productRef = A814B466245380B5002D1415 /* PureMVC */; };
 		A814B46924538142002D1415 /* SceneMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46824538142002D1415 /* SceneMediator.swift */; };
 		A870F4B72569DD4200CB7EBF /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = A870F4B62569DD4200CB7EBF /* Department.swift */; };
+		A8F3858725873E64008739B5 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F3858625873E64008739B5 /* Exception.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		A814B46224538080002D1415 /* UserProxyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxyTest.swift; sourceTree = "<group>"; };
 		A814B46824538142002D1415 /* SceneMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneMediator.swift; sourceTree = "<group>"; };
 		A870F4B62569DD4200CB7EBF /* Department.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Department.swift; sourceTree = "<group>"; };
+		A8F3858625873E64008739B5 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 				A814B43824537FA8002D1415 /* Role.swift */,
 				A814B43924537FA8002D1415 /* User.swift */,
 				A870F4B62569DD4200CB7EBF /* Department.swift */,
+				A8F3858625873E64008739B5 /* Exception.swift */,
 			);
 			path = valueObject;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				A814B45624537FA8002D1415 /* UserForm.swift in Sources */,
 				A814B45924538060002D1415 /* SceneDelegate.swift in Sources */,
 				A814B45524537FA8002D1415 /* UserList.swift in Sources */,
+				A8F3858725873E64008739B5 /* Exception.swift in Sources */,
 				A814B45124537FA8002D1415 /* RoleProxy.swift in Sources */,
 				A814B46924538142002D1415 /* SceneMediator.swift in Sources */,
 				A814B44A24537FA8002D1415 /* RegisterCommand.swift in Sources */,

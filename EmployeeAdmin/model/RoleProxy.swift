@@ -21,7 +21,7 @@ class RoleProxy: Proxy {
     }
     
     func findAll(_ completion: @escaping ([Role]?, NSException?) -> Void) {
-        var request = URLRequest(url: URL(string: "http://localhost/roles")!)
+        var request = URLRequest(url: URL(string: "http://localhost:8080/roles")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
@@ -31,13 +31,8 @@ class RoleProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
-            }
-            
-            guard let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Did not receive data.", userInfo: nil))
                 return
             }
             
@@ -60,13 +55,8 @@ class RoleProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
-            }
-            
-            guard let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Did not receive data.", userInfo: nil))
                 return
             }
             
@@ -77,30 +67,31 @@ class RoleProxy: Proxy {
             }
         }.resume()
     }
-    
+        
     func updateByUserId(_ id: Int, roles: [Role], _ completion: @escaping ([Int]?, NSException?) -> Void) {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)/roles")!)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONEncoder().encode(roles.map{ $0.id })
         
+        do {
+            request.httpBody = try JSONEncoder().encode(roles.map{ $0.id })
+        } catch let error {
+            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
+            return
+        }
+
         session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
                 return
             }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
                 return
             }
-            
-            guard let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Did not receive data.", userInfo: nil))
-                return
-            }
-            
+
             do {
                 completion(try JSONDecoder().decode([Int].self, from: data), nil)
             } catch let error {

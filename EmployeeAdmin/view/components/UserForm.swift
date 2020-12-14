@@ -50,11 +50,13 @@ class UserForm: UIViewController {
         group.enter()
         DispatchQueue.global().async { [weak self] in // UI data
             self?.delegate?.findAllDepartments({ (departments, exception) in
-                if let exception = exception {
-                    DispatchQueue.main.async { self?.fault(exception) }
-                } else {
-                    self?.departments?.append(contentsOf: departments ?? [])
-                    group.leave()
+                DispatchQueue.main.async {
+                    if let exception = exception {
+                         self?.fault(exception)
+                    } else {
+                        self?.departments?.append(contentsOf: departments ?? [])
+                        group.leave()
+                    }
                 }
             })
         }
@@ -63,11 +65,13 @@ class UserForm: UIViewController {
             group.enter()
             DispatchQueue.global().async { [weak self] in
                 self?.delegate?.findById(self?.id) { (user, exception) in
-                    if let exception = exception {
-                        self?.fault(exception)
-                    } else {
-                        self?.user = user
-                        group.leave()
+                    DispatchQueue.main.async {
+                        if let exception = exception {
+                            self?.fault(exception)
+                        } else {
+                            self?.user = user
+                            group.leave()
+                        }
                     }
                 }
             }
@@ -82,8 +86,8 @@ class UserForm: UIViewController {
                 self?.email.text = user.email
                 self?.username.text = user.username
                 self?.username.isEnabled = false
-                self?.password.text = "temp"
-                self?.confirmPassword.text = "temp"
+                self?.password.text = user.password
+                self?.confirmPassword.text = user.password
                 self?.department.selectRow(Int(user.department?.id ?? 0), inComponent: 0, animated: true)
             }
         }
@@ -108,12 +112,11 @@ class UserForm: UIViewController {
             if user?.id == nil {
                 DispatchQueue.global().async { [weak self] in
                     self?.delegate?.save(self?.user, roles: self?.roles, completion: { (id, exception) in
-                        if let exception = exception {
-                            self?.fault(exception)
-                        } else {
-                            self?.user?.id = id
-                            
-                            DispatchQueue.main.async {
+                        DispatchQueue.main.async {
+                            if let exception = exception {
+                                self?.fault(exception)
+                            } else {
+                                self?.user?.id = id
                                 self?.navigationController?.popToRootViewController(animated: true)
                             }
                         }
@@ -122,10 +125,10 @@ class UserForm: UIViewController {
             } else {
                 DispatchQueue.global().async { [weak self] in
                     self?.delegate?.update(self?.user, roles: self?.roles, completion: { (modified, exception) in
-                        if let exception = exception {
-                            self?.fault(exception)
-                        } else {
-                            DispatchQueue.main.async { [weak self] in
+                        DispatchQueue.main.async {
+                            if let exception = exception {
+                                self?.fault(exception)
+                            } else {
                                 self?.navigationController?.popToRootViewController(animated: true)
                             }
                         }
@@ -133,17 +136,17 @@ class UserForm: UIViewController {
                 }
             }
         } else {
-            fault(NSException(name: NSExceptionName(rawValue: "Error"), reason: "Invalid Form Data.", userInfo: nil))
+            fault(NSException(name: NSExceptionName(rawValue: "Error"), reason: "Invalid Form Data.", userInfo: nil)) 
         }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { // segue to User Roles
         if let identifier = segue.identifier, identifier == "segueToUserRoles" {
             if let userRole = segue.destination as? UserRole {
-                user?.first = first.text ?? "" // retain any form changes before the segue
-                user?.last = last.text ?? ""
-                user?.email = email.text ?? ""
-                user?.password = password.text ?? ""
+                user?.first = first.text // retain any form changes before the segue
+                user?.last = last.text
+                user?.email = email.text
+                user?.password = password.text
                 user?.department?.id = department.selectedRow(inComponent: 0)
                 
                 userRole.id = user?.id
