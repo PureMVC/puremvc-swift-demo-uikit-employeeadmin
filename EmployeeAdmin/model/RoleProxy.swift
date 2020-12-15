@@ -31,13 +31,18 @@ class RoleProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
+            guard let response = response as? HTTPURLResponse, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
                 return
             }
             
             do {
-                completion(try JSONDecoder().decode([Role].self, from: data), nil)
+                if response.statusCode == 200 {
+                    completion(try JSONDecoder().decode([Role].self, from: data), nil)
+                } else {
+                    let exception = try JSONDecoder().decode(Exception.self, from: data)
+                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
+                }
             } catch let error {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
             }
@@ -55,13 +60,18 @@ class RoleProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
+            guard let response = response as? HTTPURLResponse, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
                 return
             }
             
             do {
-                completion(try JSONDecoder().decode([Role].self, from: data), nil)
+                if response.statusCode == 200 {
+                    completion(try JSONDecoder().decode([Role].self, from: data), nil)
+                } else {
+                    let exception = try JSONDecoder().decode(Exception.self, from: data)
+                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
+                }
             } catch let error {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
             }
@@ -87,13 +97,18 @@ class RoleProxy: Proxy {
                 return
             }
 
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
+            guard let response = response as? HTTPURLResponse, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
                 return
             }
 
             do {
-                completion(try JSONDecoder().decode([Int].self, from: data), nil)
+                if response.statusCode == 200 {
+                    completion(try JSONDecoder().decode([Int].self, from: data), nil)
+                } else {
+                    let exception = try JSONDecoder().decode(Exception.self, from: data)
+                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
+                }
             } catch let error {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
             }

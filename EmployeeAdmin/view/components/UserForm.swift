@@ -19,11 +19,11 @@ class UserForm: UIViewController {
     
     var id: Int?
     
-    var user: User?
+    private var user: User?
     
-    var departments: [Department]? = [Department(id: 0, name: "--None Selected--")]
+    private var departments: [Department]? = [Department(id: 0, name: "--None Selected--")]
         
-    var roles: [Role]?
+    private var roles: [Role]?
     
     weak var delegate: UserFormDelegate?
 
@@ -61,7 +61,7 @@ class UserForm: UIViewController {
             })
         }
         
-        if self.user == nil { // User data
+        if self.id != nil && self.user == nil { // User data
             group.enter()
             DispatchQueue.global().async { [weak self] in
                 self?.delegate?.findById(self?.id) { (user, exception) in
@@ -157,7 +157,7 @@ class UserForm: UIViewController {
     }
     
     func fault(_ exception: NSException) {
-        let alertController = UIAlertController(title: "Error", message: exception.description, preferredStyle: UIAlertController.Style.alert)
+        let alertController = UIAlertController(title: exception.name.rawValue, message: exception.description, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }

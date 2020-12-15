@@ -15,9 +15,9 @@ protocol UserListDelegate: class {
 
 class UserList: UIViewController {
     
-    var users: [User]?
+    private var users: [User]?
     
-    var indexPath: IndexPath?
+    private var indexPath: IndexPath?
     
     weak var delegate: UserListDelegate?
     

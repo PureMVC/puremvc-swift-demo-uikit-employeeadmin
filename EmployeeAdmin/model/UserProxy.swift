@@ -1,4 +1,4 @@
-// data
+//
 //  UserProxy.swift
 //  PureMVC SWIFT Demo - EmployeeAdmin
 //
@@ -31,13 +31,18 @@ class UserProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
+            guard let response = response as? HTTPURLResponse, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
                 return
             }
             
             do {
-                completion(try JSONDecoder().decode([User].self, from: data), nil)
+                if response.statusCode == 200 {
+                    completion(try JSONDecoder().decode([User].self, from: data), nil)
+                } else {
+                    let exception = try JSONDecoder().decode(Exception.self, from: data)
+                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
+                }
             } catch let error {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
             }
@@ -55,13 +60,18 @@ class UserProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
+            guard let response = response as? HTTPURLResponse, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
                 return
             }
             
             do {
-                completion(try JSONDecoder().decode(User.self, from: data), nil)
+                if response.statusCode == 200 {
+                    completion(try JSONDecoder().decode(User.self, from: data), nil)
+                } else {
+                    let exception = try JSONDecoder().decode(Exception.self, from: data)
+                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
+                }
             } catch let error {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
             }
@@ -91,7 +101,7 @@ class UserProxy: Proxy {
                     completion(try JSONDecoder().decode(User.self, from: data).id, nil)
                 } else {
                     let exception = try JSONDecoder().decode(Exception.self, from: data)
-                    completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "\(exception.code ?? 0): \(exception.message ?? "")", userInfo: nil))
+                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
                 }
             } catch let error {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
@@ -112,13 +122,18 @@ class UserProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
+            guard let response = response as? HTTPURLResponse, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
                 return
             }
             
             do {
-                completion(try JSONDecoder().decode(User.self, from: data).id, nil)
+                if response.statusCode == 200 {
+                    completion(try JSONDecoder().decode(User.self, from: data).id, nil)
+                } else {
+                    let exception = try JSONDecoder().decode(Exception.self, from: data)
+                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
+                }
             } catch let error {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
             }
@@ -135,12 +150,21 @@ class UserProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 204 else {
+            guard let response = response as? HTTPURLResponse, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
                 return
             }
             
-            completion(1, nil)
+            do {
+                if response.statusCode == 204 {
+                    completion(1, nil)
+                } else {
+                    let exception = try JSONDecoder().decode(Exception.self, from: data)
+                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
+                }
+            } catch let error {
+                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
+            }
         }.resume()
     }
     
@@ -155,13 +179,18 @@ class UserProxy: Proxy {
                 return
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
+            guard let response = response as? HTTPURLResponse, let data = data else {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
                 return
             }
             
             do {
-                completion(try JSONDecoder().decode([Department].self, from: data), nil)
+                if response.statusCode == 200 {
+                    completion(try JSONDecoder().decode([Department].self, from: data), nil)
+                } else {
+                    let exception = try JSONDecoder().decode(Exception.self, from: data)
+                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
+                }
             } catch let error {
                 completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
             }

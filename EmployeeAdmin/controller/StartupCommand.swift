@@ -13,7 +13,6 @@ import UIKit
 class StartupCommand: SimpleCommand {
     
     override func execute(_ notification: INotification) {
-        
         let configuration = URLSessionConfiguration.default
         configuration.allowsConstrainedNetworkAccess = true
         configuration.allowsExpensiveNetworkAccess = true

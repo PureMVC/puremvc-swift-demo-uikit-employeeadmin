@@ -8,10 +8,10 @@
 
 struct Exception: Decodable, Encodable {
     
-    var code: Int?
+    var code: String?
     var message: String?
     
-    init(code: Int? = nil, message: String? = nil) {
+    init(code: String? = nil, message: String? = nil) {
         self.code = code
         self.message = message
     }

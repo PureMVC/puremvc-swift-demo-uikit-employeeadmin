@@ -13,9 +13,9 @@ class EmployeeAdminMediator: Mediator {
     
     override class var NAME: String { "EmployeeAdminMediator" }
 
-    var userProxy: UserProxy?
+    private var userProxy: UserProxy?
     
-    var roleProxy: RoleProxy?
+    private var roleProxy: RoleProxy?
     
     init(viewComponent: UIViewController) {
         super.init(name: EmployeeAdminMediator.NAME + viewComponent.title!, viewComponent: viewComponent)
@@ -65,19 +65,54 @@ extension EmployeeAdminMediator: UserFormDelegate {
     
     func save(_ user: User?, roles: [Role]?, completion: @escaping (Int?, NSException?) -> Void) {
         if let user = user {
-            userProxy?.save(user, completion: completion)
+            userProxy?.save(user) { [weak self] (id, exception) in
+
+                guard exception == nil else {
+                    completion(nil, exception)
+                    return
+                }
+
+                if let id = id, let roles = roles {
+                    self?.roleProxy?.updateByUserId(id, roles: roles, { (ids, exception) in
+                        guard exception == nil else {
+                            completion(nil, exception)
+                            return
+                        }
+                        completion(id, nil)
+                    })
+                } else {
+                    completion(id, nil)
+                }
+            }
         } else {
             completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "User can't be nil.", userInfo: nil))
         }
     }
     
     func update(_ user: User?, roles: [Role]?, completion: @escaping (Int?, NSException?) -> Void) {
-        if let roles = roles, let id = user?.id {
-            roleProxy?.updateByUserId(id, roles: roles) { _,_ in }
-        }
-        
         if let user = user {
-            userProxy?.update(user, completion: completion)
+            userProxy?.update(user) { [weak self] (modified, exception) in
+                
+                guard exception == nil else {
+                    completion(nil, exception)
+                    return
+                }
+                
+                if let roles = roles, let id = user.id {
+                    self?.roleProxy?.updateByUserId(id, roles: roles) { _, exception in
+                        
+                        guard exception == nil else {
+                            completion(nil, exception)
+                            return
+                        }
+                        completion(modified, nil)
+                    }
+                } else {
+                    completion(modified, nil)
+                }
+            }
+        } else {
+            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "User can't be nil.", userInfo: nil))
         }
     }
     
