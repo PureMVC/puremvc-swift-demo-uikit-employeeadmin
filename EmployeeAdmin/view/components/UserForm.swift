@@ -19,11 +19,11 @@ class UserForm: UIViewController {
     
     var id: Int64?
     
-    var user: User?
+    private var user: User?
     
-    var departments: [Department]? = [Department(id: 0, name: "--None Selected--")]
+    private var departments: [Department]? = [Department(id: 0, name: "--None Selected--")]
         
-    var roles: [Role]?
+    private var roles: [Role]?
     
     weak var delegate: UserFormDelegate?
 

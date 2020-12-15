@@ -23,7 +23,7 @@ class UserRole: UIViewController {
     
     var roles: [Role]?
         
-    var dataSource: [Role]?
+    private var dataSource: [Role]?
     
     weak var responder: UserRoleResponder?
     
