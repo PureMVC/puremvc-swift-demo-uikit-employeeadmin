@@ -13,17 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    var facade: ApplicationFacade = ApplicationFacade.getInstance(key: "EmployeeAdmin")
+    var facade: ApplicationFacade = ApplicationFacade.getInstance(key: ApplicationFacade.KEY)
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         facade.startup(self)
 
         return true
-    }
-    
-    func registerView(view: UIResponder) {
-        facade.registerView(view: view)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

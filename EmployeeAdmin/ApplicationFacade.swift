@@ -12,6 +12,8 @@ import UIKit
 class ApplicationFacade: Facade {
     
     // Notification name constants
+    static var KEY = "EmployeeAdmin"
+    
     static var STARTUP = "startup"
         
     static var REGISTER = "register"

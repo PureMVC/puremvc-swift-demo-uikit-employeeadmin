@@ -62,7 +62,9 @@ class EmployeeAdminUITests: XCTestCase {
         // update details
         app.textFields["First Name"].tap(); app.textFields["First Name"].typeText("1")
         app.textFields["Last Name"].tap(); app.textFields["Last Name"].typeText("1")
-        app.textFields["Email"].tap(); app.textFields["Email"].typeText("1")
+        app.textFields["Email"].coordinate(withNormalizedOffset: CGVectorMake(0.9, 0.9)).tap() // tap lower left
+        app.textFields["Email"].typeText("\u{8}\u{8}\u{8}\u{8}"); app.textFields["Email"].typeText("1.com")
+        
         XCTAssertFalse(app.textFields["Username"].isEnabled)
         app.pickerWheels.element.adjust(toPickerWheelValue: "Accounting")
         app.navigationBars["Profile"].buttons["Save"].tap() // save
