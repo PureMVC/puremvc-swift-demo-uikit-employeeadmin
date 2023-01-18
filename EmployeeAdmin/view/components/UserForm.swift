@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol UserFormDelegate : class {
+protocol UserFormDelegate : AnyObject {
     func findById(_ id: Int64?) throws -> User?
     func save(_ user: User?, roles: [Role]?) throws
     func update(_ user: User?, roles: [Role]?) throws
@@ -37,7 +37,7 @@ class UserForm: UIViewController {
     @IBOutlet weak var userRoles: UITableView!
     
     override func viewDidLoad() {
-        (UIApplication.shared.delegate as! AppDelegate).registerView(view: self)
+        ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(view: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {

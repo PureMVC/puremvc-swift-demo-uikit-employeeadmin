@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol UserRoleDelegate: class {
+protocol UserRoleDelegate: AnyObject {
     func findAllRoles() throws -> [Role]?
     func findRolesById(id: Int64?) throws -> [Role]?
 }
 
-protocol UserRoleResponder: class {
+protocol UserRoleResponder: AnyObject {
     func result(_ roles: [Role]?)
 }
 
@@ -32,7 +32,7 @@ class UserRole: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
-        (UIApplication.shared.delegate as! AppDelegate).registerView(view: self)
+        ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(view: self);
     }
     
     override func viewWillAppear(_ animated: Bool) {

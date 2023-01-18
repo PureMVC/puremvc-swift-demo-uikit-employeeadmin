@@ -12,6 +12,8 @@ import UIKit
 class ApplicationFacade: Facade {
     
     // Notification name constants
+    static var KEY = "EmployeeAdmin"
+    
     static var STARTUP = "startup"
         
     static var REGISTER = "register"
@@ -42,8 +44,8 @@ class ApplicationFacade: Facade {
     /**
     Start the application
     */
-    func startup(_ window: UIWindow?) {
-        sendNotification(ApplicationFacade.STARTUP, body: window as Any)
+    func startup(_ appDelegate: AppDelegate?) {
+        sendNotification(ApplicationFacade.STARTUP, body: appDelegate as Any)
     }
     
 }

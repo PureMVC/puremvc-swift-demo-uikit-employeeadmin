@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol UserListDelegate: class {
+protocol UserListDelegate: AnyObject {
     func findAll() throws -> [User]?
     func deleteById(_ id: Int64?) throws -> Int32?
 }
@@ -24,7 +24,7 @@ class UserList: UIViewController {
     @IBOutlet var tableView: UITableView!
 
     override func viewDidLoad() {
-        (UIApplication.shared.delegate as! AppDelegate).registerView(view: self);
+        ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(view: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
