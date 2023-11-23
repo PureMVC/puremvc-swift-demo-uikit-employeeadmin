@@ -13,7 +13,7 @@ protocol UserRoleDelegate: AnyObject {
     func findRolesById(_ id: Int?, _ completion: @escaping ([Role]?, NSException?) -> Void)
 }
 
-protocol UserRoleResponder: class {
+protocol UserRoleResponder: AnyObject {
     func result(_ roles: [Role]?)
 }
 

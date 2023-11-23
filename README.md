@@ -4,16 +4,26 @@ This demo illustrates techniques for performing routine maintenance operations i
 
 * [Discussion](http://forums.puremvc.org/index.php?topic=2117.0)
 
+## Demo Branches
+
+- [main](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin)
+- [SQLite](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/sqlite)
+- [CoreData](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/coredata)
+- [HTTP](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/http)
+- [SwiftUI-Combine](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/combine)
+
 ## Screenshot
 ![PureMVC SWIFT Demo: Employee Admin](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Swift-EmployeeAdmin.png)
 
 ## Installation
 
-Clone and Install a microservice before running the application
+Clone and Install a microservice before executing the application
 
+```commandLine
 git clone https://github.com/PureMVC/puremvc-js-demo-microservice-employeeadmin.git
 cd puremvc-js-demo-microservice-employeeadmin
 docker-compose-up
+```
 
 ## Tests
 * [XCode UI Tests](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Swift-iOS-EmployeeAdmin-UITests.gif)
