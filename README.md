@@ -1,8 +1,14 @@
 ## [PureMVC](http://puremvc.github.com/) [Swift](https://github.com/PureMVC/puremvc-swift-multicore-framework/wiki) Demo: Employee Admin
 
-This demo illustrates techniques for performing routine maintenance operations in a PureMVC-based application using [Cocoa Touch/UIKit](http://en.wikipedia.org/wiki/Cocoa_Touch) view components.
+This demo illustrates techniques for performing routine maintenance operations in a PureMVC-based application using [Cocoa Touch/UIKit](http://en.wikipedia.org/wiki/Cocoa_Touch) view components. [Discussion](http://forums.puremvc.org/index.php?topic=2117.0)
 
-* [Discussion](http://forums.puremvc.org/index.php?topic=2117.0)
+## Demo Branches
+
+- [main](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin)
+- [SQLite](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/sqlite)
+- [CoreData](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/coredata)
+- [HTTP](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/http)
+- [SwiftUI-Combine](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/combine)
 
 ## Screenshot
 ![PureMVC SWIFT Demo: Employee Admin](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Swift-EmployeeAdmin.png)
