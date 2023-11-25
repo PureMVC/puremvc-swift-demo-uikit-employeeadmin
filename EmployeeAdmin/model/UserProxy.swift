@@ -8,162 +8,42 @@
 
 import PureMVC
 import Foundation
-import SQLite3
+import CoreData
 
 class UserProxy: Proxy {
        
     override class var NAME: String { "UserProxy" }
     
-    private var database: OpaquePointer
-    
-    init(_ database: OpaquePointer) {
-        self.database = database
+    private var context: NSManagedObjectContext
+        
+    init(_ context: NSManagedObjectContext) {
+        self.context = context
         super.init(name: UserProxy.NAME, data: [User]())
     }
     
-    func findAll() throws -> [User]? {
-        var statement: OpaquePointer? = nil
-        let sql = "SELECT id, first, last FROM user"
-        
-        guard sqlite3_prepare_v2(database, sql, -1, &statement, nil) == SQLITE_OK else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
-        }
-        
-        defer {
-            sqlite3_finalize(statement)
-            sqlite3_db_cacheflush(database)
-        }
-        
-        var users: [User] = []
-        while sqlite3_step(statement) == SQLITE_ROW {
-            users.append(User(id: sqlite3_column_int64(statement, 0), username: nil, first: String(cString: sqlite3_column_text(statement, 1)),
-                              last: String(cString: sqlite3_column_text(statement, 2)), email: nil, password: nil, department: nil))
-        }
-        return users
+    func findAll() throws -> [User] {
+        let request = User.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "created", ascending: true)]
+        return try context.fetch(request)
     }
-    
-    func findById(_ id: Int64) throws -> User? {
-        var statement: OpaquePointer? = nil
-        let sql = """
-                    SELECT user.id, username, first, last, email, password, department_id, department.name AS 'department_name' FROM user
-                    INNER JOIN department ON user.department_id = department.id WHERE user.id = @id
-                """
-        
-        guard sqlite3_prepare(database, sql, -1, &statement, nil) == SQLITE_OK else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
-        }
-        
-        defer {
-            sqlite3_finalize(statement)
-            sqlite3_db_cacheflush(database)
-        }
-        
-        guard sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, "@id"), id) == SQLITE_OK else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
-        }
-        
-        if sqlite3_step(statement) == SQLITE_ROW {
-            return User(statement)
-        } else {
-            return nil
-        }
+
+    func save(_ user: User) throws {
+        try context.save()
     }
-    
-    func save(_ user: User) throws -> Int64? {
-        var statement: OpaquePointer? = nil
-        let sql = "INSERT INTO user(username, first, last, email, password, department_id) VALUES(@username, @first, @last, @email, @password, @department_id)"
-        
-        guard sqlite3_prepare_v2(database, sql, -1, &statement, nil) == SQLITE_OK else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
-        }
-        
-        defer {
-            sqlite3_finalize(statement)
-            sqlite3_db_cacheflush(database)
-        }
-        
-        guard
-            sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@username"), ((user.username ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
-            sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@first"), ((user.first ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
-            sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@last"), ((user.last ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
-            sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@email"), ((user.email ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
-            sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@password"), ((user.password ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
-            sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, "@department_id"), user.department?.id ?? -1) == SQLITE_OK
-        else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
-        }
-        
-        guard sqlite3_step(statement) == SQLITE_DONE else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 3, userInfo: nil)
-        }
-        
-        return sqlite3_last_insert_rowid(database)
+
+    func update(_ user: User) throws {
+        try context.save()
     }
-    
-    func update(_ user: User) throws -> Int32? {
-        var statement: OpaquePointer? = nil
-        let sql = "UPDATE user SET first = @first, last = @last, email = @email, password = @password, department_id = @department_id WHERE id = @id"
-        
-        guard sqlite3_prepare_v2(database, sql, -1, &statement, nil) == SQLITE_OK else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
-        }
-        
-        defer {
-            sqlite3_finalize(statement)
-            sqlite3_db_cacheflush(database)
-        }
-        
-        guard
-            sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@first"), ((user.first ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
-            sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@last"), ((user.last ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
-            sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@email"), ((user.email ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
-            sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, "@password"), ((user.password ?? "") as NSString).utf8String, -1, nil) == SQLITE_OK &&
-            sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, "@department_id"), user.department?.id ?? -1) == SQLITE_OK &&
-            sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, "@id"), user.id ?? 0) == SQLITE_OK
-        else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
-        }
-        
-        guard sqlite3_step(statement) == SQLITE_DONE else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 3, userInfo: nil)
-        }
-        
-        return sqlite3_changes(database)
+
+    func delete(_ user: User) throws {
+        context.delete(user)
+        try context.save()
     }
-    
-    func deleteById(_ id: Int64) throws -> Int32? {
-        let sql = "DELETE FROM user WHERE id = \(id)"
-        
-        defer {
-            sqlite3_db_cacheflush(database)
-        }
-        
-        guard sqlite3_exec(database, sql, nil, nil, nil) == SQLITE_OK else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
-        }
-        
-        return sqlite3_changes(database)
+
+    func findAllDepartments() throws -> [Department] {
+        let request = Department.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "created", ascending: true)]
+        return try context.fetch(request)
     }
-    
-    func findAllDepartments() throws -> [Department]? {
-        var statement: OpaquePointer? = nil
-        let sql = "SELECT id, name FROM department"
-        
-        guard sqlite3_prepare_v2(database, sql, -1, &statement, nil) == SQLITE_OK else {
-            throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 1, userInfo: nil)
-        }
-        
-        defer {
-            sqlite3_finalize(statement)
-            sqlite3_db_cacheflush(database)
-        }
-        
-        var departments: [Department] = []
-        while sqlite3_step(statement) == SQLITE_ROW {
-            departments.append(Department(statement))
-        }
-        
-        return departments
-    }
-    
+
 }

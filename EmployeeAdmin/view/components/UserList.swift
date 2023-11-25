@@ -10,15 +10,13 @@ import UIKit
 
 protocol UserListDelegate: AnyObject {
     func findAll() throws -> [User]?
-    func deleteById(_ id: Int64?) throws -> Int32?
+    func delete(_ user: User?) throws
 }
 
 class UserList: UIViewController {
     
     private var users: [User]?
-    
-    private var indexPath: IndexPath?
-    
+
     weak var delegate: UserListDelegate?
     
     @IBOutlet var tableView: UITableView!
@@ -40,21 +38,11 @@ class UserList: UIViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if let indexPath = indexPath { // fade in the updated row
-            tableView.reloadRows(at: [indexPath], with: .fade)
-        }
-        
-        if let users = users, tableView.numberOfRows(inSection: 0) != users.count {
-            tableView.insertRows(at: [IndexPath(row: users.count-1, section: 0)], with: .automatic)
-        }
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { // segue to UserForm to show user details
         if let identifier = segue.identifier, identifier == "segueToUserForm" {
             if let userForm = segue.destination as? UserForm {
-                if let id = sender as? Int64 { // existing vs. new user
-                    userForm.id = id
+                if let user = sender as? User {
+                    userForm.user = user
                 }
             }
         }
@@ -63,7 +51,7 @@ class UserList: UIViewController {
     func fault(_ message: String) {
         let alertController = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
 }
@@ -85,18 +73,17 @@ extension UserList: UITableViewDataSource {
 extension UserList: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { // show details of the user
-        self.indexPath = indexPath
-        self.performSegue(withIdentifier: "segueToUserForm", sender: users![indexPath.row].id)
+        performSegue(withIdentifier: "segueToUserForm", sender: users?[indexPath.row])
     }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) { // delete user from the tableView and model
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) { // delete from tableView and model
         if editingStyle == UITableViewCell.EditingStyle.delete {
             
             DispatchQueue.global().async { [weak self] in
                 do {
-                    _ = try self?.delegate?.deleteById(self?.users?[indexPath.row].id)
+                    try self?.delegate?.delete(self?.users?[indexPath.row])
                     self?.users?.remove(at: indexPath.row)
-                    
+
                     DispatchQueue.main.async {
                         self?.tableView.deleteRows(at: [indexPath], with: .automatic)
                     }

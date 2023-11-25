@@ -1,16 +1,14 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "PureMVC",
-        "repositoryURL": "https://github.com/PureMVC/puremvc-swift-multicore-framework",
-        "state": {
-          "branch": null,
-          "revision": "2d768790948f1441a03d89ab4a78ed2178a71afc",
-          "version": "1.6.0"
-        }
+  "pins" : [
+    {
+      "identity" : "puremvc-swift-multicore-framework",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/PureMVC/puremvc-swift-multicore-framework",
+      "state" : {
+        "revision" : "2d768790948f1441a03d89ab4a78ed2178a71afc",
+        "version" : "1.6.0"
       }
-    ]
-  },
-  "version": 1
+    }
+  ],
+  "version" : 2
 }

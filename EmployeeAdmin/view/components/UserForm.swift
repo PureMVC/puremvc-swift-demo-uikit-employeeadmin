@@ -9,21 +9,18 @@
 import UIKit
 
 protocol UserFormDelegate : AnyObject {
-    func findById(_ id: Int64?) throws -> User?
-    func save(_ user: User?, roles: [Role]?) throws
-    func update(_ user: User?, roles: [Role]?) throws
+    func save(_ user: User?) throws
+    func update(_ user: User?) throws
     func findAllDepartments() throws -> [Department]?
 }
 
 class UserForm: UIViewController {
+
+    var user: User?
+
+    private var roles: NSSet?
     
-    var id: Int64?
-    
-    private var user: User?
-    
-    private var departments: [Department]? = [Department(id: 0, name: "--None Selected--")]
-        
-    private var roles: [Role]?
+    private var departments: [Department] = []
     
     weak var delegate: UserFormDelegate?
 
@@ -38,135 +35,107 @@ class UserForm: UIViewController {
     
     override func viewDidLoad() {
         ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(view: self)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-        userRoles.tableFooterView = UIView()
-        
-        let group = DispatchGroup()
-        
-        group.enter()
         DispatchQueue.global().async { [weak self] in // UI data
             do {
                 if let departments = try self?.delegate?.findAllDepartments() {
-                    self?.departments?.append(contentsOf: departments)
+                    self?.departments.append(contentsOf: departments)
+                    DispatchQueue.main.async {
+                        self?.department.reloadComponent(0) // Stitch UI Data
+                    }
                 }
-                group.leave()
             } catch let error as NSError {
                 DispatchQueue.main.async { self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)") }
             }
         }
-        
-        if self.user == nil { // User data
-            group.enter()
-            DispatchQueue.global().async { [weak self] in
-                do {
-                    if let user = try self?.delegate?.findById(self?.id) {
-                        self?.user = user
-                    }
-                    group.leave()
-                } catch let error as NSError {
-                    DispatchQueue.main.async { self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)") }
-                }
-            }
-        }
-        
-        group.notify(queue: DispatchQueue.main) { [weak self] in // Stitch UI and User Data
-            self?.department.reloadComponent(0)
-            
-            if let user = self?.user {
-                self?.first.text = user.first
-                self?.last.text = user.last
-                self?.email.text = user.email
-                self?.username.text = user.username
-                self?.username.isEnabled = false
-                self?.password.text = user.password
-                self?.confirmPassword.text = user.password
-                self?.department.selectRow(Int(user.department?.id ?? 0), inComponent: 0, animated: true)
-            }
-        }
-        
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        userRoles.tableFooterView = UIView()
+
+        if let user = user { // Stitch User Data
+            first.text = user.first
+            last.text = user.last
+            email.text = user.email
+            username.text = user.username
+            username.isEnabled = false
+            password.text = user.password
+            confirmPassword.text = user.password
+            if let index = departments.firstIndex(where: { $0 == user.department } ) {
+                department.selectRow(index + 1, inComponent: 0, animated: true)
+            }
+        }
+    }
+
     @IBAction func save(_ sender: Any) { // save or update
         if user == nil { // new user
-            user = User(id: nil, username: username.text, first: first?.text,
-                        last: last.text, email: email.text, password: password.text,
-                        department: Department(id: Int64(department.selectedRow(inComponent: 0)), name: nil))
+            guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
+                return
+            }
+            user = User(context: context, username: username?.text, first: first?.text,
+                    last: last.text, email: email.text, password: password.text,
+                    department: departments[department.selectedRow(inComponent: 0) - 1], roles: roles)
         } else { // existing user
             user?.first = first.text ?? ""
             user?.last = last.text ?? ""
             user?.email = email.text ?? ""
             user?.password = password.text ?? ""
-            user?.department?.id = Int64(department.selectedRow(inComponent: 0))
-            user?.department?.name = departments?[department.selectedRow(inComponent: 0)].name
+            user?.department = departments[department.selectedRow(inComponent: 0) - 1]
+            user?.roles = roles
         }
-        
-        if user!.password == confirmPassword.text && user!.isValid == true { // validation
-            if user?.id == nil {
-                DispatchQueue.global().async { [weak self] in
-                    do {
-                        try self?.delegate?.save(self?.user, roles: self?.roles)
-                        DispatchQueue.main.async { [weak self] in
-                            self?.navigationController?.popToRootViewController(animated: true)
-                        }
-                    } catch let error as NSError {
-                        DispatchQueue.main.async { self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)") }
-                    }
+
+        guard let user = user, user.password == confirmPassword.text, user.isValid == true else {
+            return fault("Invalid Form Data.")
+        }
+
+        DispatchQueue.global().async { [weak self] in // update
+            do {
+                try user.objectID.isTemporaryID ? self?.delegate?.save(user) : self?.delegate?.update(user)
+                DispatchQueue.main.async { [weak self] in
+                    self?.navigationController?.popToRootViewController(animated: true)
                 }
-            } else {
-                DispatchQueue.global().async { [weak self] in
-                    do {
-                        try self?.delegate?.update(self?.user, roles: self?.roles)
-                        DispatchQueue.main.async { [weak self] in
-                            self?.navigationController?.popToRootViewController(animated: true)
-                        }
-                    } catch let error as NSError {
-                        DispatchQueue.main.async { self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)") }
-                    }
-                }
+            } catch let error as NSError {
+                DispatchQueue.main.async { self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)") }
             }
-        } else {
-            fault("Invalid Form Data.")
         }
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { // segue to User Roles
+    // segue to User Roles
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier, identifier == "segueToUserRoles" {
             if let userRole = segue.destination as? UserRole {
                 user?.first = first.text ?? "" // retain any form changes before the segue
                 user?.last = last.text ?? ""
                 user?.email = email.text ?? ""
                 user?.password = password.text ?? ""
-                user?.department?.id = Int64(department.selectedRow(inComponent: 0))
-                
-                userRole.id = user?.id
-                userRole.roles = roles // previous selection if any
+                user?.department = departments[department.selectedRow(inComponent: 0) - 1]
+
+                userRole.roles = roles != nil ? roles : user?.roles // previous selection if any
                 userRole.responder = self
             }
         }
     }
-    
+
     func fault(_ message: String) {
         let alertController = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 
 }
 
 extension UserForm: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 } // number of rows
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { // cells
         let cell = tableView.dequeueReusableCell(withIdentifier: "userRolesCell", for: indexPath as IndexPath)
         cell.textLabel?.text = "User Roles"
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { // Seque to UserRoles
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { // Segue to UserRoles
         performSegue(withIdentifier: "segueToUserRoles", sender: user)
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -174,13 +143,13 @@ extension UserForm: UITableViewDataSource, UITableViewDelegate {
 
 extension UserForm: UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? { // title
-        departments?[row].name
+        (row == 0) ? "--None Selected--" : departments[row - 1].name
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 } // number of components
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { // number of rows
-        departments?.count ?? 0
+        departments.count + 1
     }
 }
 
@@ -192,7 +161,7 @@ extension UserForm: UITextFieldDelegate {
 }
 
 extension UserForm: UserRoleResponder {
-    func result(_ roles: [Role]?) { // add role to the user
+    func result(_ roles: NSSet?) { // add role to the user
         self.roles = roles
     }
 }

@@ -10,18 +10,15 @@ import UIKit
 
 protocol UserRoleDelegate: AnyObject {
     func findAllRoles() throws -> [Role]?
-    func findRolesById(id: Int64?) throws -> [Role]?
 }
 
 protocol UserRoleResponder: AnyObject {
-    func result(_ roles: [Role]?)
+    func result(_ roles: NSSet?)
 }
 
 class UserRole: UIViewController {
-    
-    var id: Int64?
-    
-    var roles: [Role]?
+
+    var roles: NSSet?
         
     private var dataSource: [Role]?
     
@@ -36,42 +33,26 @@ class UserRole: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let group = DispatchGroup()
-        
-        group.enter()
+
         DispatchQueue.global().async { [weak self] in // UI Data
             do {
                 self?.dataSource = try self?.delegate?.findAllRoles()
-                group.leave()
             } catch let error as NSError {
                 self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)")
             }
         }
         
-        if roles == nil && id != nil { // User Data
-            group.enter()
-            DispatchQueue.global().async { [weak self] in
-                do {
-                    self?.roles = try self?.delegate?.findRolesById(id: self?.id)
-                    group.leave()
-                } catch let error as NSError {
-                    self?.fault("\(error.localizedDescription), \(error.domain), \(error.code)")
-                }
-            }
+        if roles == nil { // User Data
+            roles = NSSet()
         }
-        
-        group.notify(queue: DispatchQueue.main) { [weak self] in // Stitch UI and User Data
-            if self?.roles == nil {
-                self?.roles = [Role]()
-            }
-            self?.tableView.reloadData()
-        }
+
+        tableView.reloadData()
     }
     
     func fault(_ message: String) {
         let alertController = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 
 }
@@ -87,8 +68,8 @@ extension UserRole: UITableViewDataSource {
         
         let role = dataSource?[indexPath.row]
         cell.textLabel?.text = role?.name
-        
-        if roles?.filter({ $0.id == role?.id }).isEmpty == false {
+
+        if roles?.filter({ $0 as? Role == role }).isEmpty == false {
             cell.accessoryType = UITableViewCell.AccessoryType.checkmark
         } else {
             cell.accessoryType = UITableViewCell.AccessoryType.none
@@ -105,12 +86,14 @@ extension UserRole: UITableViewDelegate {
         
         if cell!.accessoryType == UITableViewCell.AccessoryType.none {
             cell!.accessoryType = UITableViewCell.AccessoryType.checkmark
-            roles?.append((dataSource?[indexPath.row])!)
+            if let existing = roles as? Set<Role>, let role = dataSource?[indexPath.row] {
+                roles = NSSet(set: existing.union([role]))
+            }
             responder?.result(roles)
         } else {
             cell!.accessoryType = UITableViewCell.AccessoryType.none
-            roles = roles?.filter {
-                $0.id as AnyObject !== dataSource![indexPath.row].id as AnyObject
+            if let existing = roles as? Set<Role>, let role = dataSource?[indexPath.row] {
+                roles = NSSet(set: existing.subtracting([role]))
             }
             responder?.result(roles)
         }

@@ -12,7 +12,7 @@ class ApplicationMediator: Mediator {
     
     override class var NAME: String { "ApplicationMediator" }
     
-    init(viewComponent: AppDelegate) {
+    init(_ viewComponent: AppDelegate) {
         super.init(name: ApplicationMediator.NAME, viewComponent: viewComponent)
     }
     

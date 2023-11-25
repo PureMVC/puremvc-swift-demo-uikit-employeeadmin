@@ -39,53 +39,32 @@ class EmployeeAdminMediator: Mediator {
 }
 
 extension EmployeeAdminMediator: UserListDelegate {
-    
+
     func findAll() throws -> [User]? {
-        return try userProxy?.findAll()
+        try userProxy?.findAll()
     }
-    
-    func deleteById(_ id: Int64?) throws -> Int32? {
-        if let id = id {
-            return try userProxy?.deleteById(id)
-        } else {
-            return nil
-        }
+
+    func delete(_ user: User?) throws {
+        guard let user = user else { return }
+        try userProxy?.delete(user)
     }
-    
+
 }
 
 extension EmployeeAdminMediator: UserFormDelegate {
-    
-    func findById(_ id: Int64?) throws -> User? {
-        if let id = id {
-            return try userProxy?.findById(id)
-        } else {
-            return nil
-        }
+
+    func save(_ user: User?) throws {
+        guard let user else { return }
+        try userProxy?.save(user)
     }
     
-    func save(_ user: User?, roles: [Role]?) throws {
-        if let user = user {
-            let id = try userProxy?.save(user)
-            
-            if let id = id, let roles = roles {
-                _ = try roleProxy?.updateByUserId(id, roles: roles.compactMap { $0.id })
-            }
-        }
-    }
-    
-    func update(_ user: User?, roles: [Role]?) throws {
-        if let user = user {
-            _ = try userProxy?.update(user)
-            
-            if let id = user.id, let roles = roles {
-                _ = try roleProxy?.updateByUserId(id, roles: roles.compactMap { $0.id })
-            }
-        }
+    func update(_ user: User?) throws {
+        guard let user else { return }
+        try userProxy?.update(user)
     }
     
     func findAllDepartments() throws -> [Department]? {
-        return try userProxy?.findAllDepartments()
+        try userProxy?.findAllDepartments()
     }
     
 }
@@ -94,14 +73,6 @@ extension EmployeeAdminMediator: UserRoleDelegate {
     
     func findAllRoles() throws -> [Role]? {
         try roleProxy?.findAll()
-    }
-    
-    func findRolesById(id: Int64?) throws -> [Role]? {
-        if let id = id {
-            return try roleProxy?.findByUserId(id)
-        } else {
-            return nil
-        }
     }
     
 }

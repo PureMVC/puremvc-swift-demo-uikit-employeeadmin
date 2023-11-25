@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1220"
+   LastUpgradeVersion = "1420"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A814B3F624537F73002D1415"
+               BlueprintIdentifier = "93FE7DF62B0F1D74008D5B29"
                BuildableName = "EmployeeAdmin.app"
                BlueprintName = "EmployeeAdmin"
                ReferencedContainer = "container:EmployeeAdmin.xcodeproj">
@@ -29,20 +29,22 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A814B40C24537F75002D1415"
+               BlueprintIdentifier = "93FE7E0F2B0F1D76008D5B29"
                BuildableName = "EmployeeAdminTests.xctest"
                BlueprintName = "EmployeeAdminTests"
                ReferencedContainer = "container:EmployeeAdmin.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A814B41724537F75002D1415"
+               BlueprintIdentifier = "93FE7E192B0F1D76008D5B29"
                BuildableName = "EmployeeAdminUITests.xctest"
                BlueprintName = "EmployeeAdminUITests"
                ReferencedContainer = "container:EmployeeAdmin.xcodeproj">
@@ -64,7 +66,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A814B3F624537F73002D1415"
+            BlueprintIdentifier = "93FE7DF62B0F1D74008D5B29"
             BuildableName = "EmployeeAdmin.app"
             BlueprintName = "EmployeeAdmin"
             ReferencedContainer = "container:EmployeeAdmin.xcodeproj">
@@ -81,7 +83,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A814B3F624537F73002D1415"
+            BlueprintIdentifier = "93FE7DF62B0F1D74008D5B29"
             BuildableName = "EmployeeAdmin.app"
             BlueprintName = "EmployeeAdmin"
             ReferencedContainer = "container:EmployeeAdmin.xcodeproj">
