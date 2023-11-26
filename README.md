@@ -10,7 +10,7 @@ This demo illustrates techniques for performing routine maintenance operations i
 - [SQLite](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/sqlite)
 - [CoreData](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/coredata)
 - [HTTP](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/http)
-- [SwiftUI-Combine](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/combine)
+- [Combine](https://github.com/PureMVC/puremvc-swift-demo-uikit-employeeadmin/tree/combine)
 
 ## Screenshot
 ![PureMVC SWIFT Demo: Employee Admin](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Swift-EmployeeAdmin.png)
