@@ -8,10 +8,10 @@
 
 struct Department: Decodable, Encodable {
     
-    var id: Int?
+    var id: Int
     var name: String?
     
-    init(id: Int? = nil, name: String? = nil) {
+    init(id: Int, name: String? = nil) {
         self.id = id
         self.name = name
     }

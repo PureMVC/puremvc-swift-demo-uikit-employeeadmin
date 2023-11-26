@@ -12,13 +12,12 @@
 		A814B40724537F75002D1415 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A814B40524537F75002D1415 /* LaunchScreen.storyboard */; };
 		A814B41D24537F75002D1415 /* EmployeeAdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B41C24537F75002D1415 /* EmployeeAdminUITests.swift */; };
 		A814B44724537FA8002D1415 /* StartupCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43124537FA8002D1415 /* StartupCommand.swift */; };
-		A814B44A24537FA8002D1415 /* RegisterCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43424537FA8002D1415 /* RegisterCommand.swift */; };
 		A814B44B24537FA8002D1415 /* ApplicationFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43524537FA8002D1415 /* ApplicationFacade.swift */; };
 		A814B44C24537FA8002D1415 /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43824537FA8002D1415 /* Role.swift */; };
 		A814B44D24537FA8002D1415 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43924537FA8002D1415 /* User.swift */; };
 		A814B45024537FA8002D1415 /* UserProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43D24537FA8002D1415 /* UserProxy.swift */; };
 		A814B45124537FA8002D1415 /* RoleProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B43E24537FA8002D1415 /* RoleProxy.swift */; };
-		A814B45224537FA8002D1415 /* ApplicationMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44024537FA8002D1415 /* ApplicationMediator.swift */; };
+		A814B45224537FA8002D1415 /* AppDelegateMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44024537FA8002D1415 /* AppDelegateMediator.swift */; };
 		A814B45324537FA8002D1415 /* EmployeeAdminMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44124537FA8002D1415 /* EmployeeAdminMediator.swift */; };
 		A814B45424537FA8002D1415 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44324537FA8002D1415 /* UserRole.swift */; };
 		A814B45524537FA8002D1415 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B44424537FA8002D1415 /* UserList.swift */; };
@@ -30,7 +29,6 @@
 		A814B467245380B5002D1415 /* PureMVC in Frameworks */ = {isa = PBXBuildFile; productRef = A814B466245380B5002D1415 /* PureMVC */; };
 		A814B46924538142002D1415 /* SceneMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A814B46824538142002D1415 /* SceneMediator.swift */; };
 		A870F4B72569DD4200CB7EBF /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = A870F4B62569DD4200CB7EBF /* Department.swift */; };
-		A8F3858725873E64008739B5 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F3858625873E64008739B5 /* Exception.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,13 +60,12 @@
 		A814B41C24537F75002D1415 /* EmployeeAdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeAdminUITests.swift; sourceTree = "<group>"; };
 		A814B41E24537F75002D1415 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A814B43124537FA8002D1415 /* StartupCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupCommand.swift; sourceTree = "<group>"; };
-		A814B43424537FA8002D1415 /* RegisterCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterCommand.swift; sourceTree = "<group>"; };
 		A814B43524537FA8002D1415 /* ApplicationFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationFacade.swift; sourceTree = "<group>"; };
 		A814B43824537FA8002D1415 /* Role.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
 		A814B43924537FA8002D1415 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A814B43D24537FA8002D1415 /* UserProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxy.swift; sourceTree = "<group>"; };
 		A814B43E24537FA8002D1415 /* RoleProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleProxy.swift; sourceTree = "<group>"; };
-		A814B44024537FA8002D1415 /* ApplicationMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationMediator.swift; sourceTree = "<group>"; };
+		A814B44024537FA8002D1415 /* AppDelegateMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateMediator.swift; sourceTree = "<group>"; };
 		A814B44124537FA8002D1415 /* EmployeeAdminMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeAdminMediator.swift; sourceTree = "<group>"; };
 		A814B44324537FA8002D1415 /* UserRole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
 		A814B44424537FA8002D1415 /* UserList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
@@ -79,7 +76,6 @@
 		A814B46224538080002D1415 /* UserProxyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProxyTest.swift; sourceTree = "<group>"; };
 		A814B46824538142002D1415 /* SceneMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneMediator.swift; sourceTree = "<group>"; };
 		A870F4B62569DD4200CB7EBF /* Department.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Department.swift; sourceTree = "<group>"; };
-		A8F3858625873E64008739B5 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,7 +163,6 @@
 			isa = PBXGroup;
 			children = (
 				A814B43124537FA8002D1415 /* StartupCommand.swift */,
-				A814B43424537FA8002D1415 /* RegisterCommand.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -188,7 +183,6 @@
 				A814B43824537FA8002D1415 /* Role.swift */,
 				A814B43924537FA8002D1415 /* User.swift */,
 				A870F4B62569DD4200CB7EBF /* Department.swift */,
-				A8F3858625873E64008739B5 /* Exception.swift */,
 			);
 			path = valueObject;
 			sourceTree = "<group>";
@@ -197,8 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				A814B44224537FA8002D1415 /* components */,
-				A814B44024537FA8002D1415 /* ApplicationMediator.swift */,
 				A814B46824538142002D1415 /* SceneMediator.swift */,
+				A814B44024537FA8002D1415 /* AppDelegateMediator.swift */,
 				A814B44124537FA8002D1415 /* EmployeeAdminMediator.swift */,
 			);
 			path = view;
@@ -363,7 +357,7 @@
 			files = (
 				A814B44C24537FA8002D1415 /* Role.swift in Sources */,
 				A814B45024537FA8002D1415 /* UserProxy.swift in Sources */,
-				A814B45224537FA8002D1415 /* ApplicationMediator.swift in Sources */,
+				A814B45224537FA8002D1415 /* AppDelegateMediator.swift in Sources */,
 				A814B45424537FA8002D1415 /* UserRole.swift in Sources */,
 				A814B44D24537FA8002D1415 /* User.swift in Sources */,
 				A814B45324537FA8002D1415 /* EmployeeAdminMediator.swift in Sources */,
@@ -374,10 +368,8 @@
 				A814B45624537FA8002D1415 /* UserForm.swift in Sources */,
 				A814B45924538060002D1415 /* SceneDelegate.swift in Sources */,
 				A814B45524537FA8002D1415 /* UserList.swift in Sources */,
-				A8F3858725873E64008739B5 /* Exception.swift in Sources */,
 				A814B45124537FA8002D1415 /* RoleProxy.swift in Sources */,
 				A814B46924538142002D1415 /* SceneMediator.swift in Sources */,
-				A814B44A24537FA8002D1415 /* RegisterCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

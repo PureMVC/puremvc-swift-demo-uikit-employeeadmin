@@ -7,13 +7,12 @@
 //
 
 import PureMVC
+import UIKit
 
-class ApplicationMediator: Mediator {
-    
-    override class var NAME: String { "ApplicationMediator" }
-    
-    init(viewComponent: AppDelegate) {
-        super.init(name: ApplicationMediator.NAME, viewComponent: viewComponent)
+class AppDelegateMediator: Mediator {
+        
+    init(name: String, viewComponent: UIResponder) {
+        super.init(name: name, viewComponent: viewComponent)
     }
     
 }

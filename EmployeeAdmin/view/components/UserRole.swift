@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import Combine
 
 protocol UserRoleDelegate: AnyObject {
-    func findAllRoles(_ completion: @escaping ([Role]?, NSException?) -> Void)
-    func findRolesById(_ id: Int?, _ completion: @escaping ([Role]?, NSException?) -> Void)
+    func findAllRoles() -> AnyPublisher<[Role], Error>
+    func findRolesById(_ id: Int) -> AnyPublisher<[Role], Error>
 }
 
-protocol UserRoleResponder: AnyObject {
-    func result(_ roles: [Role]?)
+protocol UserRoleListener: AnyObject {
+    func update(_ roles: [Role]?)
 }
 
 class UserRole: UIViewController {
@@ -24,60 +25,53 @@ class UserRole: UIViewController {
     var roles: [Role]?
         
     private var dataSource: [Role]?
+
+    private var cancellable = Set<AnyCancellable>()
     
-    weak var responder: UserRoleResponder?
+    weak var listener: UserRoleListener?
     
     weak var delegate: UserRoleDelegate?
+
+    open class var NAME: String { "UserRole" }
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
-        ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(view: self)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        let group = DispatchGroup()
+        ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(name: UserRole.NAME, viewComponent: self)
         
-        group.enter()
-        DispatchQueue.global().async { [weak self] in // UI Data
-            self?.delegate?.findAllRoles({ (roles, exception) in
-                if let exception = exception {
-                    DispatchQueue.main.async { self?.fault(exception) }
+        delegate?.findAllRoles()
+            .flatMap { [weak self] roles in
+                self?.dataSource = roles // UI Data
+                
+                if let roles = self?.roles {
+                    return Just(roles).setFailureType(to: Error.self).eraseToAnyPublisher()
+                } else if let id = self?.id, let delegate = self?.delegate {
+                    return delegate.findRolesById(id).eraseToAnyPublisher() // User Data
                 } else {
-                    self?.dataSource = roles
+                    return Just([Role]()).setFailureType(to: Error.self).eraseToAnyPublisher()
                 }
+            }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                if case let .failure(error) = completion { self?.fault(error)}
+            }, receiveValue: { [weak self] roles in // Bind UI and User Data
+                self?.roles = roles
+                self?.tableView.reloadData()
             })
-            group.leave()
-        }
-        
-        if roles == nil && id != nil { // User Data
-            group.enter()
-            DispatchQueue.global().async { [weak self] in
-                self?.delegate?.findRolesById(self?.id, { (roles, exception) in
-                    if let exception = exception {
-                        self?.fault(exception)
-                    } else {
-                        self?.roles = roles
-                        group.leave()
-                    }
-                })
-            }
-        }
-        
-        group.notify(queue: DispatchQueue.main) { [weak self] in // Stitch UI and User Data
-            if self?.roles == nil {
-                self?.roles = [Role]()
-            }
-            self?.tableView.reloadData()
-        }
-    }
-    
-    func fault(_ exception: NSException) {
-        let alertController = UIAlertController(title: "Error", message: exception.description, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+            .store(in: &cancellable)
     }
 
+    func fault(_ error: Error) {
+        let alertController = UIAlertController(title: "\(type(of: error))", message: error.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
+
+    deinit {
+        cancellable.forEach { $0.cancel() }
+        cancellable.removeAll()
+        ApplicationFacade.getInstance(key: ApplicationFacade.KEY).removeView(name: UserRole.NAME)
+    }
 }
 
 extension UserRole: UITableViewDataSource {
@@ -100,6 +94,7 @@ extension UserRole: UITableViewDataSource {
         
         return cell
     }
+    
 }
 
 extension UserRole: UITableViewDelegate {
@@ -110,14 +105,14 @@ extension UserRole: UITableViewDelegate {
         if cell!.accessoryType == UITableViewCell.AccessoryType.none {
             cell!.accessoryType = UITableViewCell.AccessoryType.checkmark
             roles?.append((dataSource?[indexPath.row])!)
-            responder?.result(roles)
+            listener?.update(roles)
         } else {
             cell!.accessoryType = UITableViewCell.AccessoryType.none
             roles = roles?.filter {
                 $0.id as AnyObject !== dataSource![indexPath.row].id as AnyObject
             }
-            responder?.result(roles)
+            listener?.update(roles)
         }
-        
     }
+    
 }

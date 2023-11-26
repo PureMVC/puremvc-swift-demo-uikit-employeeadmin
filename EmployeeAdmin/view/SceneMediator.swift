@@ -7,13 +7,12 @@
 //
 
 import PureMVC
+import UIKit
 
 class SceneMediator: Mediator {
-    
-    override class var NAME: String { "SceneMediator" }
-    
-    init(viewComponent: SceneDelegate) {
-        super.init(name: SceneMediator.NAME, viewComponent: viewComponent)
+        
+    init(name: String, viewComponent: UIResponder) {
+        super.init(name: name, viewComponent: viewComponent)
     }
     
 }

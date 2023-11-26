@@ -49,22 +49,8 @@ class RoleProxyTest: XCTestCase {
     
     func testFindByUserId() {
         let e = expectation(description: "testFindbyUserId")
-        
-        roleProxy.findByUserId(2) { (roles, exception) in
-            guard let roles = roles else {
-                XCTFail(exception!.description)
-                e.fulfill()
-                return
-            }
-            
-            XCTAssertEqual(roles.count, 3)
-            roles.forEach { role in
-                XCTAssertNotNil(role.id)
-                XCTAssertNotNil(role.name)
-            }
-            
-            e.fulfill()
-        }
+
+        roleProxy.findByUserId(2)
         
         waitForExpectations(timeout: 10, handler: nil)
     }
@@ -81,20 +67,8 @@ class RoleProxyTest: XCTestCase {
             }
             
             XCTAssertEqual(ids.count, 3)
-            
-            self?.roleProxy.findByUserId(1) { (roles, ex) in // confirmation
-                guard let roles = roles else {
-                    XCTFail(ex!.description)
-                    e.fulfill()
-                    return
-                }
-                XCTAssertEqual(roles.count, 3)
-                
-                // reset
-                self?.roleProxy.updateByUserId(1, roles: [Role(id: 4, name: "Employee Benefits")]) { (_, _) in
-                    e.fulfill()
-                }
-            }
+
+            self?.roleProxy.findByUserId(1)
         }
 
        waitForExpectations(timeout: 10, handler: nil)

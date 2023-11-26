@@ -8,22 +8,22 @@
 
 import PureMVC
 import UIKit
+import Combine
 
 class EmployeeAdminMediator: Mediator { 
-    
-    override class var NAME: String { "EmployeeAdminMediator" }
 
-    private var userProxy: UserProxy?
+    private var userProxy: UserProxy!
     
-    private var roleProxy: RoleProxy?
+    private var roleProxy: RoleProxy!
     
-    init(viewComponent: UIViewController) {
-        super.init(name: EmployeeAdminMediator.NAME + viewComponent.title!, viewComponent: viewComponent)
+    init(name: String, viewComponent: UIResponder) {
+        super.init(name: name, viewComponent: viewComponent)
     }
     
-    override func onRegister() {
-        userProxy = facade.retrieveProxy(UserProxy.NAME) as? UserProxy
-        roleProxy = facade.retrieveProxy(RoleProxy.NAME) as? RoleProxy
+    override func onRegister() { // Forced unwrapping and casting streamlined delegate methods
+        //  but the app is susceptible to ceasing to work if these core dependencies are not available.
+        userProxy = (facade.retrieveProxy(UserProxy.NAME) as! UserProxy)
+        roleProxy = (facade.retrieveProxy(RoleProxy.NAME) as! RoleProxy)
         
         switch viewComponent {
         case let userList as UserList:
@@ -41,99 +41,62 @@ class EmployeeAdminMediator: Mediator {
 
 extension EmployeeAdminMediator: UserListDelegate {
     
-    func findAll(_ completion: @escaping ([User]?, NSException?) -> Void) {
-        userProxy?.findAll(completion)
+    func findAll() -> AnyPublisher<[User], Error> {
+        userProxy.findAll()
     }
-    
-    func deleteById(_ id: Int?, _ completion: @escaping (Int?, NSException?) -> Void) {
-        if let id = id {
-            userProxy?.deleteById(id, completion)
-        } else {
-            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Id can't be nil.", userInfo: nil))
-        }
+
+    func deleteById(_ id: Int) -> AnyPublisher<Never, Error> {
+        userProxy.deleteById(id)
     }
     
 }
 
 extension EmployeeAdminMediator: UserFormDelegate {
- 
-    func findById(_ id: Int?, _ completion: @escaping (User?, NSException?) -> Void) {
-        if let id = id {
-            userProxy?.findById(id, completion)
-        }
+
+    func findById(_ id: Int) -> AnyPublisher<User, Error> {
+        userProxy.findById(id)
     }
     
-    func save(_ user: User?, roles: [Role]?, completion: @escaping (Int?, NSException?) -> Void) {
-        if let user = user {
-            userProxy?.save(user) { [weak self] (id, exception) in
-
-                guard exception == nil else {
-                    completion(nil, exception)
-                    return
-                }
-
-                if let id = id, let roles = roles {
-                    self?.roleProxy?.updateByUserId(id, roles: roles, { (ids, exception) in
-                        guard exception == nil else {
-                            completion(nil, exception)
-                            return
-                        }
-                        completion(id, nil)
-                    })
-                } else {
-                    completion(id, nil)
-                }
-            }
-        } else {
-            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "User can't be nil.", userInfo: nil))
-        }
-    }
-    
-    func update(_ user: User?, roles: [Role]?, completion: @escaping (Int?, NSException?) -> Void) {
-        if let user = user {
-            userProxy?.update(user) { [weak self] (modified, exception) in
-                
-                guard exception == nil else {
-                    completion(nil, exception)
-                    return
-                }
-                
-                if let roles = roles, let id = user.id {
-                    self?.roleProxy?.updateByUserId(id, roles: roles) { _, exception in
-                        
-                        guard exception == nil else {
-                            completion(nil, exception)
-                            return
-                        }
-                        completion(modified, nil)
+    func save(_ user: User, roles: [Role]?) -> AnyPublisher<User, Error> {
+        userProxy.save(user)
+                .flatMap { [weak self] user in
+                    guard let roles, let roleProxy = self?.roleProxy else {
+                        return Just(user).setFailureType(to: Error.self).eraseToAnyPublisher()
                     }
-                } else {
-                    completion(modified, nil)
+                    return roleProxy.updateByUserId(user.id, roles: roles)
+                            .map { _ in user }
+                            .eraseToAnyPublisher()
                 }
-            }
-        } else {
-            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "User can't be nil.", userInfo: nil))
-        }
+                .eraseToAnyPublisher()
+    }
+
+    func update(_ user: User, roles: [Role]?) -> AnyPublisher<User, Error> {
+        userProxy.update(user)
+                .flatMap { [weak self] user in
+                    guard let roles, let roleProxy = self?.roleProxy else {
+                        return Just(user).setFailureType(to: Error.self).eraseToAnyPublisher()
+                    }
+                    return roleProxy.updateByUserId(user.id, roles: roles)
+                            .map { _ in user }
+                            .eraseToAnyPublisher()
+                }
+                .eraseToAnyPublisher()
     }
     
-    func findAllDepartments(_ completion: @escaping ([Department]?, NSException?) -> Void) {
-        userProxy?.findAllDepartments(completion)
+    func findAllDepartments() -> AnyPublisher<[Department], Error> {
+        userProxy.findAllDepartments()
     }
     
 }
 
 extension EmployeeAdminMediator: UserRoleDelegate {
 
-    func findAllRoles(_ completion: @escaping ([Role]?, NSException?) -> Void){
-        roleProxy?.findAll(completion)
+    func findAllRoles() -> AnyPublisher<[Role], Error> {
+        roleProxy.findAll()
     }
     
-    func findRolesById(_ id: Int?, _ completion: @escaping ([Role]?, NSException?) -> Void) {
-        if let id = id {
-            roleProxy?.findByUserId(id, completion)
-        } else {
-            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "Id can't be nil.", userInfo: nil))
-        }
+    func findRolesById(_ id: Int) -> AnyPublisher<[Role], Error> {
+        roleProxy.findByUserId(id)
     }
     
 }

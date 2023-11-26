@@ -8,7 +8,6 @@
 
 import PureMVC
 import Foundation
-import UIKit
 
 class StartupCommand: SimpleCommand {
     
@@ -17,9 +16,10 @@ class StartupCommand: SimpleCommand {
         configuration.allowsConstrainedNetworkAccess = true
         configuration.allowsExpensiveNetworkAccess = true
         let session = URLSession(configuration: configuration)
-                
-        facade.registerProxy(UserProxy(session: session))
-        facade.registerProxy(RoleProxy(session: session))
+
+        let jsonDecoder = JSONDecoder()
+        facade.registerProxy(UserProxy(session: session, jsonDecoder: jsonDecoder))
+        facade.registerProxy(RoleProxy(session: session, jsonDecoder: jsonDecoder))
     }
     
 }

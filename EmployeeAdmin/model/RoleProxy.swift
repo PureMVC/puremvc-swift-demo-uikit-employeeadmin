@@ -8,111 +8,55 @@
 
 import PureMVC
 import Foundation
+import Combine
 
 class RoleProxy: Proxy {
     
     override class var NAME: String { "RoleProxy" }
         
     private var session: URLSession
-    
-    init(session: URLSession) {
+
+    private var jsonDecoder: JSONDecoder
+
+    init(session: URLSession, jsonDecoder: JSONDecoder) {
         self.session = session
+        self.jsonDecoder = jsonDecoder
         super.init(name: RoleProxy.NAME, data: [Role]())
     }
     
-    func findAll(_ completion: @escaping ([Role]?, NSException?) -> Void) {
+    func findAll() -> AnyPublisher<[Role], Error> {
         var request = URLRequest(url: URL(string: "http://localhost:8080/roles")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        session.dataTask(with: request) { data, response, error in
-            guard error == nil else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
-            }
-            
-            do {
-                if response.statusCode == 200 {
-                    completion(try JSONDecoder().decode([Role].self, from: data), nil)
-                } else {
-                    let exception = try JSONDecoder().decode(Exception.self, from: data)
-                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
-                }
-            } catch let error {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
-            }
-        }.resume()
+
+        return session.dataTaskPublisher(for: request)
+                .map(\.data)
+                .decode(type: [Role].self, decoder: jsonDecoder)
+                .eraseToAnyPublisher()
     }
     
-    func findByUserId(_ id: Int, _ completion: @escaping ([Role]?, NSException?) -> Void) {
+    func findByUserId(_ id: Int) -> AnyPublisher<[Role], Error> {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)/roles")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        session.dataTask(with: request) { data, response, error in
-            guard error == nil else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
-            }
-            
-            do {
-                if response.statusCode == 200 {
-                    completion(try JSONDecoder().decode([Role].self, from: data), nil)
-                } else {
-                    let exception = try JSONDecoder().decode(Exception.self, from: data)
-                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
-                }
-            } catch let error {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
-            }
-        }.resume()
+
+        return session.dataTaskPublisher(for: request)
+                .map(\.data)
+                .decode(type: [Role].self, decoder: jsonDecoder)
+                .eraseToAnyPublisher()
     }
         
-    func updateByUserId(_ id: Int, roles: [Role], _ completion: @escaping ([Int]?, NSException?) -> Void) {
+    func updateByUserId(_ id: Int, roles: [Role]) -> AnyPublisher<[Int], Error> {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)/roles")!)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        do {
-            request.httpBody = try JSONEncoder().encode(roles.map{ $0.id })
-        } catch let error {
-            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
-            return
-        }
+        request.httpBody = try? JSONEncoder().encode(roles.map{ $0.id })
 
-        session.dataTask(with: request) { data, response, error in
-            guard error == nil else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
-                return
-            }
-
-            guard let response = response as? HTTPURLResponse, let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
-            }
-
-            do {
-                if response.statusCode == 200 {
-                    completion(try JSONDecoder().decode([Int].self, from: data), nil)
-                } else {
-                    let exception = try JSONDecoder().decode(Exception.self, from: data)
-                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
-                }
-            } catch let error {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
-            }
-        }.resume()
+        return session.dataTaskPublisher(for: request)
+                .map(\.data)
+                .decode(type: [Int].self, decoder: jsonDecoder)
+                .eraseToAnyPublisher()
     }
     
 }

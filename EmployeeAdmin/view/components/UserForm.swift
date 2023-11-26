@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import Combine
 
 protocol UserFormDelegate : AnyObject {
-    func findById(_ id: Int?, _ completion: @escaping (User?, NSException?) -> Void)
-    func save(_ user: User?, roles: [Role]?, completion: @escaping (Int?, NSException?) -> Void)
-    func update(_ user: User?, roles: [Role]?, completion: @escaping (Int?, NSException?) -> Void)
-    func findAllDepartments(_ completion: @escaping ([Department]?, NSException?) -> Void)
+    func findById(_ id: Int) -> AnyPublisher<User, Error>
+    func save(_ user: User, roles: [Role]?) -> AnyPublisher<User, Error>
+    func update(_ user: User, roles: [Role]?) -> AnyPublisher<User, Error>
+    func findAllDepartments() -> AnyPublisher<[Department], Error>
+}
+
+protocol UserFormListener : AnyObject {
+    func save(_ user: User)
+    func update(_ user: User)
 }
 
 class UserForm: UIViewController {
@@ -24,8 +30,14 @@ class UserForm: UIViewController {
     private var departments: [Department]? = [Department(id: 0, name: "--None Selected--")]
         
     private var roles: [Role]?
+
+    private var cancellable = Set<AnyCancellable>()
+    
+    weak var listener: UserFormListener?
     
     weak var delegate: UserFormDelegate?
+
+    open class var NAME: String { "UserForm" }
 
     @IBOutlet weak var first: UITextField!
     @IBOutlet weak var last: UITextField!
@@ -37,129 +49,103 @@ class UserForm: UIViewController {
     @IBOutlet weak var userRoles: UITableView!
     
     override func viewDidLoad() {
-        ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(view: self)
+        ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(name: UserForm.NAME, viewComponent: self)
+        
+        delegate?.findAllDepartments()
+            .flatMap { [weak self] departments in
+                self?.departments?.append(contentsOf: departments) // UI Data
+                
+                if let id = self?.id, let delegate = self?.delegate { // existing user
+                    return delegate.findById(id).eraseToAnyPublisher() // User Data
+                } else {
+                    return Just(User(id: 0)).setFailureType(to: Error.self).eraseToAnyPublisher() // new user
+                }
+            }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                if case let .failure(error) = completion { self?.fault(error)}
+            }, receiveValue: { [weak self] user in // Bind UI and User Data
+                self?.department.reloadComponent(0)
+                self?.bind(user: user)
+            })
+            .store(in: &cancellable)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         userRoles.tableFooterView = UIView()
-        
-        let group = DispatchGroup()
-        
-        group.enter()
-        DispatchQueue.global().async { [weak self] in // UI data
-            self?.delegate?.findAllDepartments({ (departments, exception) in
-                DispatchQueue.main.async {
-                    if let exception = exception {
-                         self?.fault(exception)
-                    } else {
-                        self?.departments?.append(contentsOf: departments ?? [])
-                        group.leave()
-                    }
-                }
-            })
-        }
-        
-        if self.id != nil && self.user == nil { // User data
-            group.enter()
-            DispatchQueue.global().async { [weak self] in
-                self?.delegate?.findById(self?.id) { (user, exception) in
-                    DispatchQueue.main.async {
-                        if let exception = exception {
-                            self?.fault(exception)
-                        } else {
-                            self?.user = user
-                            group.leave()
-                        }
-                    }
-                }
-            }
-        }
-        
-        group.notify(queue: DispatchQueue.main) { [weak self] in // Stitch UI and User Data
-            self?.department.reloadComponent(0)
-            
-            if let user = self?.user {
-                self?.first.text = user.first
-                self?.last.text = user.last
-                self?.email.text = user.email
-                self?.username.text = user.username
-                self?.username.isEnabled = false
-                self?.password.text = user.password
-                self?.confirmPassword.text = user.password
-                self?.department.selectRow(Int(user.department?.id ?? 0), inComponent: 0, animated: true)
-            }
-        }
-        
+    }
+
+    func bind(user: User) {
+        self.user = user
+        username.isEnabled = user.id == 0
+        first.text = user.first
+        last.text = user.last
+        email.text = user.email
+        username.text = user.username
+        password.text = user.password
+        confirmPassword.text = user.password
+        department.selectRow(Int(user.department?.id ?? 0), inComponent: 0, animated: true)
     }
     
     @IBAction func save(_ sender: Any) { // save or update
-        if user == nil { // new user
-            user = User(id: nil, username: username.text, first: first?.text,
-                        last: last.text, email: email.text, password: password.text,
-                        department: Department(id: department.selectedRow(inComponent: 0), name: nil))
-        } else { // existing user
-            user?.first = first.text ?? ""
-            user?.last = last.text ?? ""
-            user?.email = email.text ?? ""
-            user?.password = password.text ?? ""
-            user?.department?.id = department.selectedRow(inComponent: 0)
-            user?.department?.name = departments?[department.selectedRow(inComponent: 0)].name
-        }
+        guard var user, let delegate else { return }
         
-        if user!.password == confirmPassword.text && user!.isValid == true { // validation
-            if user?.id == nil {
-                DispatchQueue.global().async { [weak self] in
-                    self?.delegate?.save(self?.user, roles: self?.roles, completion: { (id, exception) in
-                        DispatchQueue.main.async {
-                            if let exception = exception {
-                                self?.fault(exception)
-                            } else {
-                                self?.user?.id = id
-                                self?.navigationController?.popToRootViewController(animated: true)
-                            }
-                        }
+        user.username = username.text
+        user.first = first.text ?? ""
+        user.last = last.text ?? ""
+        user.email = email.text ?? ""
+        user.password = password.text ?? ""
+        user.department = Department(id: department.selectedRow(inComponent: 0), name: departments?[department.selectedRow(inComponent: 0)].name ?? "")
+        
+        if user.password == confirmPassword.text && user.isValid == true { // validation
+            let publisher = (user.id == 0) ? delegate.save(user, roles: roles) : delegate.update(user, roles: roles)
+            publisher
+                    .receive(on: DispatchQueue.main)
+                    .sink(receiveCompletion: { [weak self] completion in
+                        if case let .failure(error) = completion { self?.fault(error)}
+                    }, receiveValue: { [weak self] user in
+                        self?.user?.id = user.id
+                        (user.id == 0) ? self?.listener?.save(user) : self?.listener?.update(user)
+                        self?.navigationController?.popToRootViewController(animated: true)
                     })
-                }
-            } else {
-                DispatchQueue.global().async { [weak self] in
-                    self?.delegate?.update(self?.user, roles: self?.roles, completion: { (modified, exception) in
-                        DispatchQueue.main.async {
-                            if let exception = exception {
-                                self?.fault(exception)
-                            } else {
-                                self?.navigationController?.popToRootViewController(animated: true)
-                            }
-                        }
-                    })
-                }
-            }
+                    .store(in: &cancellable)
         } else {
-            fault(NSException(name: NSExceptionName(rawValue: "Error"), reason: "Invalid Form Data.", userInfo: nil)) 
+            fault(nil, message: "Invalid Form Data.")
         }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { // segue to User Roles
         if let identifier = segue.identifier, identifier == "segueToUserRoles" {
             if let userRole = segue.destination as? UserRole {
-                user?.first = first.text // retain any form changes before the segue
-                user?.last = last.text
-                user?.email = email.text
-                user?.password = password.text
+                user?.first = first.text ?? "" // retain any form changes before the segue
+                user?.last = last.text ?? ""
+                user?.email = email.text ?? ""
+                user?.password = password.text ?? ""
                 user?.department?.id = department.selectedRow(inComponent: 0)
                 
                 userRole.id = user?.id
                 userRole.roles = roles // previous selection if any
-                userRole.responder = self
+                userRole.listener = self
             }
         }
     }
-    
-    func fault(_ exception: NSException) {
-        let alertController = UIAlertController(title: exception.name.rawValue, message: exception.description, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+
+    func fault(_ error: Error?, message: String? = nil) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        if let error = error {
+            alert.title = "\(type(of: error))"
+            alert.message = error.localizedDescription
+        }
+        if let message = message { alert.message = message }
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+
+    deinit {
+        cancellable.forEach { $0.cancel() }
+        cancellable.removeAll()
+        ApplicationFacade.getInstance(key: ApplicationFacade.KEY).removeView(name: UserForm.NAME)
     }
 
 }
@@ -198,8 +184,8 @@ extension UserForm: UITextFieldDelegate {
     }
 }
 
-extension UserForm: UserRoleResponder {
-    func result(_ roles: [Role]?) { // add role to the user
+extension UserForm: UserRoleListener {
+    func update(_ roles: [Role]?) { // add role to the user
         self.roles = roles
     }
 }
