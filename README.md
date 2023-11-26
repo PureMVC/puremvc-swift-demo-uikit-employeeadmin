@@ -17,7 +17,7 @@ This demo illustrates techniques for performing routine maintenance operations i
 
 ## Installation
 
-Clone and Install a microservice before executing the application
+Clone and launch a microservice before running the application
 
 ```commandLine
 git clone https://github.com/PureMVC/puremvc-js-demo-microservice-employeeadmin.git
