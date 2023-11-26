@@ -31,7 +31,7 @@ struct User: Decodable, Encodable {
                 department!.id != 0 && department!.name != ""
     }
     
-    var givenName: String? {
+    var givenName: String {
         [last ?? "", first ?? ""].joined(separator: ", ")
     }
     
