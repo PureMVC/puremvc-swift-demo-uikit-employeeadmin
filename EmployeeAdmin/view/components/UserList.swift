@@ -126,8 +126,7 @@ extension UserList: UserFormListener {
         if let index = users?.firstIndex(where: { $0.id == user.id }) {
             self.users?[index] = user
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-                guard let indexPath = self?.tableView.indexPathForSelectedRow else { return }
-                self?.tableView.reloadRows(at: [indexPath], with: .fade)
+                self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
             }
         }
     }
