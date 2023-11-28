@@ -6,12 +6,12 @@
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
-struct Department: Decodable, Encodable {
+struct Department: Codable {
     
-    var id: Int?
+    var id: Int
     var name: String?
     
-    init(id: Int? = nil, name: String? = nil) {
+    init(id: Int, name: String? = nil) {
         self.id = id
         self.name = name
     }

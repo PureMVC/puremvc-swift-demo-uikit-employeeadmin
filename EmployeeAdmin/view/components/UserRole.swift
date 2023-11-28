@@ -9,23 +9,23 @@
 import UIKit
 
 protocol UserRoleDelegate: AnyObject {
-    func findAllRoles(_ completion: @escaping ([Role]?, NSException?) -> Void)
-    func findRolesById(_ id: Int?, _ completion: @escaping ([Role]?, NSException?) -> Void)
+    func findAllRoles(_ completion: @escaping (Result<[Role], Exception>) -> Void)
+    func findRolesByUser(_ user: User, _ completion: @escaping (Result<[Role], Exception>) -> Void)
 }
 
-protocol UserRoleResponder: AnyObject {
+protocol UserRoleListener: AnyObject {
     func result(_ roles: [Role]?)
 }
 
 class UserRole: UIViewController {
     
-    var id: Int?
+    var user: User?
     
     var roles: [Role]?
         
     private var dataSource: [Role]?
     
-    weak var responder: UserRoleResponder?
+    weak var listener: UserRoleListener?
     
     weak var delegate: UserRoleDelegate?
     
@@ -37,43 +37,38 @@ class UserRole: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         let group = DispatchGroup()
-        
-        group.enter()
         DispatchQueue.global().async { [weak self] in // UI Data
-            self?.delegate?.findAllRoles({ (roles, exception) in
-                if let exception = exception {
-                    DispatchQueue.main.async { self?.fault(exception) }
-                } else {
-                    self?.dataSource = roles
+            group.enter()
+            self?.delegate?.findAllRoles{ result in
+                defer { group.leave() }
+                switch result {
+                case .success(let roles): self?.dataSource = roles
+                case .failure(let exception): DispatchQueue.main.async { self?.fault(exception) }
                 }
-            })
-            group.leave()
+            }
         }
         
-        if roles == nil && id != nil { // User Data
-            group.enter()
+        if user?.id != 0 && roles == nil { // User Data (Optional)
             DispatchQueue.global().async { [weak self] in
-                self?.delegate?.findRolesById(self?.id, { (roles, exception) in
-                    if let exception = exception {
-                        self?.fault(exception)
-                    } else {
-                        self?.roles = roles
-                        group.leave()
+                group.enter()
+                self?.delegate?.findRolesByUser(self?.user ?? User(id: 0), { result in
+                    defer { group.leave() }
+                    switch result {
+                    case .success(let roles): self?.roles = roles
+                    case .failure(let exception): DispatchQueue.main.async { self?.fault(exception) }
                     }
                 })
             }
         }
         
-        group.notify(queue: DispatchQueue.main) { [weak self] in // Stitch UI and User Data
-            if self?.roles == nil {
-                self?.roles = [Role]()
-            }
+        group.notify(queue: DispatchQueue.main) { [weak self] in // Bind UI and User Data
+            if self?.roles == nil { self?.roles = [Role]() } // User Data (Default)
             self?.tableView.reloadData()
         }
     }
     
-    func fault(_ exception: NSException) {
-        let alertController = UIAlertController(title: "Error", message: exception.description, preferredStyle: UIAlertController.Style.alert)
+    func fault(_ exception: Exception) {
+        let alertController = UIAlertController(title: "Error", message: exception.message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
@@ -110,13 +105,13 @@ extension UserRole: UITableViewDelegate {
         if cell!.accessoryType == UITableViewCell.AccessoryType.none {
             cell!.accessoryType = UITableViewCell.AccessoryType.checkmark
             roles?.append((dataSource?[indexPath.row])!)
-            responder?.result(roles)
+            listener?.result(roles)
         } else {
             cell!.accessoryType = UITableViewCell.AccessoryType.none
             roles = roles?.filter {
                 $0.id as AnyObject !== dataSource![indexPath.row].id as AnyObject
             }
-            responder?.result(roles)
+            listener?.result(roles)
         }
         
     }

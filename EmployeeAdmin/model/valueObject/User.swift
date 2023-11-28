@@ -6,9 +6,9 @@
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
-struct User: Decodable, Encodable {
+struct User: Codable {
     
-    var id: Int?
+    var id: Int
     var username: String?
     var first: String?
     var last: String?
@@ -16,7 +16,7 @@ struct User: Decodable, Encodable {
     var password: String?
     var department: Department?
     
-    init(id: Int? = nil, username: String? = nil, first:String? = nil, last:String? = nil, email:String? = nil, password:String? = nil, department:Department? = nil) {
+    init(id: Int, username: String? = nil, first:String? = nil, last:String? = nil, email:String? = nil, password:String? = nil, department:Department? = nil) {
         self.id = id
         self.username = username
         self.first = first

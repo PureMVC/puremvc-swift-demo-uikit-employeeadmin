@@ -17,9 +17,11 @@ class StartupCommand: SimpleCommand {
         configuration.allowsConstrainedNetworkAccess = true
         configuration.allowsExpensiveNetworkAccess = true
         let session = URLSession(configuration: configuration)
-                
-        facade.registerProxy(UserProxy(session: session))
-        facade.registerProxy(RoleProxy(session: session))
+        let encoder = JSONEncoder()
+        let decoder = JSONDecoder()
+        
+        facade.registerProxy(UserProxy(session: session, encoder: encoder, decoder: decoder))
+        facade.registerProxy(RoleProxy(session: session, encoder: encoder, decoder: decoder))
     }
     
 }

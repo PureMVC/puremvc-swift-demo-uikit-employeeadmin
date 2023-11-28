@@ -15,102 +15,96 @@ class RoleProxy: Proxy {
         
     private var session: URLSession
     
-    init(session: URLSession) {
+    private var encoder: JSONEncoder
+    
+    private var decoder: JSONDecoder
+    
+    init(session: URLSession, encoder: JSONEncoder, decoder: JSONDecoder) {
         self.session = session
-        super.init(name: RoleProxy.NAME, data: [Role]())
+        self.encoder = encoder
+        self.decoder = decoder
+        super.init(name: RoleProxy.NAME, data: nil)
     }
     
-    func findAll(_ completion: @escaping ([Role]?, NSException?) -> Void) {
+    func findAll(_ completion: @escaping (Result<[Role], Exception>) -> Void) {
         var request = URLRequest(url: URL(string: "http://localhost:8080/roles")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        session.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { [weak self] data, response, error in
             guard error == nil else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
-                return
+                return completion(.failure(Exception(message: error!.localizedDescription)))
             }
             
-            guard let response = response as? HTTPURLResponse, let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
+            guard let response = response as? HTTPURLResponse else {
+                return completion(.failure(Exception(message: "HTTP request failed.")))
+            }
+            
+            guard let data, let decoder = self?.decoder else {
+                return completion(.failure(Exception(message: "The data is invalid.")))
             }
             
             do {
-                if response.statusCode == 200 {
-                    completion(try JSONDecoder().decode([Role].self, from: data), nil)
-                } else {
-                    let exception = try JSONDecoder().decode(Exception.self, from: data)
-                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
-                }
-            } catch let error {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
+                response.statusCode == 200 ? completion(.success(try decoder.decode([Role].self, from: data))) :
+                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+            } catch {
+                completion(.failure(Exception(message: error.localizedDescription)))
             }
         }.resume()
     }
     
-    func findByUserId(_ id: Int, _ completion: @escaping ([Role]?, NSException?) -> Void) {
-        var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)/roles")!)
+    func findByUser(_ user: User, _ completion: @escaping (Result<[Role], Exception>) -> Void) {
+        var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(user.id)/roles")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        session.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { [weak self] data, response, error in
             guard error == nil else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
-                return
+                return completion(.failure(Exception(message: error!.localizedDescription)))
             }
             
-            guard let response = response as? HTTPURLResponse, let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
+            guard let response = response as? HTTPURLResponse else {
+                return completion(.failure(Exception(message: "HTTP request failed.")))
+            }
+            
+            guard let data, let decoder = self?.decoder else {
+                return completion(.failure(Exception(message: "The data is invalid.")))
             }
             
             do {
-                if response.statusCode == 200 {
-                    completion(try JSONDecoder().decode([Role].self, from: data), nil)
-                } else {
-                    let exception = try JSONDecoder().decode(Exception.self, from: data)
-                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
-                }
-            } catch let error {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
+                response.statusCode == 200 ? completion(.success(try decoder.decode([Role].self, from: data))) :
+                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+            } catch {
+                completion(.failure(Exception(message: error.localizedDescription)))
             }
         }.resume()
     }
         
-    func updateByUserId(_ id: Int, roles: [Role], _ completion: @escaping ([Int]?, NSException?) -> Void) {
-        var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)/roles")!)
+    func updateByUser(_ user: User, roles: [Role], _ completion: @escaping (Result<[Int], Exception>) -> Void) {
+        var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(user.id)/roles")!)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        do {
-            request.httpBody = try JSONEncoder().encode(roles.map{ $0.id })
-        } catch let error {
-            completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
-            return
-        }
+        request.httpBody = try? encoder.encode(roles.map{ $0.id })
 
-        session.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { [weak self] data, response, error in
             guard error == nil else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error?.localizedDescription, userInfo: nil))
-                return
+                return completion(.failure(Exception(message: error!.localizedDescription)))
             }
-
-            guard let response = response as? HTTPURLResponse, let data = data else {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: "HTTP request failed.", userInfo: nil))
-                return
+            
+            guard let response = response as? HTTPURLResponse else {
+                return completion(.failure(Exception(message: "HTTP request failed.")))
             }
-
+            
+            guard let data, let decoder = self?.decoder else {
+                return completion(.failure(Exception(message: "The data is invalid.")))
+            }
+            
             do {
-                if response.statusCode == 200 {
-                    completion(try JSONDecoder().decode([Int].self, from: data), nil)
-                } else {
-                    let exception = try JSONDecoder().decode(Exception.self, from: data)
-                    completion(nil, NSException(name: NSExceptionName(rawValue: exception.code ?? ""), reason: exception.message ?? "", userInfo: nil))
-                }
-            } catch let error {
-                completion(nil, NSException(name: NSExceptionName(rawValue: "Error"), reason: error.localizedDescription, userInfo: nil))
+                response.statusCode == 200 ? completion(.success(try decoder.decode([Int].self, from: data))) :
+                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+            } catch {
+                completion(.failure(Exception(message: error.localizedDescription)))
             }
         }.resume()
     }
