@@ -1,13 +1,13 @@
 //
 //  StartupCommand.swift
-//  PureMVC SWIFT Demo - userAdmin
+//  PureMVC SWIFT Demo - EmployeeAdmin
 //
-//  Copyright(c) 2020 Saad Shams <saad.shams@puremvc.org>
+//  Copyright(c) 2023 Saad Shams <saad.shams@puremvc.org>
 //  Your reuse is governed by the Creative Commons Attribution 3.0 License
 //
 
-import PureMVC
 import Foundation
+import PureMVC
 
 class StartupCommand: SimpleCommand {
     
@@ -17,9 +17,10 @@ class StartupCommand: SimpleCommand {
         configuration.allowsExpensiveNetworkAccess = true
         let session = URLSession(configuration: configuration)
 
-        let jsonDecoder = JSONDecoder()
-        facade.registerProxy(UserProxy(session: session, jsonDecoder: jsonDecoder))
-        facade.registerProxy(RoleProxy(session: session, jsonDecoder: jsonDecoder))
+        let encoder = JSONEncoder()
+        let decoder = JSONDecoder()
+        facade.registerProxy(UserProxy(session: session, encoder: encoder, decoder: decoder))
+        facade.registerProxy(RoleProxy(session: session, encoder: encoder, decoder: decoder))
     }
     
 }
