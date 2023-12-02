@@ -9,8 +9,8 @@
 import UIKit
 
 protocol UserRoleDelegate: AnyObject {
-    func findAllRoles(_ completion: @escaping (Result<[Role], Exception>) -> Void)
-    func findRolesByUser(_ user: User, _ completion: @escaping (Result<[Role], Exception>) -> Void)
+    func findAllRoles(_ completion: @escaping (Result<[Role], Error>) -> Void)
+    func findRolesByUser(_ user: User, _ completion: @escaping (Result<[Role], Error>) -> Void)
 }
 
 class UserRole: UIViewController {
@@ -62,10 +62,10 @@ class UserRole: UIViewController {
         }
     }
     
-    func fault(_ exception: Exception) {
-        let alertController = UIAlertController(title: "Error", message: exception.message, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+    func fault(_ error: Error) {
+        let alert = UIAlertController(title: "Error", message: (error as? Exception)?.message ?? error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 
 }

@@ -9,8 +9,8 @@
 import UIKit
 
 protocol UserListDelegate: AnyObject {
-    func findAll(_ completion: @escaping (Result<[User], Exception>) -> Void)
-    func deleteById(_ id: Int, _ completion: @escaping (Result<Void, Exception>) -> Void)
+    func findAll(_ completion: @escaping (Result<[User], Error>) -> Void)
+    func deleteById(_ id: Int, _ completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class UserList: UIViewController {
@@ -30,8 +30,8 @@ class UserList: UIViewController {
                 case .success(let users):
                     self?.users = users
                     DispatchQueue.main.async { self?.tableView.reloadData() }
-                case .failure(let exception):
-                    DispatchQueue.main.async { self?.fault(exception) }
+                case .failure(let error):
+                    DispatchQueue.main.async { self?.fault(error) }
                 }
             }
         }
@@ -67,10 +67,10 @@ class UserList: UIViewController {
     }
     
     
-    func fault(_ exception: Exception) {
-        let alertController = UIAlertController(title: "Error", message: exception.message, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+    func fault(_ error: Error) {
+        let alert = UIAlertController(title: "Error", message: (error as? Exception)?.message ?? error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
 }
@@ -103,8 +103,8 @@ extension UserList: UITableViewDelegate {
                     case .success():
                         self?.users?.remove(at: indexPath.row)
                         DispatchQueue.main.async { self?.tableView.deleteRows(at: [indexPath], with: .automatic) }
-                    case .failure(let exception):
-                        DispatchQueue.main.async { self?.fault(exception) }
+                    case .failure(let error):
+                        DispatchQueue.main.async { self?.fault(error) }
                     }
                 }
             }

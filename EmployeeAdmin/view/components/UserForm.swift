@@ -9,10 +9,10 @@
 import UIKit
 
 protocol UserFormDelegate : AnyObject {
-    func findById(_ id: Int, _ completion: @escaping (Result<User, Exception>) -> Void)
-    func save(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Exception>) -> Void)
-    func update(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Exception>) -> Void)
-    func findAllDepartments(_ completion: @escaping (Result<[Department], Exception>) -> Void)
+    func findById(_ id: Int, _ completion: @escaping (Result<User, Error>) -> Void)
+    func save(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Error>) -> Void)
+    func update(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Error>) -> Void)
+    func findAllDepartments(_ completion: @escaping (Result<[Department], Error>) -> Void)
 }
 
 class UserForm: UIViewController {
@@ -134,10 +134,10 @@ class UserForm: UIViewController {
         }
     }
     
-    func fault(_ exception: Exception) {
-        let alertController = UIAlertController(title: "Error", message: exception.message, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+    func fault(_ error: Error) {
+        let alert = UIAlertController(title: "Error", message: (error as? Exception)?.message ?? error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 
 }

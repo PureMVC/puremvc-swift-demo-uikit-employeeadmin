@@ -26,22 +26,17 @@ class UserProxy: Proxy {
         super.init(name: UserProxy.NAME, data: nil)
     }
         
-    func findAll(_ completion: @escaping (Result<[User], Exception>) -> Void) {
+    func findAll(_ completion: @escaping (Result<[User], Error>) -> Void) {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
+        session.dataTask(with: request) { [decoder] data, response, error in
+            if let error { return completion(.failure(error)) }
+            guard let data else { return completion(.failure(Exception(message: "The data is nil."))) }
 
             do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
                     return completion(.failure(try decoder.decode(Exception.self, from: data)))
                 }
                 completion(.success(try decoder.decode([User].self, from: data)))
@@ -51,22 +46,17 @@ class UserProxy: Proxy {
         }.resume()
     }
     
-    func findById(_ id: Int, _ completion: @escaping (Result<User, Exception>) -> Void) {
+    func findById(_ id: Int, _ completion: @escaping (Result<User, Error>) -> Void) {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
+        session.dataTask(with: request) { [decoder] data, response, error in
+            if let error { return completion(.failure(error)) }
+            guard let data else { return completion(.failure(Exception(message: "The data is nil."))) }
             
             do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
                     return completion(.failure(try decoder.decode(Exception.self, from: data)))
                 }
                 completion(.success(try decoder.decode(User.self, from: data)))
@@ -76,24 +66,19 @@ class UserProxy: Proxy {
         }.resume()
     }
     
-    func save(_ user: User, _ completion: @escaping (Result<User, Exception>) -> Void) {
+    func save(_ user: User, _ completion: @escaping (Result<User, Error>) -> Void) {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees")!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? encoder.encode(user)
         
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
+        session.dataTask(with: request) { [decoder] data, response, error in
+            if let error { return completion(.failure(error)) }
+            guard let data else { return completion(.failure(Exception(message: "The data is nil."))) }
             
             do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 201 else {
+                guard (response as? HTTPURLResponse)?.statusCode == 201 else {
                     return completion(.failure(try decoder.decode(Exception.self, from: data)))
                 }
                 completion(.success(try decoder.decode(User.self, from: data)))
@@ -103,24 +88,19 @@ class UserProxy: Proxy {
         }.resume()
     }
     
-    func update(_ user: User, _ completion: @escaping (Result<User, Exception>) -> Void) {
+    func update(_ user: User, _ completion: @escaping (Result<User, Error>) -> Void) {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(user.id)")!)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? encoder.encode(user)
         
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
+        session.dataTask(with: request) { [decoder] data, response, error in
+            if let error { return completion(.failure(error)) }
+            guard let data else { return completion(.failure(Exception(message: "The data is nil."))) }
             
             do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
                     return completion(.failure(try decoder.decode(Exception.self, from: data)))
                 }
                 completion(.success(try decoder.decode(User.self, from: data)))
@@ -130,21 +110,16 @@ class UserProxy: Proxy {
         }.resume()
     }
     
-    func deleteById(_ id: Int, _ completion: @escaping (Result<Void, Exception>) -> Void) {
+    func deleteById(_ id: Int, _ completion: @escaping (Result<Void, Error>) -> Void) {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)")!)
         request.httpMethod = "DELETE"
         
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
+        session.dataTask(with: request) { [decoder] data, response, error in
+            if let error { return completion(.failure(error)) }
+            guard let data else { return completion(.failure(Exception(message: "The data is nil."))) }
             
             do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 204 else {
+                guard (response as? HTTPURLResponse)?.statusCode == 204 else {
                     return completion(.failure(try decoder.decode(Exception.self, from: data)))
                 }
                 completion(.success(()))
@@ -154,22 +129,17 @@ class UserProxy: Proxy {
         }.resume()
     }
 
-    func findAllDepartments(_ completion: @escaping (Result<[Department], Exception>) -> Void) {
+    func findAllDepartments(_ completion: @escaping (Result<[Department], Error>) -> Void) {
         var request = URLRequest(url: URL(string: "http://localhost:8080/departments")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
+        session.dataTask(with: request) { [decoder] data, response, error in
+            if let error { return completion(.failure(error)) }
+            guard let data else { return completion(.failure(Exception(message: "The data is nil."))) }
 
             do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
                     return completion(.failure(try decoder.decode(Exception.self, from: data)))
                 }
                 completion(.success(try decoder.decode([Department].self, from: data)))

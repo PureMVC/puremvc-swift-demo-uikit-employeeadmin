@@ -41,11 +41,11 @@ class EmployeeAdminMediator: Mediator {
 
 extension EmployeeAdminMediator: UserListDelegate {
     
-    func findAll(_ completion: @escaping (Result<[User], Exception>) -> Void) {
+    func findAll(_ completion: @escaping (Result<[User], Error>) -> Void) {
         userProxy?.findAll(completion)
     }
     
-    func deleteById(_ id: Int, _ completion: @escaping (Result<Void, Exception>) -> Void) {
+    func deleteById(_ id: Int, _ completion: @escaping (Result<Void, Error>) -> Void) {
         userProxy?.deleteById(id, completion)
     }
     
@@ -53,11 +53,11 @@ extension EmployeeAdminMediator: UserListDelegate {
 
 extension EmployeeAdminMediator: UserFormDelegate {
 
-    func findById(_ id: Int, _ completion: @escaping (Result<User, Exception>) -> Void) {
+    func findById(_ id: Int, _ completion: @escaping (Result<User, Error>) -> Void) {
         userProxy?.findById(id, completion)
     }
     
-    func save(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Exception>) -> Void) {
+    func save(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Error>) -> Void) {
 
         userProxy?.save(user) { [weak self] result in
             switch result {
@@ -66,16 +66,16 @@ extension EmployeeAdminMediator: UserFormDelegate {
                 self?.roleProxy?.updateByUser(user, roles: roles) { result in
                     switch result {
                     case .success(_): completion(.success(user))
-                    case .failure(let exception): completion(.failure(exception))
+                    case .failure(let error): completion(.failure(error))
                     }
                 }
-            case .failure(let exception):
-                completion(.failure(exception))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
     
-    func update(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Exception>) -> Void) {
+    func update(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Error>) -> Void) {
         userProxy?.update(user) { [weak self] result in
             switch result {
             case .success(let user):
@@ -83,16 +83,16 @@ extension EmployeeAdminMediator: UserFormDelegate {
                 self?.roleProxy?.updateByUser(user, roles: roles) { result in
                     switch result {
                     case .success(_): completion(.success(user))
-                    case .failure(let exception): completion(.failure(exception))
+                    case .failure(let error): completion(.failure(error))
                     }
                 }
-            case .failure(let exception):
-                completion(.failure(exception))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
     
-    func findAllDepartments(_ completion: @escaping (Result<[Department], Exception>) -> Void) {
+    func findAllDepartments(_ completion: @escaping (Result<[Department], Error>) -> Void) {
         userProxy?.findAllDepartments(completion)
     }
     
@@ -100,11 +100,11 @@ extension EmployeeAdminMediator: UserFormDelegate {
 
 extension EmployeeAdminMediator: UserRoleDelegate {
 
-    func findAllRoles(_ completion: @escaping (Result<[Role], Exception>) -> Void) {
+    func findAllRoles(_ completion: @escaping (Result<[Role], Error>) -> Void) {
         roleProxy?.findAll(completion)
     }
     
-    func findRolesByUser(_ user: User, _ completion: @escaping (Result<[Role], Exception>) -> Void) {
+    func findRolesByUser(_ user: User, _ completion: @escaping (Result<[Role], Error>) -> Void) {
         roleProxy?.findByUser(user, completion)
     }
     
