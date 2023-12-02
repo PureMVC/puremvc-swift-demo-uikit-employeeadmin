@@ -15,6 +15,7 @@ struct User: Codable {
     var email: String?
     var password: String?
     var department: Department?
+    var roles: [Role]?
     
     init(id: Int, username: String? = nil, first:String? = nil, last:String? = nil, email:String? = nil, password:String? = nil, department:Department? = nil) {
         self.id = id

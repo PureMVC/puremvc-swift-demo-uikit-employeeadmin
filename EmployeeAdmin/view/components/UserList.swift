@@ -49,7 +49,20 @@ class UserList: UIViewController {
             if let user = sender as? User {
                 userForm.user = user
             }
-            userForm.listener = self
+            userForm.responder = { [weak self] user in
+                guard let user else { return }
+                if let index = self?.users?.firstIndex(where: { $0.id == user.id }) { // update
+                    self?.users?[index] = user
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                        self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                    }
+                } else { // insert
+                    self?.users?.append(user)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                        self?.tableView.insertRows(at: [IndexPath(row: (self?.users?.count ?? 1) - 1, section: 0)], with: .automatic)
+                    }
+                }
+            }
         }
     }
     
@@ -94,26 +107,6 @@ extension UserList: UITableViewDelegate {
                         DispatchQueue.main.async { self?.fault(exception) }
                     }
                 }
-            }
-        }
-    }
-    
-}
-
-extension UserList: UserFormListener {
-    
-    func save(_ user: User) {
-        users?.append(user)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            self?.tableView.insertRows(at: [IndexPath(row: (self?.users?.count ?? 1) - 1, section: 0)], with: .automatic)
-        }
-    }
-    
-    func update(_ user: User) {
-        if let index = users?.firstIndex(where: { $0.id == user.id }) {
-            self.users?[index] = user
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-                self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
             }
         }
     }

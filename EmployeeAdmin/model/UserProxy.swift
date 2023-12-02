@@ -32,21 +32,19 @@ class UserProxy: Proxy {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         session.dataTask(with: request) { [weak self] data, response, error in
-            guard error == nil else {
-                return completion(.failure(Exception(message: error!.localizedDescription)))
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                return completion(.failure(Exception(message: "HTTP request failed.")))
+            if let error {
+                return completion(.failure(Exception(message: error.localizedDescription)))
             }
             
             guard let data, let decoder = self?.decoder else {
                 return completion(.failure(Exception(message: "The data is invalid.")))
             }
-            
+
             do {
-                response.statusCode == 200 ? completion(.success(try decoder.decode([User].self, from: data))) :
-                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
+                }
+                completion(.success(try decoder.decode([User].self, from: data)))
             } catch {
                 completion(.failure(Exception(message: error.localizedDescription)))
             }
@@ -59,12 +57,8 @@ class UserProxy: Proxy {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         session.dataTask(with: request) { [weak self] data, response, error in
-            guard error == nil else {
-                return completion(.failure(Exception(message: error!.localizedDescription)))
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                return completion(.failure(Exception(message: "HTTP request failed.")))
+            if let error {
+                return completion(.failure(Exception(message: error.localizedDescription)))
             }
             
             guard let data, let decoder = self?.decoder else {
@@ -72,8 +66,10 @@ class UserProxy: Proxy {
             }
             
             do {
-                response.statusCode == 200 ? completion(.success((try decoder.decode(User.self, from: data)))) :
-                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
+                }
+                completion(.success(try decoder.decode(User.self, from: data)))
             } catch {
                 completion(.failure(Exception(message: error.localizedDescription)))
             }
@@ -88,12 +84,8 @@ class UserProxy: Proxy {
         request.httpBody = try? encoder.encode(user)
         
         session.dataTask(with: request) { [weak self] data, response, error in
-            guard error == nil else {
-                return completion(.failure(Exception(message: error!.localizedDescription)))
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                return completion(.failure(Exception(message: "HTTP request failed.")))
+            if let error {
+                return completion(.failure(Exception(message: error.localizedDescription)))
             }
             
             guard let data, let decoder = self?.decoder else {
@@ -101,8 +93,10 @@ class UserProxy: Proxy {
             }
             
             do {
-                response.statusCode == 201 ? completion(.success((try decoder.decode(User.self, from: data)))) :
-                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+                guard let response = response as? HTTPURLResponse, response.statusCode == 201 else {
+                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
+                }
+                completion(.success(try decoder.decode(User.self, from: data)))
             } catch {
                 completion(.failure(Exception(message: error.localizedDescription)))
             }
@@ -117,12 +111,8 @@ class UserProxy: Proxy {
         request.httpBody = try? encoder.encode(user)
         
         session.dataTask(with: request) { [weak self] data, response, error in
-            guard error == nil else {
-                return completion(.failure(Exception(message: error!.localizedDescription)))
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                return completion(.failure(Exception(message: "HTTP request failed.")))
+            if let error {
+                return completion(.failure(Exception(message: error.localizedDescription)))
             }
             
             guard let data, let decoder = self?.decoder else {
@@ -130,8 +120,10 @@ class UserProxy: Proxy {
             }
             
             do {
-                response.statusCode == 200 ? completion(.success((try decoder.decode(User.self, from: data)))) :
-                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
+                }
+                completion(.success(try decoder.decode(User.self, from: data)))
             } catch {
                 completion(.failure(Exception(message: error.localizedDescription)))
             }
@@ -143,12 +135,8 @@ class UserProxy: Proxy {
         request.httpMethod = "DELETE"
         
         session.dataTask(with: request) { [weak self] data, response, error in
-            guard error == nil else {
-                return completion(.failure(Exception(message: error!.localizedDescription)))
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                return completion(.failure(Exception(message: "HTTP request failed.")))
+            if let error {
+                return completion(.failure(Exception(message: error.localizedDescription)))
             }
             
             guard let data, let decoder = self?.decoder else {
@@ -156,8 +144,10 @@ class UserProxy: Proxy {
             }
             
             do {
-                response.statusCode == 204 ? completion(.success(())) :
-                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+                guard let response = response as? HTTPURLResponse, response.statusCode == 204 else {
+                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
+                }
+                completion(.success(()))
             } catch {
                 completion(.failure(Exception(message: error.localizedDescription)))
             }
@@ -170,21 +160,19 @@ class UserProxy: Proxy {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         session.dataTask(with: request) { [weak self] data, response, error in
-            guard error == nil else {
-                return completion(.failure(Exception(message: error!.localizedDescription)))
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                return completion(.failure(Exception(message: "HTTP request failed.")))
+            if let error {
+                return completion(.failure(Exception(message: error.localizedDescription)))
             }
             
             guard let data, let decoder = self?.decoder else {
                 return completion(.failure(Exception(message: "The data is invalid.")))
             }
-            
+
             do {
-                response.statusCode == 200 ? completion(.success(try decoder.decode([Department].self, from: data))) :
-                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
+                }
+                completion(.success(try decoder.decode([Department].self, from: data)))
             } catch {
                 completion(.failure(Exception(message: error.localizedDescription)))
             }

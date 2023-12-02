@@ -185,9 +185,9 @@
 		A814B43724537FA8002D1415 /* valueObject */ = {
 			isa = PBXGroup;
 			children = (
-				A814B43824537FA8002D1415 /* Role.swift */,
 				A814B43924537FA8002D1415 /* User.swift */,
 				A870F4B62569DD4200CB7EBF /* Department.swift */,
+				A814B43824537FA8002D1415 /* Role.swift */,
 				A8F3858625873E64008739B5 /* Exception.swift */,
 			);
 			path = valueObject;

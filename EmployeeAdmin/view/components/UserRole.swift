@@ -13,20 +13,14 @@ protocol UserRoleDelegate: AnyObject {
     func findRolesByUser(_ user: User, _ completion: @escaping (Result<[Role], Exception>) -> Void)
 }
 
-protocol UserRoleListener: AnyObject {
-    func result(_ roles: [Role]?)
-}
-
 class UserRole: UIViewController {
     
     var user: User?
+            
+    private var roles: [Role]?
     
-    var roles: [Role]?
+    var responder: ((User?) -> Void)?
         
-    private var dataSource: [Role]?
-    
-    weak var listener: UserRoleListener?
-    
     weak var delegate: UserRoleDelegate?
     
     @IBOutlet weak var tableView: UITableView!
@@ -42,19 +36,20 @@ class UserRole: UIViewController {
             self?.delegate?.findAllRoles{ result in
                 defer { group.leave() }
                 switch result {
-                case .success(let roles): self?.dataSource = roles
+                case .success(let roles): self?.roles = roles
                 case .failure(let exception): DispatchQueue.main.async { self?.fault(exception) }
                 }
             }
         }
         
-        if user?.id != 0 && roles == nil { // User Data (Optional)
+        if user?.id != 0 && user?.roles == nil { // User Data (Optional)
             DispatchQueue.global().async { [weak self] in
                 group.enter()
                 self?.delegate?.findRolesByUser(self?.user ?? User(id: 0), { result in
                     defer { group.leave() }
                     switch result {
-                    case .success(let roles): self?.roles = roles
+                    case .success(let roles):
+                        self?.user?.roles = roles
                     case .failure(let exception): DispatchQueue.main.async { self?.fault(exception) }
                     }
                 })
@@ -62,7 +57,7 @@ class UserRole: UIViewController {
         }
         
         group.notify(queue: DispatchQueue.main) { [weak self] in // Bind UI and User Data
-            if self?.roles == nil { self?.roles = [Role]() } // User Data (Default)
+            if self?.user?.roles == nil { self?.user?.roles = [Role]() } // User Data (Default)
             self?.tableView.reloadData()
         }
     }
@@ -78,16 +73,16 @@ class UserRole: UIViewController {
 extension UserRole: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // number of rows
-        dataSource?.count ?? 0
+        roles?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { // cell content initialize - checkmark/none
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserRoleCell", for: indexPath)
         
-        let role = dataSource?[indexPath.row]
+        let role = roles?[indexPath.row]
         cell.textLabel?.text = role?.name
         
-        if roles?.filter({ $0.id == role?.id }).isEmpty == false {
+        if user?.roles?.filter({ $0.id == role?.id }).isEmpty == false {
             cell.accessoryType = UITableViewCell.AccessoryType.checkmark
         } else {
             cell.accessoryType = UITableViewCell.AccessoryType.none
@@ -104,14 +99,14 @@ extension UserRole: UITableViewDelegate {
         
         if cell!.accessoryType == UITableViewCell.AccessoryType.none {
             cell!.accessoryType = UITableViewCell.AccessoryType.checkmark
-            roles?.append((dataSource?[indexPath.row])!)
-            listener?.result(roles)
+            user?.roles?.append((roles?[indexPath.row])!)
+            responder?(user)
         } else {
             cell!.accessoryType = UITableViewCell.AccessoryType.none
-            roles = roles?.filter {
-                $0.id as AnyObject !== dataSource![indexPath.row].id as AnyObject
+            user?.roles = user?.roles?.filter {
+                $0.id as AnyObject !== roles![indexPath.row].id as AnyObject
             }
-            listener?.result(roles)
+            responder?(user)
         }
         
     }

@@ -15,20 +15,13 @@ protocol UserFormDelegate : AnyObject {
     func findAllDepartments(_ completion: @escaping (Result<[Department], Exception>) -> Void)
 }
 
-protocol UserFormListener : AnyObject {
-    func save(_ user: User)
-    func update(_ user: User)
-}
-
 class UserForm: UIViewController {
         
     var user: User?
-    
-    private var roles: [Role]?
-    
+        
     private var departments: [Department]? = [Department(id: 0, name: "--None Selected--")]
-    
-    weak var listener: UserFormListener?
+        
+    var responder: ((User?) -> Void)?
     
     weak var delegate: UserFormDelegate?
 
@@ -85,6 +78,7 @@ class UserForm: UIViewController {
     }
     
     func bind(user: User) {
+        self.user = user
         first.text = user.first
         last.text = user.last
         email.text = user.email
@@ -111,10 +105,10 @@ class UserForm: UIViewController {
         
         DispatchQueue.global().async { [weak self] in
             let action = (user.id == 0) ? delegate.save : delegate.update
-            action(user, self?.roles) { result in
+            action(user, self?.user?.roles) { result in
                 switch result {
                 case .success(let user):
-                    self?.user?.id == 0 ? self?.listener?.save(user) : self?.listener?.update(user)
+                    self?.responder?(user)
                     DispatchQueue.main.async { self?.navigationController?.popToRootViewController(animated: true) }
                 case .failure(let exception):
                     DispatchQueue.main.async { self?.fault(exception) }
@@ -133,8 +127,9 @@ class UserForm: UIViewController {
                 user?.department?.id = department.selectedRow(inComponent: 0)
                 
                 userRole.user = user
-                userRole.roles = roles // previous selection if any
-                userRole.listener = self
+                userRole.responder = { [weak self] user in
+                    self?.user = user
+                }
             }
         }
     }
@@ -178,11 +173,5 @@ extension UserForm: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool { // resign keyboard
         textField.resignFirstResponder()
         return true
-    }
-}
-
-extension UserForm: UserRoleListener {
-    func result(_ roles: [Role]?) { // add role to the user
-        self.roles = roles
     }
 }

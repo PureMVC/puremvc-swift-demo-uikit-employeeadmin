@@ -32,21 +32,19 @@ class RoleProxy: Proxy {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         session.dataTask(with: request) { [weak self] data, response, error in
-            guard error == nil else {
-                return completion(.failure(Exception(message: error!.localizedDescription)))
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                return completion(.failure(Exception(message: "HTTP request failed.")))
+            if let error {
+                return completion(.failure(Exception(message: error.localizedDescription)))
             }
             
             guard let data, let decoder = self?.decoder else {
                 return completion(.failure(Exception(message: "The data is invalid.")))
             }
-            
+
             do {
-                response.statusCode == 200 ? completion(.success(try decoder.decode([Role].self, from: data))) :
-                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
+                }
+                completion(.success(try decoder.decode([Role].self, from: data)))
             } catch {
                 completion(.failure(Exception(message: error.localizedDescription)))
             }
@@ -59,21 +57,19 @@ class RoleProxy: Proxy {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         session.dataTask(with: request) { [weak self] data, response, error in
-            guard error == nil else {
-                return completion(.failure(Exception(message: error!.localizedDescription)))
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                return completion(.failure(Exception(message: "HTTP request failed.")))
+            if let error {
+                return completion(.failure(Exception(message: error.localizedDescription)))
             }
             
             guard let data, let decoder = self?.decoder else {
                 return completion(.failure(Exception(message: "The data is invalid.")))
             }
-            
+
             do {
-                response.statusCode == 200 ? completion(.success(try decoder.decode([Role].self, from: data))) :
-                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
+                }
+                completion(.success(try decoder.decode([Role].self, from: data)))
             } catch {
                 completion(.failure(Exception(message: error.localizedDescription)))
             }
@@ -88,21 +84,19 @@ class RoleProxy: Proxy {
         request.httpBody = try? encoder.encode(roles.map{ $0.id })
 
         session.dataTask(with: request) { [weak self] data, response, error in
-            guard error == nil else {
-                return completion(.failure(Exception(message: error!.localizedDescription)))
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                return completion(.failure(Exception(message: "HTTP request failed.")))
+            if let error {
+                return completion(.failure(Exception(message: error.localizedDescription)))
             }
             
             guard let data, let decoder = self?.decoder else {
                 return completion(.failure(Exception(message: "The data is invalid.")))
             }
-            
+
             do {
-                response.statusCode == 200 ? completion(.success(try decoder.decode([Int].self, from: data))) :
-                    completion(.failure(try decoder.decode(Exception.self, from: data)))
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
+                }
+                completion(.success(try decoder.decode([Int].self, from: data)))
             } catch {
                 completion(.failure(Exception(message: error.localizedDescription)))
             }
