@@ -9,8 +9,8 @@
 import UIKit
 
 protocol UserRoleDelegate: AnyObject {
-    func findAllRoles(_ completion: @escaping (Result<[Role], Exception>) -> Void)
-    func findRolesByUser(_ user: User, _ completion: @escaping (Result<[Role], Exception>) -> Void)
+    func findAllRoles() async throws -> [Role]
+    func findRolesByUser(_ user: User) async throws -> [Role]
 }
 
 class UserRole: UIViewController {
@@ -26,39 +26,21 @@ class UserRole: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(view: self)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        let group = DispatchGroup()
-        DispatchQueue.global().async { [weak self] in // UI Data
-            group.enter()
-            self?.delegate?.findAllRoles{ result in
-                defer { group.leave() }
-                switch result {
-                case .success(let roles): self?.roles = roles
-                case .failure(let exception): DispatchQueue.main.async { self?.fault(exception) }
-                }
-            }
-        }
         
-        if user?.id != 0 && user?.roles == nil { // User Data (Optional)
-            DispatchQueue.global().async { [weak self] in
-                group.enter()
-                self?.delegate?.findRolesByUser(self?.user ?? User(id: 0), { result in
-                    defer { group.leave() }
-                    switch result {
-                    case .success(let roles):
-                        self?.user?.roles = roles
-                    case .failure(let exception): DispatchQueue.main.async { self?.fault(exception) }
-                    }
-                })
-            }
-        }
+        guard let user, let delegate else { return }
         
-        group.notify(queue: DispatchQueue.main) { [weak self] in // Bind UI and User Data
-            if self?.user?.roles == nil { self?.user?.roles = [Role]() } // User Data (Default)
-            self?.tableView.reloadData()
+        Task {
+            do {
+                let (roles, userRoles) = try await(delegate.findAllRoles(),
+                                                   user.id != 0 ? delegate.findRolesByUser(user) : (user.roles != nil ? user.roles : [Role]()))
+                self.roles = roles
+                self.user?.roles = userRoles
+                tableView.reloadData()
+            } catch (let error as Exception) {
+                fault(error)
+            }
         }
     }
     

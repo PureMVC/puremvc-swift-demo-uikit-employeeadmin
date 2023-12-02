@@ -13,17 +13,17 @@ class EmployeeAdminMediator: Mediator {
     
     override class var NAME: String { "EmployeeAdminMediator" }
 
-    private var userProxy: UserProxy?
+    private var userProxy: UserProxy!
     
-    private var roleProxy: RoleProxy?
+    private var roleProxy: RoleProxy!
     
     init(viewComponent: UIViewController) {
         super.init(name: EmployeeAdminMediator.NAME + viewComponent.title!, viewComponent: viewComponent)
     }
     
     override func onRegister() {
-        userProxy = facade.retrieveProxy(UserProxy.NAME) as? UserProxy
-        roleProxy = facade.retrieveProxy(RoleProxy.NAME) as? RoleProxy
+        userProxy = (facade.retrieveProxy(UserProxy.NAME) as! UserProxy)
+        roleProxy = (facade.retrieveProxy(RoleProxy.NAME) as! RoleProxy)
         
         switch viewComponent {
         case let userList as UserList:
@@ -41,71 +41,56 @@ class EmployeeAdminMediator: Mediator {
 
 extension EmployeeAdminMediator: UserListDelegate {
     
-    func findAll(_ completion: @escaping (Result<[User], Exception>) -> Void) {
-        userProxy?.findAll(completion)
+    func findAll() async throws -> [User] {
+        try await userProxy.findAll()
     }
     
-    func deleteById(_ id: Int, _ completion: @escaping (Result<Void, Exception>) -> Void) {
-        userProxy?.deleteById(id, completion)
+    func deleteById(_ id: Int) async throws {
+        try await userProxy.deleteById(id)
     }
     
 }
 
 extension EmployeeAdminMediator: UserFormDelegate {
 
-    func findById(_ id: Int, _ completion: @escaping (Result<User, Exception>) -> Void) {
-        userProxy?.findById(id, completion)
+    func findById(_ id: Int) async throws -> User {
+        try await userProxy.findById(id)
     }
     
-    func save(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Exception>) -> Void) {
+    func save(_ user: User, _ roles: [Role]?) async throws -> User {
+        let user = try await userProxy.save(user)
+        
+        if let roles = roles {
+            _ = try await roleProxy.updateByUser(user, roles: roles)
+        }
 
-        userProxy?.save(user) { [weak self] result in
-            switch result {
-            case .success(let user):
-                guard let roles else { return completion(.success(user)) }
-                self?.roleProxy?.updateByUser(user, roles: roles) { result in
-                    switch result {
-                    case .success(_): completion(.success(user))
-                    case .failure(let exception): completion(.failure(exception))
-                    }
-                }
-            case .failure(let exception):
-                completion(.failure(exception))
-            }
-        }
+        return user
     }
     
-    func update(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Exception>) -> Void) {
-        userProxy?.update(user) { [weak self] result in
-            switch result {
-            case .success(let user):
-                guard let roles else { return completion(.success(user)) }
-                self?.roleProxy?.updateByUser(user, roles: roles) { result in
-                    switch result {
-                    case .success(_): completion(.success(user))
-                    case .failure(let exception): completion(.failure(exception))
-                    }
-                }
-            case .failure(let exception):
-                completion(.failure(exception))
-            }
+    func update(_ user: User, _ roles: [Role]?) async throws -> User {
+        let user = try await userProxy.update(user)
+        
+        if let roles = roles {
+            _ = try await roleProxy.updateByUser(user, roles: roles)
         }
+
+        return user
     }
     
-    func findAllDepartments(_ completion: @escaping (Result<[Department], Exception>) -> Void) {
-        userProxy?.findAllDepartments(completion)
+    func findAllDepartments() async throws -> [Department] {
+        try await userProxy.findAllDepartments()
     }
     
 }
 
 extension EmployeeAdminMediator: UserRoleDelegate {
 
-    func findAllRoles(_ completion: @escaping (Result<[Role], Exception>) -> Void) {
-        roleProxy?.findAll(completion)
+    func findAllRoles() async throws -> [Role] {
+        try await roleProxy.findAll()
     }
     
-    func findRolesByUser(_ user: User, _ completion: @escaping (Result<[Role], Exception>) -> Void) {
-        roleProxy?.findByUser(user, completion)
+    func findRolesByUser(_ user: User) async throws -> [Role] {
+        try await roleProxy.findByUser(user)
     }
     
 }

@@ -35,13 +35,14 @@
                     <navigationItem key="navigationItem" title="Users" id="b69-zV-Bcy">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="AWk-zO-5kx">
                             <connections>
-                                <segue destination="0g0-6m-0wk" kind="show" identifier="segueToUserForm" id="zLQ-86-XKI"/>
+                                <action selector="add" destination="b1t-yn-9EQ" id="hvd-iY-yQP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="Awe-vP-r2U" id="Ekx-EJ-fZV"/>
+                        <segue destination="0g0-6m-0wk" kind="show" identifier="segueToUserForm" id="52Z-Dj-Xvc"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A0r-kP-BcI" userLabel="First Responder" sceneMemberID="firstResponder"/>

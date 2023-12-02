@@ -9,10 +9,10 @@
 import UIKit
 
 protocol UserFormDelegate : AnyObject {
-    func findById(_ id: Int, _ completion: @escaping (Result<User, Exception>) -> Void)
-    func save(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Exception>) -> Void)
-    func update(_ user: User, _ roles: [Role]?, _ completion: @escaping (Result<User, Exception>) -> Void)
-    func findAllDepartments(_ completion: @escaping (Result<[Department], Exception>) -> Void)
+    func findById(_ id: Int) async throws -> User
+    func save(_ user: User, _ roles: [Role]?) async throws -> User
+    func update(_ user: User, _ roles: [Role]?) async throws -> User
+    func findAllDepartments() async throws -> [Department]
 }
 
 class UserForm: UIViewController {
@@ -37,56 +37,24 @@ class UserForm: UIViewController {
     override func viewDidLoad() {
         ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(view: self)
         
-        let group = DispatchGroup()
-        DispatchQueue.global().async { [weak self] in // UI data
-            group.enter()
-            self?.delegate?.findAllDepartments { result in
-                defer { group.leave() }
-                switch result {
-                case .success(let departments): self?.departments?.append(contentsOf: departments)
-                case .failure(let exception): DispatchQueue.main.async { self?.fault(exception) }
-                }
-            }
-        }
+        guard let user, let delegate else { return }
         
-        if let user = self.user { // User data (Optional)
-            DispatchQueue.global().async { [weak self] in
-                group.enter()
-                self?.delegate?.findById(user.id) { result in
-                    defer { group.leave() }
-                    switch result {
-                    case .success(let user): self?.user = user
-                    case .failure(let exception): DispatchQueue.main.async { self?.fault(exception) }
-                    }
-                }
+        Task {
+            do {
+                let (departments, user) = try await(delegate.findAllDepartments(),
+                                                    user.id != 0 ? delegate.findById(user.id) : user)
+                self.departments?.append(contentsOf: departments)
+                self.department.reloadComponent(0)
+                self.bind(user: user)
+            } catch (let error as Exception) {
+                fault(error)
             }
-        }
-        
-        group.notify(queue: DispatchQueue.main) { [weak self] in // Bind UI and User Data (Optional)
-            self?.department.reloadComponent(0)
-            guard let user = self?.user else {
-                self?.user = User(id: 0) // Default UserData
-                return
-            }
-            self?.bind(user: user)
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         userRoles.tableFooterView = UIView()
-    }
-    
-    func bind(user: User) {
-        self.user = user
-        first.text = user.first
-        last.text = user.last
-        email.text = user.email
-        username.isEnabled = user.id == 0
-        username.text = user.username
-        password.text = user.password
-        confirmPassword.text = user.password
-        department.selectRow(Int(user.department?.id ?? 0), inComponent: 0, animated: true)
     }
     
     @IBAction func save(_ sender: Any) { // save or update
@@ -103,35 +71,45 @@ class UserForm: UIViewController {
             return fault(Exception(message: "Invalid Form Data."))
         }
         
-        DispatchQueue.global().async { [weak self] in
-            let action = (user.id == 0) ? delegate.save : delegate.update
-            action(user, self?.user?.roles) { result in
-                switch result {
-                case .success(let user):
-                    self?.responder?(user)
-                    DispatchQueue.main.async { self?.navigationController?.popToRootViewController(animated: true) }
-                case .failure(let exception):
-                    DispatchQueue.main.async { self?.fault(exception) }
-                }
+        Task {
+            do {
+                let action = (user.id == 0) ? delegate.save : delegate.update
+                user = try await action(user, user.roles)
+                responder?(user)
+                navigationController?.popToRootViewController(animated: true)
+            } catch(let error as Exception) {
+                fault(error)
             }
         }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { // segue to User Roles
         if let identifier = segue.identifier, identifier == "segueToUserRoles" {
-            if let userRole = segue.destination as? UserRole {
+            if let destination = segue.destination as? UserRole {
                 user?.first = first.text // retain any form changes before the segue
                 user?.last = last.text
                 user?.email = email.text
                 user?.password = password.text
                 user?.department?.id = department.selectedRow(inComponent: 0)
                 
-                userRole.user = user
-                userRole.responder = { [weak self] user in
+                destination.user = user
+                destination.responder = { [weak self] user in
                     self?.user = user
                 }
             }
         }
+    }
+    
+    func bind(user: User) {
+        self.user = user
+        first.text = user.first
+        last.text = user.last
+        email.text = user.email
+        username.isEnabled = user.id == 0
+        username.text = user.username
+        password.text = user.password
+        confirmPassword.text = user.password
+        department.selectRow(Int(user.department?.id ?? 0), inComponent: 0, animated: true)
     }
     
     func fault(_ exception: Exception) {

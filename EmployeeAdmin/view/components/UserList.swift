@@ -9,8 +9,8 @@
 import UIKit
 
 protocol UserListDelegate: AnyObject {
-    func findAll(_ completion: @escaping (Result<[User], Exception>) -> Void)
-    func deleteById(_ id: Int, _ completion: @escaping (Result<Void, Exception>) -> Void)
+    func findAll() async throws -> [User]
+    func deleteById(_ id: Int) async throws
 }
 
 class UserList: UIViewController {
@@ -24,15 +24,12 @@ class UserList: UIViewController {
     override func viewDidLoad() {
         ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(view: self)
         
-        DispatchQueue.global().async { [weak self] in
-            self?.delegate?.findAll { result in
-                switch result {
-                case .success(let users):
-                    self?.users = users
-                    DispatchQueue.main.async { self?.tableView.reloadData() }
-                case .failure(let exception):
-                    DispatchQueue.main.async { self?.fault(exception) }
-                }
+        Task {
+            do {
+                users = try await delegate?.findAll()
+                tableView.reloadData()
+            } catch(let error as Exception) {
+                fault(error)
             }
         }
     }
@@ -44,28 +41,31 @@ class UserList: UIViewController {
         }
     }
     
+    @IBAction func add() {
+        performSegue(withIdentifier: "segueToUserForm", sender: User(id: 0))
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { // segue to UserForm to show user details
-        if let identifier = segue.identifier, identifier == "segueToUserForm", let userForm = segue.destination as? UserForm {
+        if let identifier = segue.identifier, identifier == "segueToUserForm", let destination = segue.destination as? UserForm {
             if let user = sender as? User {
-                userForm.user = user
+                destination.user = user
             }
-            userForm.responder = { [weak self] user in
+            destination.responder = { [weak self] user in
                 guard let user else { return }
                 if let index = self?.users?.firstIndex(where: { $0.id == user.id }) { // update
                     self?.users?[index] = user
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                         self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
                     }
                 } else { // insert
                     self?.users?.append(user)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-                        self?.tableView.insertRows(at: [IndexPath(row: (self?.users?.count ?? 1) - 1, section: 0)], with: .automatic)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                        self?.tableView.insertRows(at: [IndexPath(row: (self?.users?.count ?? 1) - 1, section: 0)], with: .fade)
                     }
                 }
             }
         }
     }
-    
     
     func fault(_ exception: Exception) {
         let alertController = UIAlertController(title: "Error", message: exception.message, preferredStyle: UIAlertController.Style.alert)
@@ -97,15 +97,13 @@ extension UserList: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
-            DispatchQueue.global().async { [weak self] in
-                self?.delegate?.deleteById(self?.users?[indexPath.row].id ?? 0) { result in
-                    switch result {
-                    case .success():
-                        self?.users?.remove(at: indexPath.row)
-                        DispatchQueue.main.async { self?.tableView.deleteRows(at: [indexPath], with: .automatic) }
-                    case .failure(let exception):
-                        DispatchQueue.main.async { self?.fault(exception) }
-                    }
+            Task {
+                do {
+                    try await delegate?.deleteById(users?[indexPath.row].id ?? 0)
+                    users?.remove(at: indexPath.row)
+                    DispatchQueue.main.async { [weak self] in self?.tableView.deleteRows(at: [indexPath], with: .automatic) }
+                } catch(let error as Exception) {
+                    fault(error)
                 }
             }
         }

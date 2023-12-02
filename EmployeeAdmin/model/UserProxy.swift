@@ -26,157 +26,113 @@ class UserProxy: Proxy {
         super.init(name: UserProxy.NAME, data: nil)
     }
         
-    func findAll(_ completion: @escaping (Result<[User], Exception>) -> Void) {
+    func findAll() async throws -> [User] {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
+        let (data, response) = try await session.data(for: request)
 
-            do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
-                }
-                completion(.success(try decoder.decode([User].self, from: data)))
-            } catch {
-                completion(.failure(Exception(message: error.localizedDescription)))
-            }
-        }.resume()
+        guard let response = response as? HTTPURLResponse else {
+           throw Exception(message: "Unexpected response format.")
+        }
+        
+        guard response.statusCode == 200 else {
+            throw try decoder.decode(Exception.self, from: data)
+        }
+
+        return try decoder.decode([User].self, from: data)
     }
     
-    func findById(_ id: Int, _ completion: @escaping (Result<User, Exception>) -> Void) {
+    func findById(_ id: Int) async throws -> User {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
-            
-            do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
-                }
-                completion(.success(try decoder.decode(User.self, from: data)))
-            } catch {
-                completion(.failure(Exception(message: error.localizedDescription)))
-            }
-        }.resume()
+        let (data, response) = try await session.data(for: request)
+        
+        guard let response = response as? HTTPURLResponse else {
+           throw Exception(message: "Unexpected response format.")
+        }
+        
+        guard response.statusCode == 200 else {
+            throw try decoder.decode(Exception.self, from: data)
+        }
+        
+        return try decoder.decode(User.self, from: data)
     }
     
-    func save(_ user: User, _ completion: @escaping (Result<User, Exception>) -> Void) {
+    func save(_ user: User) async throws -> User {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees")!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? encoder.encode(user)
         
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
-            
-            do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 201 else {
-                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
-                }
-                completion(.success(try decoder.decode(User.self, from: data)))
-            } catch {
-                completion(.failure(Exception(message: error.localizedDescription)))
-            }
-        }.resume()
+        let (data, response) = try await session.data(for: request)
+        
+        guard let response = response as? HTTPURLResponse else {
+           throw Exception(message: "Unexpected response format.")
+        }
+        
+        guard response.statusCode == 201 else {
+            throw try decoder.decode(Exception.self, from: data)
+        }
+        
+        return try decoder.decode(User.self, from: data)
     }
     
-    func update(_ user: User, _ completion: @escaping (Result<User, Exception>) -> Void) {
+    func update(_ user: User) async throws -> User {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(user.id)")!)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try? encoder.encode(user)
         
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
-            
-            do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
-                }
-                completion(.success(try decoder.decode(User.self, from: data)))
-            } catch {
-                completion(.failure(Exception(message: error.localizedDescription)))
-            }
-        }.resume()
+        let (data, response) = try await session.data(for: request)
+        
+        guard let response = response as? HTTPURLResponse else {
+            throw Exception(message: "Unexpected response format.")
+        }
+        
+        guard response.statusCode == 200 else {
+            throw try decoder.decode(Exception.self, from: data)
+        }
+        
+        return try decoder.decode(User.self, from: data)
     }
     
-    func deleteById(_ id: Int, _ completion: @escaping (Result<Void, Exception>) -> Void) {
+    func deleteById(_ id: Int) async throws {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)")!)
         request.httpMethod = "DELETE"
         
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
-            
-            do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 204 else {
-                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
-                }
-                completion(.success(()))
-            } catch {
-                completion(.failure(Exception(message: error.localizedDescription)))
-            }
-        }.resume()
+        let (data, response) = try await session.data(for: request)
+        
+        guard let response = response as? HTTPURLResponse else {
+            throw Exception(message: "Unexpected response format.")
+        }
+        
+        guard response.statusCode == 200 else {
+            throw try decoder.decode(Exception.self, from: data)
+        }
     }
 
-    func findAllDepartments(_ completion: @escaping (Result<[Department], Exception>) -> Void) {
+    func findAllDepartments() async throws -> [Department] {
         var request = URLRequest(url: URL(string: "http://localhost:8080/departments")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        session.dataTask(with: request) { [weak self] data, response, error in
-            if let error {
-                return completion(.failure(Exception(message: error.localizedDescription)))
-            }
-            
-            guard let data, let decoder = self?.decoder else {
-                return completion(.failure(Exception(message: "The data is invalid.")))
-            }
 
-            do {
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    return completion(.failure(try decoder.decode(Exception.self, from: data)))
-                }
-                completion(.success(try decoder.decode([Department].self, from: data)))
-            } catch {
-                completion(.failure(Exception(message: error.localizedDescription)))
-            }
-        }.resume()
+        let (data, response) = try await session.data(for: request)
+
+        guard let response = response as? HTTPURLResponse else {
+            throw Exception(message: "Unexpected response format.")
+        }
+        
+        guard response.statusCode == 200 else {
+            throw try decoder.decode(Exception.self, from: data)
+        }
+
+        return try decoder.decode([Department].self, from: data)
     }
 
 }
