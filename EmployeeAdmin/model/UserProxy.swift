@@ -36,8 +36,9 @@ class UserProxy: Proxy {
         
         var users: [User] = []
         while sqlite3_step(statement) == SQLITE_ROW {
-            users.append(User(id: sqlite3_column_int64(statement, 0), username: nil, first: String(cString: sqlite3_column_text(statement, 1)),
-                              last: String(cString: sqlite3_column_text(statement, 2)), email: nil, password: nil, department: nil))
+            users.append(User(id: sqlite3_column_int64(statement, 0),
+                              first: String(cString: sqlite3_column_text(statement, 1)),
+                              last: String(cString: sqlite3_column_text(statement, 2))))
         }
         return users
     }
@@ -61,12 +62,8 @@ class UserProxy: Proxy {
         guard sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, "@id"), id) == SQLITE_OK else {
             throw NSError(domain: String(cString: sqlite3_errmsg(database)), code: 2, userInfo: nil)
         }
-        
-        if sqlite3_step(statement) == SQLITE_ROW {
-            return User(statement)
-        } else {
-            return nil
-        }
+       
+        return sqlite3_step(statement) == SQLITE_ROW ? User(statement) : nil
     }
     
     func save(_ user: User) throws -> Int64? {
