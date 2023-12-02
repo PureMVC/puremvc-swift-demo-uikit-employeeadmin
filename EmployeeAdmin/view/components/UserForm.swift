@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct UserFormView: View, UserFormDispatcher {
+struct UserForm: View, UserFormDispatcher {
     
     @StateObject private var viewModel = UserFormViewModel()
 
@@ -122,7 +122,7 @@ struct UserFormView: View, UserFormDispatcher {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()
                         .sheet(isPresented: $isSheetPresented) {
-                            UserRoleView(viewModel.user) { user in
+                            UserRole(viewModel.user) { user in
                                 viewModel.user = user
                             }
                         }
@@ -156,6 +156,6 @@ struct UserFormView: View, UserFormDispatcher {
 
 struct UserFormView_Previews: PreviewProvider {
     static var previews: some View {
-        UserFormView(User(id: 0), nil)
+        UserForm(User(id: 0), nil)
     }
 }

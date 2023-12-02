@@ -10,7 +10,7 @@
 		930923052B13EB80005E4DAB /* UserProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930923042B13EB80005E4DAB /* UserProxy.swift */; };
 		930923072B13EBB5005E4DAB /* StartupCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930923062B13EBB5005E4DAB /* StartupCommand.swift */; };
 		930923092B13F0A4005E4DAB /* RoleProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930923082B13F0A4005E4DAB /* RoleProxy.swift */; };
-		9309230B2B14521F005E4DAB /* UserFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309230A2B14521F005E4DAB /* UserFormView.swift */; };
+		9309230B2B14521F005E4DAB /* UserForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309230A2B14521F005E4DAB /* UserForm.swift */; };
 		930923102B147E11005E4DAB /* UserFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309230F2B147E11005E4DAB /* UserFormViewModel.swift */; };
 		93288EA72B13DB7800E63B07 /* EmployeeAdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93288EA62B13DB7800E63B07 /* EmployeeAdminApp.swift */; };
 		93288EAB2B13DB7A00E63B07 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93288EAA2B13DB7A00E63B07 /* Assets.xcassets */; };
@@ -18,7 +18,7 @@
 		93288EB82B13DB7A00E63B07 /* EmployeeAdminTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93288EB72B13DB7A00E63B07 /* EmployeeAdminTests.swift */; };
 		93288EC22B13DB7A00E63B07 /* EmployeeAdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93288EC12B13DB7A00E63B07 /* EmployeeAdminUITests.swift */; };
 		93288EC42B13DB7A00E63B07 /* EmployeeAdminUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93288EC32B13DB7A00E63B07 /* EmployeeAdminUITestsLaunchTests.swift */; };
-		93288ED52B13DD1500E63B07 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93288ED42B13DD1500E63B07 /* UserListView.swift */; };
+		93288ED52B13DD1500E63B07 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93288ED42B13DD1500E63B07 /* UserList.swift */; };
 		93288ED72B13E12400E63B07 /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93288ED62B13E12400E63B07 /* UserListViewModel.swift */; };
 		93288EDA2B13E1AF00E63B07 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93288ED92B13E1AF00E63B07 /* User.swift */; };
 		93288EDC2B13E1E600E63B07 /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93288EDB2B13E1E600E63B07 /* Department.swift */; };
@@ -28,7 +28,7 @@
 		93288EE52B13E37800E63B07 /* EmployeeAdminMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93288EE42B13E37800E63B07 /* EmployeeAdminMediator.swift */; };
 		93288EE72B13E3B300E63B07 /* EmployeeAdminAppMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93288EE62B13E3B300E63B07 /* EmployeeAdminAppMediator.swift */; };
 		932FCD7B2B16CF39008AC273 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932FCD7A2B16CF39008AC273 /* Exception.swift */; };
-		93BF9B932B1899F500A10426 /* UserRoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF9B922B1899F500A10426 /* UserRoleView.swift */; };
+		93BF9B932B1899F500A10426 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF9B922B1899F500A10426 /* UserRole.swift */; };
 		93BF9B952B189AF900A10426 /* UserRoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF9B942B189AF900A10426 /* UserRoleViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +53,7 @@
 		930923042B13EB80005E4DAB /* UserProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProxy.swift; sourceTree = "<group>"; };
 		930923062B13EBB5005E4DAB /* StartupCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupCommand.swift; sourceTree = "<group>"; };
 		930923082B13F0A4005E4DAB /* RoleProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleProxy.swift; sourceTree = "<group>"; };
-		9309230A2B14521F005E4DAB /* UserFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFormView.swift; sourceTree = "<group>"; };
+		9309230A2B14521F005E4DAB /* UserForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserForm.swift; sourceTree = "<group>"; };
 		9309230C2B1463D3005E4DAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9309230F2B147E11005E4DAB /* UserFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFormViewModel.swift; sourceTree = "<group>"; };
 		93288EA32B13DB7800E63B07 /* EmployeeAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmployeeAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,7 +65,7 @@
 		93288EBD2B13DB7A00E63B07 /* EmployeeAdminUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmployeeAdminUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93288EC12B13DB7A00E63B07 /* EmployeeAdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeAdminUITests.swift; sourceTree = "<group>"; };
 		93288EC32B13DB7A00E63B07 /* EmployeeAdminUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeAdminUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		93288ED42B13DD1500E63B07 /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
+		93288ED42B13DD1500E63B07 /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		93288ED62B13E12400E63B07 /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
 		93288ED92B13E1AF00E63B07 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		93288EDB2B13E1E600E63B07 /* Department.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Department.swift; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 		93288EE42B13E37800E63B07 /* EmployeeAdminMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeAdminMediator.swift; sourceTree = "<group>"; };
 		93288EE62B13E3B300E63B07 /* EmployeeAdminAppMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeAdminAppMediator.swift; sourceTree = "<group>"; };
 		932FCD7A2B16CF39008AC273 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
-		93BF9B922B1899F500A10426 /* UserRoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRoleView.swift; sourceTree = "<group>"; };
+		93BF9B922B1899F500A10426 /* UserRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
 		93BF9B942B189AF900A10426 /* UserRoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRoleViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -195,11 +195,11 @@
 		93288ED32B13DCE100E63B07 /* components */ = {
 			isa = PBXGroup;
 			children = (
-				93288ED42B13DD1500E63B07 /* UserListView.swift */,
+				93288ED42B13DD1500E63B07 /* UserList.swift */,
 				93288ED62B13E12400E63B07 /* UserListViewModel.swift */,
-				9309230A2B14521F005E4DAB /* UserFormView.swift */,
+				9309230A2B14521F005E4DAB /* UserForm.swift */,
 				9309230F2B147E11005E4DAB /* UserFormViewModel.swift */,
-				93BF9B922B1899F500A10426 /* UserRoleView.swift */,
+				93BF9B922B1899F500A10426 /* UserRole.swift */,
 				93BF9B942B189AF900A10426 /* UserRoleViewModel.swift */,
 			);
 			path = components;
@@ -353,7 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93288ED72B13E12400E63B07 /* UserListViewModel.swift in Sources */,
-				9309230B2B14521F005E4DAB /* UserFormView.swift in Sources */,
+				9309230B2B14521F005E4DAB /* UserForm.swift in Sources */,
 				930923092B13F0A4005E4DAB /* RoleProxy.swift in Sources */,
 				930923072B13EBB5005E4DAB /* StartupCommand.swift in Sources */,
 				93288EDE2B13E20500E63B07 /* Role.swift in Sources */,
@@ -362,8 +362,8 @@
 				930923052B13EB80005E4DAB /* UserProxy.swift in Sources */,
 				93BF9B952B189AF900A10426 /* UserRoleViewModel.swift in Sources */,
 				930923102B147E11005E4DAB /* UserFormViewModel.swift in Sources */,
-				93BF9B932B1899F500A10426 /* UserRoleView.swift in Sources */,
-				93288ED52B13DD1500E63B07 /* UserListView.swift in Sources */,
+				93BF9B932B1899F500A10426 /* UserRole.swift in Sources */,
+				93288ED52B13DD1500E63B07 /* UserList.swift in Sources */,
 				93288EE52B13E37800E63B07 /* EmployeeAdminMediator.swift in Sources */,
 				93288EDA2B13E1AF00E63B07 /* User.swift in Sources */,
 				93288EA72B13DB7800E63B07 /* EmployeeAdminApp.swift in Sources */,

@@ -14,7 +14,7 @@ struct EmployeeAdminApp: App {
     
     var body: some Scene {
         WindowGroup {
-            UserListView()
+            UserList()
         }
     }
     

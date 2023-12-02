@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct UserRoleView: View, UserRoleDispatcher {
+struct UserRole: View, UserRoleDispatcher {
     
     @StateObject var viewModel = UserRoleViewModel()
     
@@ -69,6 +69,6 @@ struct UserRoleView: View, UserRoleDispatcher {
 
 struct UserRoleView_Previews: PreviewProvider {
     static var previews: some View {
-        UserRoleView(User(id: 0), responder: nil)
+        UserRole(User(id: 0), responder: nil)
     }
 }

@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct UserListView: View, UserListDispatcher {
+struct UserList: View, UserListDispatcher {
     
     @StateObject private var viewModel = UserListViewModel()
     
@@ -29,7 +29,7 @@ struct UserListView: View, UserListDispatcher {
                 }
             }
             .navigationTitle("UserList")
-            .navigationBarItems(trailing: NavigationLink(destination: UserFormView(User(id: 0)) { user in
+            .navigationBarItems(trailing: NavigationLink(destination: UserForm(User(id: 0)) { user in
                 if let user {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         withAnimation { viewModel.users.append(user) }
@@ -39,7 +39,7 @@ struct UserListView: View, UserListDispatcher {
                 Image(systemName: "plus.circle").imageScale(.large)
             })
             .navigationDestination(for: User.self, destination: {
-                UserFormView($0) { user in
+                UserForm($0) { user in
                     if let user {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             if let index = viewModel.users.firstIndex(where: { $0.id == user.id }) {
@@ -73,7 +73,7 @@ struct UserListView: View, UserListDispatcher {
 
 struct UserList_Previews: PreviewProvider {
     static var previews: some View {
-        UserListView()
+        UserList()
     }
 }
 
