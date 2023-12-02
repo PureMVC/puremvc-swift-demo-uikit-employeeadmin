@@ -16,24 +16,15 @@ protocol UserFormDelegate : AnyObject {
     func findAllDepartments() -> AnyPublisher<[Department], Error>
 }
 
-protocol UserFormListener : AnyObject {
-    func save(_ user: User)
-    func update(_ user: User)
-}
-
 class UserForm: UIViewController {
-    
-    var id: Int?
-    
-    private var user: User?
+        
+    public var user: User?
     
     private var departments: [Department]? = [Department(id: 0, name: "--None Selected--")]
         
-    private var roles: [Role]?
-
     private var cancellable = Set<AnyCancellable>()
     
-    weak var listener: UserFormListener?
+    var responder: ((User?) -> Void)?
     
     weak var delegate: UserFormDelegate?
 
@@ -51,20 +42,21 @@ class UserForm: UIViewController {
     override func viewDidLoad() {
         ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(name: UserForm.NAME, viewComponent: self)
         
-        delegate?.findAllDepartments()
-            .flatMap { [weak self] departments in
-                self?.departments?.append(contentsOf: departments) // UI Data
+        guard let delegate else { return }
                 
-                if let id = self?.id, let delegate = self?.delegate { // existing user
-                    return delegate.findById(id).eraseToAnyPublisher() // User Data
-                } else {
-                    return Just(User(id: 0)).setFailureType(to: Error.self).eraseToAnyPublisher() // new user
-                }
-            }
+        var publishers = Publishers.Zip(delegate.findAllDepartments(),
+                                        Just(User(id: 0)).setFailureType(to: Error.self).eraseToAnyPublisher())
+        
+        if let user, user.id != 0 { // existing user
+            publishers = Publishers.Zip(delegate.findAllDepartments(), delegate.findById(user.id)) // User Data (conditional)
+        }
+        
+        publishers // Parallelize UI and User Data requests
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
-                if case let .failure(error) = completion { self?.fault(error)}
-            }, receiveValue: { [weak self] user in // Bind UI and User Data
+                if case let .failure(error) = completion { self?.fault(error) }
+            }, receiveValue: { [weak self] departments, user in // Bind UI and User Data
+                self?.departments?.append(contentsOf: departments)
                 self?.department.reloadComponent(0)
                 self?.bind(user: user)
             })
@@ -98,35 +90,36 @@ class UserForm: UIViewController {
         user.password = password.text ?? ""
         user.department = Department(id: department.selectedRow(inComponent: 0), name: departments?[department.selectedRow(inComponent: 0)].name ?? "")
         
-        if user.password == confirmPassword.text && user.isValid == true { // validation
-            let publisher = (user.id == 0) ? delegate.save(user, roles: roles) : delegate.update(user, roles: roles)
-            publisher
-                    .receive(on: DispatchQueue.main)
-                    .sink(receiveCompletion: { [weak self] completion in
-                        if case let .failure(error) = completion { self?.fault(error)}
-                    }, receiveValue: { [weak self] user in
-                        self?.user?.id = user.id
-                        (user.id == 0) ? self?.listener?.save(user) : self?.listener?.update(user)
-                        self?.navigationController?.popToRootViewController(animated: true)
-                    })
-                    .store(in: &cancellable)
-        } else {
-            fault(nil, message: "Invalid Form Data.")
+        guard user.password == confirmPassword.text && user.isValid else {
+            return fault(nil, message: "Invalid Form Data.")
         }
+        
+        let publisher = (user.id == 0) ? delegate.save(user, roles: user.roles) : delegate.update(user, roles: user.roles)
+        publisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                if case let .failure(error) = completion { self?.fault(error)}
+            }, receiveValue: { [weak self] user in
+                self?.user?.id = user.id
+                self?.responder?(user)
+                self?.navigationController?.popToRootViewController(animated: true)
+            })
+            .store(in: &cancellable)
     }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { // segue to User Roles
-        if let identifier = segue.identifier, identifier == "segueToUserRoles" {
-            if let userRole = segue.destination as? UserRole {
-                user?.first = first.text ?? "" // retain any form changes before the segue
-                user?.last = last.text ?? ""
-                user?.email = email.text ?? ""
-                user?.password = password.text ?? ""
-                user?.department?.id = department.selectedRow(inComponent: 0)
-                
-                userRole.id = user?.id
-                userRole.roles = roles // previous selection if any
-                userRole.listener = self
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueToUserRoles",
+            let userRole = segue.destination as? UserRole {
+            
+            user?.first = first.text ?? "" // Retain any form changes before the segue
+            user?.last = last.text ?? ""
+            user?.email = email.text ?? ""
+            user?.password = password.text ?? ""
+            user?.department?.id = department.selectedRow(inComponent: 0)
+            
+            userRole.user = user
+            userRole.responder = { [weak self] user in
+                self?.user = user
             }
         }
     }
@@ -181,11 +174,5 @@ extension UserForm: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool { // resign keyboard
         textField.resignFirstResponder()
         return true
-    }
-}
-
-extension UserForm: UserRoleListener {
-    func update(_ roles: [Role]?) { // add role to the user
-        self.roles = roles
     }
 }

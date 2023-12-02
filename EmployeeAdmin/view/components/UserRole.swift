@@ -14,21 +14,15 @@ protocol UserRoleDelegate: AnyObject {
     func findRolesById(_ id: Int) -> AnyPublisher<[Role], Error>
 }
 
-protocol UserRoleListener: AnyObject {
-    func update(_ roles: [Role]?)
-}
-
 class UserRole: UIViewController {
     
-    var id: Int?
+    var user: User?
     
     var roles: [Role]?
         
-    private var dataSource: [Role]?
-
     private var cancellable = Set<AnyCancellable>()
     
-    weak var listener: UserRoleListener?
+    var responder: ((User?) -> Void)?
     
     weak var delegate: UserRoleDelegate?
 
@@ -37,25 +31,34 @@ class UserRole: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
+        navigationItem.title = "My Title"
+
         ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(name: UserRole.NAME, viewComponent: self)
         
-        delegate?.findAllRoles()
-            .flatMap { [weak self] roles in
-                self?.dataSource = roles // UI Data
-                
-                if let roles = self?.roles {
-                    return Just(roles).setFailureType(to: Error.self).eraseToAnyPublisher()
-                } else if let id = self?.id, let delegate = self?.delegate {
-                    return delegate.findRolesById(id).eraseToAnyPublisher() // User Data
-                } else {
-                    return Just([Role]()).setFailureType(to: Error.self).eraseToAnyPublisher()
-                }
+        guard let delegate else { return }
+        
+        var publishers = Publishers.Zip(delegate.findAllRoles(), // new user, empty roles
+                                        Just([Role]()).setFailureType(to: Error.self).eraseToAnyPublisher())
+        if user?.id == 0 { // new user
+            if let roles = user?.roles { // has roles
+                publishers = Publishers.Zip(delegate.findAllRoles(),
+                                                Just(roles).setFailureType(to: Error.self).eraseToAnyPublisher())
             }
+        } else if let user { // existing usesr
+            publishers = Publishers.Zip(delegate.findAllRoles(), delegate.findRolesById(user.id))
+            if let roles = user.roles { // roles not empty
+                publishers = Publishers.Zip(delegate.findAllRoles(),
+                                            Just(roles).setFailureType(to: Error.self).eraseToAnyPublisher())
+            }
+        }
+        
+        publishers
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
-                if case let .failure(error) = completion { self?.fault(error)}
-            }, receiveValue: { [weak self] roles in // Bind UI and User Data
-                self?.roles = roles
+                if case let .failure(error) = completion { self?.fault(error) }
+            }, receiveValue: { [weak self] dataSource, roles in
+                self?.roles = dataSource
+                self?.user?.roles = roles
                 self?.tableView.reloadData()
             })
             .store(in: &cancellable)
@@ -77,16 +80,16 @@ class UserRole: UIViewController {
 extension UserRole: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // number of rows
-        dataSource?.count ?? 0
+        roles?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { // cell content initialize - checkmark/none
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserRoleCell", for: indexPath)
         
-        let role = dataSource?[indexPath.row]
+        let role = roles?[indexPath.row]
         cell.textLabel?.text = role?.name
         
-        if roles?.filter({ $0.id == role?.id }).isEmpty == false {
+        if user?.roles?.filter({ $0.id == role?.id }).isEmpty == false {
             cell.accessoryType = UITableViewCell.AccessoryType.checkmark
         } else {
             cell.accessoryType = UITableViewCell.AccessoryType.none
@@ -104,14 +107,14 @@ extension UserRole: UITableViewDelegate {
         
         if cell!.accessoryType == UITableViewCell.AccessoryType.none {
             cell!.accessoryType = UITableViewCell.AccessoryType.checkmark
-            roles?.append((dataSource?[indexPath.row])!)
-            listener?.update(roles)
+            user?.roles?.append((roles?[indexPath.row])!)
+            responder?(user)
         } else {
             cell!.accessoryType = UITableViewCell.AccessoryType.none
-            roles = roles?.filter {
-                $0.id as AnyObject !== dataSource![indexPath.row].id as AnyObject
+            user?.roles = user?.roles?.filter {
+                $0.id as AnyObject !== roles![indexPath.row].id as AnyObject
             }
-            listener?.update(roles)
+            responder?(user)
         }
     }
     

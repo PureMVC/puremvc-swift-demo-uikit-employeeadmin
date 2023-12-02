@@ -45,15 +45,31 @@ class UserList: UIViewController {
        if let indexPath = tableView.indexPathForSelectedRow {
            tableView.deselectRow(at: indexPath, animated: animated)
        }
-   }
+    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { // segue to UserForm to show user details
-        if let identifier = segue.identifier, identifier == "segueToUserForm" {
-            if let userForm = segue.destination as? UserForm {
-                if let id = sender as? Int { // existing vs. new user
-                    userForm.id = id
+    @IBAction func addButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "segueToUserForm", sender: User(id: 0))
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueToUserForm",
+            let user = sender as? User,
+            let userForm = segue.destination as? UserForm {
+            
+            userForm.user = user
+            userForm.responder = { [weak self] user in
+                guard let user else { return }
+                if let index = self?.users?.firstIndex(where: { $0.id == user.id }) { // update
+                    self?.users?[index] = user
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                        self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                    }
+                } else { // insert
+                    self?.users?.append(user)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                        self?.tableView.insertRows(at: [IndexPath(row: (self?.users?.count ?? 1) - 1, section: 0)], with: .automatic)
+                    }
                 }
-                userForm.listener = self
             }
         }
     }
@@ -89,7 +105,7 @@ extension UserList: UITableViewDataSource {
 extension UserList: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { // show details of the user
-        performSegue(withIdentifier: "segueToUserForm", sender: users![indexPath.row].id)
+        performSegue(withIdentifier: "segueToUserForm", sender: users?[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) { // delete user from the tableView and model
@@ -108,26 +124,6 @@ extension UserList: UITableViewDelegate {
                     }, receiveValue: { _ in }
                 )
                 .store(in: &cancellable)
-        }
-    }
-    
-}
-
-extension UserList: UserFormListener {
-    
-    func save(_ user: User) {
-        users?.append(user)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            self?.tableView.insertRows(at: [IndexPath(row: (self?.users?.count ?? 1) - 1, section: 0)], with: .automatic)
-        }
-    }
-    
-    func update(_ user: User) {
-        if let index = users?.firstIndex(where: { $0.id == user.id }) {
-            self.users?[index] = user
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-                self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
-            }
         }
     }
     
