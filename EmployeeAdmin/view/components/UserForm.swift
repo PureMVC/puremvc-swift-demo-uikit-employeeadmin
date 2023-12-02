@@ -46,7 +46,7 @@ class UserForm: UIViewController {
                 self.departments?.append(contentsOf: departments)
                 self.department.reloadComponent(0)
                 self.bind(user: user)
-            } catch (let error as Exception) {
+            } catch (let error) {
                 fault(error)
             }
         }
@@ -112,10 +112,10 @@ class UserForm: UIViewController {
         department.selectRow(Int(user.department?.id ?? 0), inComponent: 0, animated: true)
     }
     
-    func fault(_ exception: Exception) {
-        let alertController = UIAlertController(title: "Error", message: exception.message, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+    func fault(_ error: Error) {
+        let alert = UIAlertController(title: "Error", message: (error as? Exception)?.message ?? error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 
 }

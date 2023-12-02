@@ -33,11 +33,7 @@ class RoleProxy: Proxy {
         
         let (data, response) = try await session.data(for: request)
         
-        guard let response = response as? HTTPURLResponse else {
-            throw Exception(message: "Unexpected response format.")
-        }
-        
-        guard response.statusCode == 200 else {
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else {
             throw try decoder.decode(Exception.self, from: data)
         }
         
@@ -51,11 +47,7 @@ class RoleProxy: Proxy {
         
         let (data, response) = try await session.data(for: request)
         
-        guard let response = response as? HTTPURLResponse else {
-            throw Exception(message: "Unexpected response format.")
-        }
-        
-        guard response.statusCode == 200 else {
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else {
             throw try decoder.decode(Exception.self, from: data)
         }
         
@@ -71,11 +63,7 @@ class RoleProxy: Proxy {
 
         let (data, response) = try await session.data(for: request)
         
-        guard let response = response as? HTTPURLResponse else {
-            throw Exception(message: "Unexpected response format.")
-        }
-        
-        guard response.statusCode == 200 else {
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else {
             throw try decoder.decode(Exception.self, from: data)
         }
         

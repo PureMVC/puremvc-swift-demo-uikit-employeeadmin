@@ -8,7 +8,7 @@
 
 struct Exception: Error, Codable {
     
-    let code: String
+    let code: String?
     let message: String
     
     init(_ code: String = "0", message: String) {

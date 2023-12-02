@@ -28,7 +28,7 @@ class UserList: UIViewController {
             do {
                 users = try await delegate?.findAll()
                 tableView.reloadData()
-            } catch(let error as Exception) {
+            } catch(let error) {
                 fault(error)
             }
         }
@@ -67,10 +67,10 @@ class UserList: UIViewController {
         }
     }
     
-    func fault(_ exception: Exception) {
-        let alertController = UIAlertController(title: "Error", message: exception.message, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+    func fault(_ error: Error) {
+        let alert = UIAlertController(title: "Error", message: (error as? Exception)?.message ?? error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
 }
@@ -102,7 +102,7 @@ extension UserList: UITableViewDelegate {
                     try await delegate?.deleteById(users?[indexPath.row].id ?? 0)
                     users?.remove(at: indexPath.row)
                     DispatchQueue.main.async { [weak self] in self?.tableView.deleteRows(at: [indexPath], with: .automatic) }
-                } catch(let error as Exception) {
+                } catch(let error) {
                     fault(error)
                 }
             }
