@@ -75,9 +75,9 @@ class UserList: UIViewController {
     }
     
     func fault(_ error: Error) {
-        let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        present(alertController, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Error", message: (error as? Exception)?.message ?? error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 
     deinit {
@@ -119,7 +119,7 @@ extension UserList: UITableViewDelegate {
                         self?.users?.remove(at: indexPath.row)
                         self?.tableView.deleteRows(at: [indexPath], with: .automatic)
                     case .failure(let error):
-                        self?.fault(error)
+                        print(error)
                     }
                     }, receiveValue: { _ in }
                 )

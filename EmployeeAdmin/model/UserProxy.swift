@@ -16,11 +16,14 @@ class UserProxy: Proxy {
     
     private var session: URLSession
 
-    private var jsonDecoder: JSONDecoder
+    private var encoder: JSONEncoder
+    
+    private var decoder: JSONDecoder
         
-    init(session: URLSession, jsonDecoder: JSONDecoder) {
+    init(session: URLSession, encoder: JSONEncoder, decoder: JSONDecoder) {
         self.session = session
-        self.jsonDecoder = jsonDecoder
+        self.encoder = encoder
+        self.decoder = decoder
         super.init(name: UserProxy.NAME, data: nil)
     }
 
@@ -28,11 +31,16 @@ class UserProxy: Proxy {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-
+        
         return session.dataTaskPublisher(for: request)
-                .map(\.data)
-                .decode(type: [User].self, decoder: jsonDecoder)
-                .eraseToAnyPublisher()
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                   throw try decoder.decode(Exception.self, from: data)
+                }
+                return data
+            }
+            .decode(type: [User].self, decoder: decoder)
+            .eraseToAnyPublisher()
     }
     
     func findById(_ id: Int) -> AnyPublisher<User, Error> {
@@ -41,9 +49,14 @@ class UserProxy: Proxy {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
         return session.dataTaskPublisher(for: request)
-                .map(\.data)
-                .decode(type: User.self, decoder: jsonDecoder)
-                .eraseToAnyPublisher()
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                   throw try decoder.decode(Exception.self, from: data)
+                }
+                return data
+            }
+            .decode(type: User.self, decoder: decoder)
+            .eraseToAnyPublisher()
     }
     
     func save(_ user: User) -> AnyPublisher<User, Error> {
@@ -51,12 +64,17 @@ class UserProxy: Proxy {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONEncoder().encode(user)
+        request.httpBody = try? encoder.encode(user)
 
         return session.dataTaskPublisher(for: request)
-                .map(\.data)
-                .decode(type: User.self, decoder: jsonDecoder)
-                .eraseToAnyPublisher()
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 201 else {
+                   throw try decoder.decode(Exception.self, from: data)
+                }
+                return data
+            }
+            .decode(type: User.self, decoder: decoder)
+            .eraseToAnyPublisher()
     }
     
     func update(_ user: User) -> AnyPublisher<User, Error> {
@@ -64,12 +82,17 @@ class UserProxy: Proxy {
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONEncoder().encode(user)
+        request.httpBody = try? encoder.encode(user)
 
         return session.dataTaskPublisher(for: request)
-                .map(\.data)
-                .decode(type: User.self, decoder: jsonDecoder)
-                .eraseToAnyPublisher()
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                   throw try decoder.decode(Exception.self, from: data)
+                }
+                return data
+            }
+            .decode(type: User.self, decoder: decoder)
+            .eraseToAnyPublisher()
     }
 
     func deleteById(_ id: Int) -> AnyPublisher<Never, Error> {
@@ -88,9 +111,14 @@ class UserProxy: Proxy {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
         return session.dataTaskPublisher(for: request)
-                .map(\.data)
-                .decode(type: [Department].self, decoder: jsonDecoder)
-                .eraseToAnyPublisher()
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                   throw try decoder.decode(Exception.self, from: data)
+                }
+                return data
+            }
+            .decode(type: [Department].self, decoder: decoder)
+            .eraseToAnyPublisher()
     }
 
 }

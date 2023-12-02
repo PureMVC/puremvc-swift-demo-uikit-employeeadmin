@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		93BF27E62B1BD9E40083326E /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF27E52B1BD9E40083326E /* Exception.swift */; };
 		A814B40224537F73002D1415 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A814B40024537F73002D1415 /* Main.storyboard */; };
 		A814B40424537F75002D1415 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A814B40324537F75002D1415 /* Assets.xcassets */; };
 		A814B40724537F75002D1415 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A814B40524537F75002D1415 /* LaunchScreen.storyboard */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		93BF27E52B1BD9E40083326E /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		A814B3F724537F73002D1415 /* EmployeeAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmployeeAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A814B40124537F73002D1415 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A814B40324537F75002D1415 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				A814B43824537FA8002D1415 /* Role.swift */,
 				A814B43924537FA8002D1415 /* User.swift */,
 				A870F4B62569DD4200CB7EBF /* Department.swift */,
+				93BF27E52B1BD9E40083326E /* Exception.swift */,
 			);
 			path = valueObject;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				A870F4B72569DD4200CB7EBF /* Department.swift in Sources */,
 				A814B45724537FA8002D1415 /* AppDelegate.swift in Sources */,
 				A814B44B24537FA8002D1415 /* ApplicationFacade.swift in Sources */,
+				93BF27E62B1BD9E40083326E /* Exception.swift in Sources */,
 				A814B44724537FA8002D1415 /* StartupCommand.swift in Sources */,
 				A814B45624537FA8002D1415 /* UserForm.swift in Sources */,
 				A814B45924538060002D1415 /* SceneDelegate.swift in Sources */,
