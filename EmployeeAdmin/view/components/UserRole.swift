@@ -12,7 +12,7 @@ struct UserRole: View, UserRoleDispatcher {
     
     @StateObject var viewModel = UserRoleViewModel()
     
-    @State var exception: Exception?
+    @State var error: Error?
     
     var body: some View {
         VStack {
@@ -42,10 +42,10 @@ struct UserRole: View, UserRoleDispatcher {
                 viewModel.user = user
                 viewModel.initialize()
             }
-            .alert(isPresented: Binding(get:{ exception != nil }, set:{ _ in exception = nil })) {
+            .alert(isPresented: Binding(get:{ error != nil }, set:{ _ in error = nil })) {
                 Alert(
                     title: Text("Error"),
-                    message: Text(exception?.message ?? "An unknown error occurred."),
+                    message: Text(((error as? Exception)?.message ?? error?.localizedDescription) ?? "An unknown error occurred."),
                     primaryButton: .default(Text("OK")),
                     secondaryButton: .cancel()
                 )
@@ -62,8 +62,8 @@ struct UserRole: View, UserRoleDispatcher {
         self.responder = responder
     }
     
-    func fault(_ exception: Exception) {
-        self.exception = exception
+    func fault(_ error: Error) {
+        self.error = error
     }
 }
 

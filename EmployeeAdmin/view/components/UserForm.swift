@@ -13,12 +13,10 @@ struct UserForm: View, UserFormDispatcher {
     @StateObject private var viewModel = UserFormViewModel()
 
     @State var confirm: String?
-    
-    @State var department: Department?
-    
+        
     @State var isSheetPresented: Bool = false
     
-    @State var exception: Exception?
+    @State var error: Error?
     
     @Environment(\.presentationMode) var presentationMode
         
@@ -78,7 +76,10 @@ struct UserForm: View, UserFormDispatcher {
             }
             
             HStack {
-                Picker(selection: $department, label: Text("")) {
+                Picker(selection: Binding(
+                    get: { viewModel.user?.department ?? nil },
+                    set: { viewModel.user?.department = $0 }
+                ), label: Text("")) {
                     ForEach(viewModel.departments, id: \.id) { department in
                         Text(department.name ?? "").tag(Optional(department))
                     }
@@ -90,7 +91,6 @@ struct UserForm: View, UserFormDispatcher {
         .padding()
         .navigationTitle("User Form")
         .navigationBarItems(trailing: Button(action: {
-            viewModel.user?.department = department
             if ((viewModel.user?.isValid(confirm: confirm)) != nil) {
                 viewModel.saveOrUpdate()
             } else {
@@ -102,13 +102,12 @@ struct UserForm: View, UserFormDispatcher {
         .onAppear {
             viewModel.dispatcher = self
             viewModel.user = user
-            department = user.department
             viewModel.initialize()
         }
-        .alert(isPresented: Binding(get:{ exception != nil }, set:{ _ in exception = nil })) {
+        .alert(isPresented: Binding(get:{ error != nil }, set:{ _ in error = nil })) {
             Alert(
                 title: Text("Error"),
-                message: Text(exception?.message ?? "An unknown error occurred."),
+                message: Text(((error as? Exception)?.message ?? error?.localizedDescription) ?? "An unknown error occurred."),
                 primaryButton: .default(Text("OK")),
                 secondaryButton: .cancel()
             )
@@ -148,8 +147,8 @@ struct UserForm: View, UserFormDispatcher {
         presentationMode.wrappedValue.dismiss()
     }
     
-    func fault(_ exception: Exception) {
-        self.exception = exception
+    func fault(_ error: Error) {
+        self.error = error
     }
 
 }

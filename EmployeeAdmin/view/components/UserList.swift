@@ -12,7 +12,7 @@ struct UserList: View, UserListDispatcher {
     
     @StateObject private var viewModel = UserListViewModel()
     
-    @State private var exception: Exception?
+    @State private var error: Error?
         
     var body: some View {
         NavigationStack {
@@ -55,10 +55,10 @@ struct UserList: View, UserListDispatcher {
                     viewModel.initialize()
                 }
             }
-            .alert(isPresented: Binding(get: { exception != nil }, set: { _ in exception = nil })) {
+            .alert(isPresented: Binding(get: { error != nil }, set: { _ in error = nil })) {
                 Alert(
                     title: Text("Error"),
-                    message: Text(exception?.message ?? "An unknown error occurred."),
+                    message: Text(((error as? Exception)?.message ?? error?.localizedDescription) ?? "An unknown error occurred."),
                     primaryButton: .default(Text("OK")),
                     secondaryButton: .cancel()
                 )
@@ -66,8 +66,8 @@ struct UserList: View, UserListDispatcher {
         }
     }
     
-    func fault(_ exception: Exception) {
-        self.exception = exception
+    func fault(_ error: Error) {
+        self.error = error
     }
 }
 

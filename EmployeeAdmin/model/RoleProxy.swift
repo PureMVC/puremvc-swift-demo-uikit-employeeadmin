@@ -27,41 +27,39 @@ class RoleProxy: Proxy {
         super.init(name: RoleProxy.NAME, data: [Role]())
     }
     
-    func findAll() -> AnyPublisher<[Role], Exception> {
+    func findAll() -> AnyPublisher<[Role], Error> {
         var request = URLRequest(url: URL(string: "http://localhost:8080/roles")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
         return session.dataTaskPublisher(for: request)
-            .tryMap { [weak self] data, response in
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw try self?.decoder.decode(Exception.self, from: data) ?? Exception(message: "An unknown error occurred.")
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                   throw try decoder.decode(Exception.self, from: data)
                 }
                 return data
             }
             .decode(type: [Role].self, decoder: decoder)
-            .mapError { $0 as? Exception ?? Exception(message: "A decoding error occurred.") }
             .eraseToAnyPublisher()
     }
         
-    func findByUserId(_ id: Int) -> AnyPublisher<[Role], Exception> {
+    func findByUserId(_ id: Int) -> AnyPublisher<[Role], Error> {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)/roles")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
         return session.dataTaskPublisher(for: request)
-            .tryMap { [weak self] data, response in
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw try self?.decoder.decode(Exception.self, from: data) ?? Exception(message: "An unknown error occurred.")
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                   throw try decoder.decode(Exception.self, from: data)
                 }
                 return data
             }
             .decode(type: [Role].self, decoder: decoder)
-            .mapError { $0 as? Exception ?? Exception(message: "A decoding error occurred.") }
             .eraseToAnyPublisher()
     }
             
-    func updateByUserId(_ id: Int, roles: [Role]) -> AnyPublisher<[Int], Exception> {
+    func updateByUserId(_ id: Int, roles: [Role]) -> AnyPublisher<[Int], Error> {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)/roles")!)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -69,14 +67,13 @@ class RoleProxy: Proxy {
         request.httpBody = try? encoder.encode( roles.map{ $0.id } )
 
         return session.dataTaskPublisher(for: request)
-            .tryMap { [weak self] (data, response) -> Data in
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw try self?.decoder.decode(Exception.self, from: data) ?? Exception(message: "An unknown error occurred.")
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                   throw try decoder.decode(Exception.self, from: data)
                 }
                 return data
             }
             .decode(type: [Int].self, decoder: decoder)
-            .mapError { $0 as? Exception ?? Exception(message: "A decoding error occurred.") }
             .eraseToAnyPublisher()
     }
     

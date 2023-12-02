@@ -10,12 +10,12 @@ import Foundation
 import Combine
 
 protocol UserListDelegate: AnyObject {
-    func findAll() -> AnyPublisher<[User], Exception>
-    func deleteById(_ id: Int) -> AnyPublisher<Never, Exception>
+    func findAll() -> AnyPublisher<[User], Error>
+    func deleteById(_ id: Int) -> AnyPublisher<Never, Error>
 }
 
 protocol UserListDispatcher {
-    func fault(_ exception: Exception)
+    func fault(_ exception: Error)
 }
 
 class UserListViewModel: ObservableObject {
@@ -46,7 +46,7 @@ class UserListViewModel: ObservableObject {
     func deleteByIndex(_ index: Int) {
         delegate?.deleteById(users[index].id)
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] (completion: Subscribers.Completion<Exception>) in
+            .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .finished:
                     self?.users.remove(at: index)
@@ -58,7 +58,7 @@ class UserListViewModel: ObservableObject {
             .store(in: &cancellable)
     }
     
-    func fault(_ exception: Exception) {
+    func fault(_ exception: Error) {
         dispatcher?.fault(exception)
     }
     

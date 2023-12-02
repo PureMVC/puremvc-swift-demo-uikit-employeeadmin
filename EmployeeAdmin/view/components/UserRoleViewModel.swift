@@ -10,12 +10,12 @@ import Foundation
 import Combine
 
 protocol UserRoleDelegate: AnyObject {
-    func findAllRoles() -> AnyPublisher<[Role], Exception>
-    func findRolesById(_ id: Int) -> AnyPublisher<[Role], Exception>
+    func findAllRoles() -> AnyPublisher<[Role], Error>
+    func findRolesById(_ id: Int) -> AnyPublisher<[Role], Error>
 }
 
 protocol UserRoleDispatcher {
-    func fault(_ exception: Exception)
+    func fault(_ exception: Error)
 }
 
 class UserRoleViewModel: ObservableObject {
@@ -38,18 +38,18 @@ class UserRoleViewModel: ObservableObject {
         guard let delegate else { return }
         
         var publishers = Publishers.Zip(delegate.findAllRoles(), // new user, empty roles
-                                        Just([Role]()).setFailureType(to: Exception.self).eraseToAnyPublisher())
+                                        Just([Role]()).setFailureType(to: Error.self).eraseToAnyPublisher())
         
         if user?.id == 0 { // new user
             if let roles = user?.roles { // has roles
                 publishers = Publishers.Zip(delegate.findAllRoles(),
-                                                Just(roles).setFailureType(to: Exception.self).eraseToAnyPublisher())
+                                                Just(roles).setFailureType(to: Error.self).eraseToAnyPublisher())
             }
         } else if let user { // existing usesr
             publishers = Publishers.Zip(delegate.findAllRoles(), delegate.findRolesById(user.id))
             if let roles = user.roles { // roles not empty
                 publishers = Publishers.Zip(delegate.findAllRoles(),
-                                            Just(roles).setFailureType(to: Exception.self).eraseToAnyPublisher())
+                                            Just(roles).setFailureType(to: Error.self).eraseToAnyPublisher())
             }
         }
         
@@ -64,7 +64,7 @@ class UserRoleViewModel: ObservableObject {
             .store(in: &cancellable)
     }
     
-    func fault(_ exception: Exception) {
+    func fault(_ exception: Error) {
         dispatcher?.fault(exception)
     }
     

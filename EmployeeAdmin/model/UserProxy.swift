@@ -27,41 +27,39 @@ class UserProxy: Proxy {
         super.init(name: UserProxy.NAME, data: nil)
     }
     
-    func findAll() -> AnyPublisher<[User], Exception> {
+    func findAll() -> AnyPublisher<[User], Error> {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
         return session.dataTaskPublisher(for: request)
-            .tryMap { [weak self] data, response in
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw try self?.decoder.decode(Exception.self, from: data) ?? Exception(message: "An unknown error occurred.")
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                   throw try decoder.decode(Exception.self, from: data)
                 }
                 return data
             }
             .decode(type: [User].self, decoder: decoder)
-            .mapError { $0 as? Exception ?? Exception(message: "A decoding error occurred.") }
             .eraseToAnyPublisher()
     }
     
-    func findById(_ id: Int) -> AnyPublisher<User, Exception> {
+    func findById(_ id: Int) -> AnyPublisher<User, Error> {
          var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)")!)
          request.httpMethod = "GET"
          request.setValue("application/json", forHTTPHeaderField: "Accept")
 
          return session.dataTaskPublisher(for: request)
-            .tryMap { [weak self] data, response in
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw try self?.decoder.decode(Exception.self, from: data) ?? Exception(message: "An unknown error occurred.")
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                   throw try decoder.decode(Exception.self, from: data)
                 }
                 return data
             }
             .decode(type: User.self, decoder: decoder)
-            .mapError { $0 as? Exception ?? Exception(message: "A decoding error occurred.") }
             .eraseToAnyPublisher()
      }
     
-    func save(_ user: User) -> AnyPublisher<User, Exception> {
+    func save(_ user: User) -> AnyPublisher<User, Error> {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees")!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -69,18 +67,17 @@ class UserProxy: Proxy {
         request.httpBody = try? encoder.encode(user)
 
         return session.dataTaskPublisher(for: request)
-            .tryMap { [weak self] data, response in
-                guard let response = response as? HTTPURLResponse, response.statusCode == 201 else {
-                    throw try self?.decoder.decode(Exception.self, from: data) ?? Exception(message: "An unknown error occurred.")
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 201 else {
+                   throw try decoder.decode(Exception.self, from: data)
                 }
                 return data
             }
             .decode(type: User.self, decoder: decoder)
-            .mapError { $0 as? Exception ?? Exception(message: "A decoding error occurred.") }
             .eraseToAnyPublisher()
     }
     
-    func update(_ user: User) -> AnyPublisher<User, Exception> {
+    func update(_ user: User) -> AnyPublisher<User, Error> {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(user.id)")!)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -88,48 +85,44 @@ class UserProxy: Proxy {
         request.httpBody = try? encoder.encode(user)
 
         return session.dataTaskPublisher(for: request)
-            .tryMap { [weak self] data, response in
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw try self?.decoder.decode(Exception.self, from: data) ?? Exception(message: "An unknown error occurred.")
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                   throw try decoder.decode(Exception.self, from: data)
                 }
                 return data
             }
             .decode(type: User.self, decoder: decoder)
-            .mapError { $0 as? Exception ?? Exception(message: "A decoding error occurred.") }
             .eraseToAnyPublisher()
     }
     
-    func deleteById(_ id: Int) -> AnyPublisher<Never, Exception> {
+    func deleteById(_ id: Int) -> AnyPublisher<Never, Error> {
         var request = URLRequest(url: URL(string: "http://localhost:8080/employees/\(id)")!)
         request.httpMethod = "DELETE"
 
         return session.dataTaskPublisher(for: request)
-            .tryMap { [weak self] data, response in
-                guard let response = response as? HTTPURLResponse, response.statusCode == 204 else {
-                    throw try self?.decoder.decode(Exception.self, from: data) ?? Exception(message: "An unknown error occurred.")
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 204 else {
+                   throw try decoder.decode(Exception.self, from: data)
                 }
                 return data
             }
             .ignoreOutput()
-            .mapError { $0 as? Exception ?? Exception(message: "A decoding error occurred.") }
             .eraseToAnyPublisher()
     }
     
-    func findAllDepartments() -> AnyPublisher<[Department], Exception> {
+    func findAllDepartments() -> AnyPublisher<[Department], Error> {
         var request = URLRequest(url: URL(string: "http://localhost:8080/departments")!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
         return session.dataTaskPublisher(for: request)
-            .tryMap { [weak self] data, response -> Data in
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw try self?.decoder.decode(Exception.self, from: data) ??
-                        Exception(message: "An unknown error occurred.")
+            .tryMap { [decoder] data, response in
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+                   throw try decoder.decode(Exception.self, from: data)
                 }
                 return data
             }
             .decode(type: [Department].self, decoder: decoder)
-            .mapError { $0 as? Exception ?? Exception(message: "A decoding error occurred.") }
             .eraseToAnyPublisher()
     }
     

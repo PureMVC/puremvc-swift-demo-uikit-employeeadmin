@@ -10,15 +10,15 @@ import Foundation
 import Combine
 
 protocol UserFormDelegate: AnyObject {
-    func findById(_ id: Int) -> AnyPublisher<User, Exception>
-    func save(_ user: User, roles: [Role]?) -> AnyPublisher<User, Exception>
-    func update(_ user: User, roles: [Role]?) -> AnyPublisher<User, Exception>
-    func findAllDepartments() -> AnyPublisher<[Department], Exception>
+    func findById(_ id: Int) -> AnyPublisher<User, Error>
+    func save(_ user: User, roles: [Role]?) -> AnyPublisher<User, Error>
+    func update(_ user: User, roles: [Role]?) -> AnyPublisher<User, Error>
+    func findAllDepartments() -> AnyPublisher<[Department], Error>
 }
 
 protocol UserFormDispatcher {
     func dismissView()
-    func fault(_ exception: Exception)
+    func fault(_ exception: Error)
 }
 
 class UserFormViewModel: ObservableObject {
@@ -43,7 +43,7 @@ class UserFormViewModel: ObservableObject {
         guard let delegate else { return }
         
         var publishers = Publishers.Zip(delegate.findAllDepartments(),
-                                        Just(User(id: 0)).setFailureType(to: Exception.self).eraseToAnyPublisher())
+                                        Just(User(id: 0)).setFailureType(to: Error.self).eraseToAnyPublisher())
         
         if let user, user.id != 0 { // existing user
             publishers = Publishers.Zip(delegate.findAllDepartments(), delegate.findById(user.id)) // User Data (conditional)
@@ -88,7 +88,7 @@ class UserFormViewModel: ObservableObject {
             .store(in: &cancellable)
     }
     
-    func fault(_ exception: Exception) {
+    func fault(_ exception: Error) {
         dispatcher?.fault(exception)
     }
     
