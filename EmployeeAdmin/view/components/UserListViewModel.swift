@@ -28,7 +28,7 @@ class UserListViewModel: ObservableObject {
     
     var dispatcher: UserListDispatcher?
     
-    open var NAME: String { "UserListObservable" }
+    open var NAME: String { "UserListViewModel" }
     
     func initialize() {
         ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(name: NAME, viewComponent: self)

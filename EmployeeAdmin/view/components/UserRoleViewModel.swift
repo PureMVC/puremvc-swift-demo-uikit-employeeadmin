@@ -30,7 +30,7 @@ class UserRoleViewModel: ObservableObject {
     
     weak var delegate: UserRoleDelegate?
     
-    open var NAME: String { "UserRoleObservable" }
+    open var NAME: String { "UserRoleViewModel" }
     
     func initialize() {
         ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(name: NAME, viewComponent: self)

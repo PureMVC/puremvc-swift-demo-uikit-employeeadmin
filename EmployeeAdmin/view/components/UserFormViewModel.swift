@@ -35,7 +35,7 @@ class UserFormViewModel: ObservableObject {
     
     weak var delegate: UserFormDelegate?
     
-    open var NAME: String { "UserFormObservable" }
+    open var NAME: String { "UserFormViewModel" }
     
     func initialize() {
         ApplicationFacade.getInstance(key: ApplicationFacade.KEY).registerView(name: NAME, viewComponent: self)
